@@ -7,29 +7,28 @@ import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Tooltip from '@mui/material/Tooltip';
-import { useParams } from 'react-router-dom';
-
-
+import { Link } from 'react-router-dom';
 
 function createData(name, description) {
   return { name, description };
 }
 
 const rows = [
-  createData('CANDIDAT1', 'Description du candidat 1'),
-  createData('CANDIDAT2', 'Description du candidat 2'),
-  createData('CANDIDAT3', 'Description du candidat 3'),
+  createData('OFFRE1', "Description de l'offre 1"),
+  createData('OFFRE2', "Description de l'offre 2"),
+  createData('OFFRE3', "Description de l'offre 3"),
 ];
 
 export default function BasicTable() {
-  const { offre } = useParams();
   return (
     <div>
       <TableContainer component={Paper}>
         <Tooltip title="Add" arrow>
-          <h1 style={{ textAlign: 'center' }}>Liste des candidats: {offre}</h1>
+          <h1 style={{ textAlign: 'center' }}>Liste des Offres d'Emploi</h1>
         </Tooltip>
-
+        <Tooltip title="Add" placement="left-start">
+          <Button variant="contained">Ajouter Offre</Button>
+        </Tooltip>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableBody>
             {rows.map((row) => (
@@ -42,7 +41,11 @@ export default function BasicTable() {
                 </TableCell>
                 <TableCell align="right">{row.description}</TableCell>
                 <TableCell align="right">
-                  <Button variant="contained">Evaluate</Button>
+                  <Link to={`/ListeCandidats/${row.name}`}>
+                    <Button variant="contained" sx={{ marginLeft: '30px' }}>Candidats</Button>
+                  </Link>
+                  <Button variant="contained" color="warning"  sx={{ marginLeft: '30px' }}>Modifier</Button>
+                  <Button variant="contained" color="error" sx={{ marginLeft: '30px' }}>Supprimer</Button>
                 </TableCell>
               </TableRow>
             ))}

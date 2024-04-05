@@ -77,9 +77,11 @@ export default function SearchAppBar() {
             <li>
               <Link to="/">Home</Link>
             </li>
+            
             <li>
-              <Link to="/ListeCandidats">ListeCandidats</Link>
+              <Link to="/ListeOffres">ListeOffres</Link>
             </li>
+            
           </ul>
           <Search>
             <SearchIconWrapper>
