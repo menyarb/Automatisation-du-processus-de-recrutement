@@ -13,7 +13,7 @@ const EntrepriseShema = new mongoose.Schema({
         required: true
     },
     
-        timestamp: true
+       
     }
 )
 const Entreprise=mongoose.model('Entreprise',EntrepriseShema);
