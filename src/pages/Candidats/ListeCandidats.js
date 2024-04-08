@@ -27,7 +27,7 @@ const CandidatesList = () => {
         content: {
           padding: 3, 
           minWidth: 1100,
-          height: 'calc(100vh )', overflowY: 'auto',
+          height: 'calc(100vh - 200px )', overflowY: 'auto',
          marginLeft: drawerWidth + 15,
         }
       }

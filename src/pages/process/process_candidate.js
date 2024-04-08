@@ -62,7 +62,8 @@ const RecruitmentProcessPage = () => {
                 <main style={{ ...themedStyles(theme).content }}>
                     <Paper elevation={3} sx={themedStyles(theme).paper}>
                         <Typography variant="h5" gutterBottom>Processus de Recrutement</Typography>
-                        <Grid container spacing={2}>
+                  
+                        <Typography variant="h5" gutterBottom>Offre 1:Candidat 1</Typography>      <Grid container spacing={2}>
                             {recruitmentSteps.map((step, index) => (
                                 <Grid item xs={12} key={index}>
                                     <Box sx={themedStyles(theme).stepBox}>
@@ -74,7 +75,7 @@ const RecruitmentProcessPage = () => {
                             ))}
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
-                            <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>Confirmer les Étapes</Button>
+                            <Button href="/candidate/DetailOffres" variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>Lancer le Processus</Button>
                             <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
                         </Box>
                     </Paper>

@@ -20,6 +20,10 @@ import MenuNavbarAddCandidat from './pages/NavBar/NavbarCondidat';
 import ListeOffresCondidat from './pages/Offres/list_offers_condidat';
 import DetailOffresCondidat from './pages/Offres/detail_Offer _condidat';
 import RecruitmentProcess from './pages/process/process_steps';
+import RecruitmentProcessCondidat from './pages/process/process_candidate';
+import EditProcess from './pages/process/edit_process';
+import EditProcessCandidate from './pages/process/edit_process_candidate';
+
 function App() {
   return (
     <BrowserRouter>
@@ -144,6 +148,30 @@ function App() {
             element={
               <RouteHandler>
                 <RecruitmentProcess />
+              </RouteHandler>
+            }
+          />
+             <Route
+            path="/company/RecruitmentProcessCandidate"
+            element={
+              <RouteHandler>
+                <RecruitmentProcessCondidat />
+              </RouteHandler>
+            }
+          />
+            <Route
+            path="/company/EditProcess"
+            element={
+              <RouteHandler>
+                <EditProcess />
+              </RouteHandler>
+            }
+          />
+                      <Route
+            path="/company/EditProcessCandidate"
+            element={
+              <RouteHandler>
+                <EditProcessCandidate />
               </RouteHandler>
             }
           />
