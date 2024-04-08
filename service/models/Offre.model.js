@@ -1,45 +1,46 @@
 const mongoose = require('mongoose');
 
 const offreSchema = new mongoose.Schema({
-    titre: {
+    image: {
         type: String,
-        required: true
     },
-    description: {
+    title: {
         type: String,
-        required: true
     },
-    competencesRequises: [{
+    mission: {
         type: String,
-        required: true
-    }],
-    niveauExperienceRequis: {
+    },
+    profile: {
         type: String,
-        required: true
     },
-    salaire: {
+    technicalSkills: {
         type: String,
-        required: true
     },
-    localisation: {
+    interpersonalSkills: {
         type: String,
-        required: true
     },
-    typeEmploi: {
+    languages: {
         type: String,
-        required: true
     },
-    dateLimiteCandidature: {
-        type: Date,
-        required: true
-    },
-    statutOffre: {
+    Experience: {
         type: String,
-        required: true
     },
-    avantages: [{
-        type: String
-    }]
+    jobType: {
+        type: String,
+    },
+    Salaire: {
+        type: String,
+    },
+    Emplacement: {
+        type: String,
+    },
+    Qualification: {
+        type: String,
+    },
+    Contrat: {
+        type: String,
+    },
+   
 });
 
 const Offre = mongoose.model('Offre', offreSchema);

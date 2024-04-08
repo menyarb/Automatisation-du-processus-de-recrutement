@@ -5,8 +5,11 @@ const entrepriseRoutes = require('./routes/entreprise.routes');
 const offreRoutes = require('./routes/offre.routes');
 const candidatureRoutes = require('./routes/candidature.routes');
 
-
+const cors = require('cors');
 const app = express();
+
+// Autoriser les requêtes depuis tous les domaines
+app.use(cors());
 const port = 3001;
 
 // Middleware pour parser le JSON

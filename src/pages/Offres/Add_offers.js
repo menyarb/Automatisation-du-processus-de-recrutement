@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { Button, TextField, Box, Typography, Paper, Select, MenuItem } from '@mui/material';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+// Dans votre composant React
 const drawerWidth = 240;
 const themedStyles = (theme) => {
     return {
@@ -27,6 +31,7 @@ export default function Product() {
         Qualification: 'Qualification',
         Contrat: ''
     });
+
     const contracts = [
       { value: 'CIVP', label: 'CIVP' },
       { value: 'CDD', label: 'CDD' },
@@ -66,13 +71,40 @@ export default function Product() {
     };
 
     const handleImageChange = (e) => {
-        setOffer({ ...offer, image: e.target.files[0] });
+        setOffer({ ...offer, image: e.target.files[0].name });
     };
     const contractTypes = [
       { value: 'CIVP', label: 'CIVP' },
       { value: 'CDD', label: 'CDD' },
       // Ajoutez d'autres types de contrat au besoin
   ];
+
+  const addOffer = () => {
+    axios.post('http://localhost:3001/offres', offer)
+        .then(response => {
+            console.log('Offre ajoutée avec succès :', response.data);
+            // Réinitialiser le formulaire après l'ajout de l'offre
+            setOffer({
+                image: '',
+                title: '',
+                mission: '',
+                profile: '',
+                technicalSkills: '',
+                interpersonalSkills: '',
+                languages: '',
+                Experience: '',
+                jobType: 'Type de travail',
+                Salaire: '',
+                Emplacement: 'Paris',
+                Qualification: 'Qualification',
+                Contrat: ''
+            });
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'ajout de l\'offre :', error);
+        });
+
+};
     const theme = useTheme();
     return (
         <div sx={{ backgroundColor: '#ced4da', }}>
@@ -138,12 +170,13 @@ export default function Product() {
                         </Select>
                         <TextField margin="normal" required fullWidth id="Salaire" label="Salaire" name="Salaire" onChange={handleChange} />
 
-                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                            Ajouter Offre
-                        </Button>
+                        <Button component={Link} to="/company/ListeOffres" fullWidth variant="contained" onClick={addOffer} sx={{ mt: 3, mb: 2 }}>
+            Ajouter Offre
+        </Button>
                     </Paper>
                 </main>
             </Box>
         </div>
     )
+
 }

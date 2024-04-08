@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState,useEffect } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper ,Button,Box } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import axios from 'axios';
 import Image from '../../assets/images/mpbs.png';
 
 
@@ -16,52 +17,68 @@ const themedStyles = (theme) => {
     }
   }
 // Sample data
-const offers = [
-  {
-    image: require('../../assets/images/logoo.png').default,
-    title: 'Title 1',
-    mission: '-Fixer les objectifs et les axes prioritaires des ventes à SFAX.',
-    responsibilities: [
-      '- être attentif aux évolutions du marché et aux offres de la concurrence afin dadapter en performance les offres de lentreprise.',
-      '- Reporter au Responsable Commercial.',
-      ' - Fidéliser et entretenir des bonnes relations avec les clients.',
-      '- Développer la zone commerciale avec lacquisition de nouveaux clients.',
-      '- Construction du plan d\'action commercial.',
-      '- Saisir le bon de livraison et les bon de commande.',
-      '- Définir les besoins techniques demander par les clients.',
-      'Assurer le développement du chiffre d\'affaires sur les régions dont vous êtes responsable.'
-    ],
-    profile: 'Profile 1',
-    technicalSkills: 'Technical Skills 1',
-    interpersonalSkills: 'Interpersonal Skills 1',
-    languages: 'Languages 1'
-  },
-  {
-    image: require('../../assets/images/logoo.png').default,
-    title: 'Title 2',
-    mission: '-Fixer les objectifs et les axes prioritaires des ventes à SFAX.',
-    responsibilities: [
-      '- être attentif aux évolutions du marché et aux offres de la concurrence afin dadapter en performance les offres de lentreprise.',
-      '- Reporter au Responsable Commercial.',
-      ' - Fidéliser et entretenir des bonnes relations avec les clients.',
-      '- Développer la zone commerciale avec lacquisition de nouveaux clients.',
-      '- Construction du plan d\'action commercial.',
-      '- Saisir le bon de livraison et les bon de commande.',
-      '- Définir les besoins techniques demander par les clients.',
-      'Assurer le développement du chiffre d\'affaires sur les régions dont vous êtes responsable.'
-    ],
-    profile: 'Profile 2',
-    technicalSkills: 'Technical Skills 2',
-    interpersonalSkills: 'Interpersonal Skills 2',
-    languages: 'Languages 2'
-  },
-  // Ajoutez d'autres offres si nécessaire
-];
+// const offers = [
+//   {
+//     image: require('../../assets/images/logoo.png').default,
+//     title: 'Title 1',
+//     mission: '-Fixer les objectifs et les axes prioritaires des ventes à SFAX.',
+//     responsibilities: [
+//       '- être attentif aux évolutions du marché et aux offres de la concurrence afin dadapter en performance les offres de lentreprise.',
+//       '- Reporter au Responsable Commercial.',
+//       ' - Fidéliser et entretenir des bonnes relations avec les clients.',
+//       '- Développer la zone commerciale avec lacquisition de nouveaux clients.',
+//       '- Construction du plan d\'action commercial.',
+//       '- Saisir le bon de livraison et les bon de commande.',
+//       '- Définir les besoins techniques demander par les clients.',
+//       'Assurer le développement du chiffre d\'affaires sur les régions dont vous êtes responsable.'
+//     ],
+//     profile: 'Profile 1',
+//     technicalSkills: 'Technical Skills 1',
+//     interpersonalSkills: 'Interpersonal Skills 1',
+//     languages: 'Languages 1'
+//   },
+//   {
+//     image: require('../../assets/images/logoo.png').default,
+//     title: 'Title 2',
+//     mission: '-Fixer les objectifs et les axes prioritaires des ventes à SFAX.',
+//     responsibilities: [
+//       '- être attentif aux évolutions du marché et aux offres de la concurrence afin dadapter en performance les offres de lentreprise.',
+//       '- Reporter au Responsable Commercial.',
+//       ' - Fidéliser et entretenir des bonnes relations avec les clients.',
+//       '- Développer la zone commerciale avec lacquisition de nouveaux clients.',
+//       '- Construction du plan d\'action commercial.',
+//       '- Saisir le bon de livraison et les bon de commande.',
+//       '- Définir les besoins techniques demander par les clients.',
+//       'Assurer le développement du chiffre d\'affaires sur les régions dont vous êtes responsable.'
+//     ],
+//     profile: 'Profile 2',
+//     technicalSkills: 'Technical Skills 2',
+//     interpersonalSkills: 'Interpersonal Skills 2',
+//     languages: 'Languages 2'
+//   },
+//   // Ajoutez d'autres offres si nécessaire
+// ];
 
 
 
 export default function ListeOffres() {
-   
+  const [offers, setOffers] = useState([]);
+
+const addOffer = () => {
+  axios.get('http://localhost:3001/offres', offers)
+      .then(response => {
+          console.log('Offre ajoutée avec succès :', response.data);
+          setOffers(response.data);
+      })
+      .catch(error => {
+          console.error('Erreur lors de l\'ajout de l\'offre :', error);
+      });
+
+};
+useEffect(() => {
+  addOffer();
+}, []);
+
     const theme = useTheme();
     return (
       <div sx={{backgroundColor: '#ced4da', }}>
@@ -87,7 +104,7 @@ export default function ListeOffres() {
                     {offers.map((offer, index) => (
                         <TableRow key={index}>
                             <TableCell> <img src={Image} alt="Demo PC"style={{ width: '50px', height: '50px', borderRadius: '8px' }}/></TableCell>
-                            <TableCell>{offer.title}</TableCell>
+                            <TableCell>{offer.titre}</TableCell>
                             <TableCell>{offer.mission}</TableCell>
                             <TableCell>{offer.profile}</TableCell>
                             <TableCell>{offer.technicalSkills}</TableCell>
@@ -99,7 +116,7 @@ export default function ListeOffres() {
                                 </Button>
                                 <br></br>
                                 <Button style={{ marginTop:'10px'}} variant="contained" color="primary" href="/company/ListeCondidat"> 
-                                     liste de conditions
+                                     liste des candidats
                                 </Button>
                             </TableCell>
                         </TableRow>
