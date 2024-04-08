@@ -60,7 +60,7 @@ const AddCandidateForm = ({ handleAddCandidate }) => {
        
         content: {
           padding: 3,
-           height: 'calc(100vh - 150px)', overflowY: 'auto',
+           height: 'calc(100vh - 200px)', overflowY: 'auto',
           marginLeft: drawerWidth + 15,
         }
       }
@@ -73,7 +73,7 @@ const AddCandidateForm = ({ handleAddCandidate }) => {
     <Box p="20px">
          <main style={{ ...themedStyles(theme).content }}>
          <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
-  
+         <Typography variant="h5" gutterBottom>Mon Profil</Typography>
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>

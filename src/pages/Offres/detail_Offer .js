@@ -9,7 +9,7 @@ const themedStyles = (theme) => {
         padding: 3,
         maxWidth: 1500,
         minWidth: 375,
-        height: 'calc(100vh )', overflowY: 'auto',
+        height: 'calc(100vh - 200px)', overflowY: 'auto',
        marginLeft: drawerWidth + 15,
       }
     }
@@ -59,7 +59,7 @@ const OfferDetailsPage = ({ offer }) => {
                 Voir la liste des offres
               </Button>
               <br></br>
-              <Button variant="contained" color="error" href="/candidate/ListeOffres" sx={{ marginTop: '10px' }}>
+              <Button variant="contained" color="error" href="/company/RecruitmentProcess" sx={{ marginTop: '10px' }}>
               Affichez les étapes du processus de recrutement
               </Button>
             </Box>

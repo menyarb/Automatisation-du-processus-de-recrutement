@@ -8,7 +8,7 @@ const themedStyles = (theme) => {
     return {
       content: {
         padding: 3,
-        height: 'calc(100vh c)', overflowY: 'auto',
+        height: 'calc(100vh - 200px)', overflowY: 'auto',
        marginLeft: drawerWidth + 15,
       
       }
