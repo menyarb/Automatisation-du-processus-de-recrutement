@@ -96,7 +96,7 @@ function App() {
             }
           />
           <Route
-            path="/company/EditOffres"
+            path="/company/EditOffres/:idOffer"
             element={
               <RouteHandler>
                 <EditOffres />

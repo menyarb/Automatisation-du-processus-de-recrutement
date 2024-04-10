@@ -2,6 +2,8 @@ import React, { useState,useEffect } from 'react';import { Typography, Paper, Bu
 import Image from '../../assets/images/logoo.png';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 const themedStyles = (theme) => {
     return {
@@ -53,7 +55,7 @@ const OfferDetailsPage = () => {
             <Typography variant="body1" gutterBottom>{offer.interpersonalSkills}</Typography>
             <Typography variant="body1" gutterBottom>{offer.languages}</Typography>
             <Box mt={3}>
-              <Button variant="contained" color="primary" href="/company/EditOffres">
+              <Button variant="contained" color="primary" component={Link} to={`/company/EditOffres/${offer._id}`}>
                 Modifier l'offre
               </Button>
               <Button variant="contained" color="secondary" href="/company/ListeOffres" sx={{ marginLeft: '10px' }}>
