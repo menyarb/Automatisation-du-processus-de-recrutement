@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import axios from 'axios';
 import Image from '../../assets/images/mpbs.png';
-
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 const themedStyles = (theme) => {
@@ -77,7 +77,7 @@ const addOffer = () => {
 };
 useEffect(() => {
   addOffer();
-}, []);
+});
 
     const theme = useTheme();
     return (
@@ -111,11 +111,11 @@ useEffect(() => {
                             <TableCell>{offer.interpersonalSkills}</TableCell>
                             <TableCell>{offer.languages}</TableCell>
                             <TableCell>
-                                <Button variant="contained" color="primary" href="/company/DetailOffres">
+                                <Button variant="contained" color="primary" component={Link} to={`/company/DetailOffres/${offer._id}`}>
                                     Details 
                                 </Button>
                                 <br></br>
-                                <Button style={{ marginTop:'10px'}} variant="contained" color="primary" href="/company/ListeCondidat"> 
+                                <Button style={{ marginTop:'10px'}} variant="contained" color="primary" > 
                                      liste des candidats
                                 </Button>
                             </TableCell>
