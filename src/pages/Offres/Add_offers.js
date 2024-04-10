@@ -72,16 +72,14 @@ export default function Product() {
     const handleChange = (e) => {
         setOffer({ ...offer, [e.target.name]: e.target.value });
     };
+//modifer style de h5
+const h5Elements = document.querySelectorAll('h5');
+h5Elements.forEach((element) => {
+  element.style.fontSize = '14px';
+  element.style.color = '#333';
+  element.style.margin="2px";
 
-    const handleImageChange = (e) => {
-        setOffer({ ...offer, image: e.target.files[0].name });
-    };
-    const Exigence = [
-      { value: 'Technique', label: 'Technique' },
-      { value: 'commerciale', label: 'commerciale' },
-      { value: 'Emplacement', label: 'Emplacement' },
-      { value: 'commerciale', label: 'commerciale' },
-  ];
+});
 
   const addOffer = () => {
     axios.post('http://localhost:3001/offres', offer)
@@ -110,29 +108,19 @@ export default function Product() {
 
 };
 
-  
-  const handleExigenceChange = (value) => {
-    const isExigenceSelected = offer.Exigence.includes(value);
-    let updatedExigence;
-    if (isExigenceSelected) {
-        updatedExigence = offer.Exigence.filter(exigence => exigence !== value);
-    } else {
-        updatedExigence = [...offer.Exigence, value];
-    }
-    setOffer({ ...offer, Exigence: updatedExigence });
-};
-//modifer style de h5
-const h5Elements = document.querySelectorAll('h5');
 
-// Parcourir tous les éléments h5 et appliquer les modifications
-h5Elements.forEach((element) => {
-  // Modifier le style de chaque élément h5
-  element.style.fontSize = '14px';
- 
-  element.style.color = '#333';
-  element.style.margin="2px";
-  // Autres modifications de style si nécessaire
-});
+const [imagePreview, setImagePreview] = useState('');
+
+const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setImagePreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+    }
+};
 
     const theme = useTheme();
     return (
@@ -143,11 +131,11 @@ h5Elements.forEach((element) => {
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>Ajouter Offres</Typography>
                         
                         <input accept="image/*" id="image" type="file" onChange={handleImageChange} />
-                        {offer.image && (
-                            <Box sx={{ mt: 1 }}>
-                                <img src={URL.createObjectURL(offer.image)} alt="uploaded" style={{ maxWidth: '500px', height: '500px' }} />
-                            </Box>
-                        )}
+{imagePreview && (
+    <Box sx={{ mt: 1 }}>
+        <img src={imagePreview} alt="uploaded" style={{ maxWidth: '500px', height: '500px' }} />
+    </Box>
+)}
                         <h5 htmlFor="title">Title de Poste :</h5>
                         <TextField margin="normal" required fullWidth id="title" label="Title" name="title" onChange={handleChange} />
                         <h5 htmlFor="mission" >Mission :</h5>

@@ -1,9 +1,10 @@
-import React from 'react';
-import { Typography, Box, Paper, Grid, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Typography, Box, Paper, Grid, Button, TextField, IconButton } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import EditIcon from '@mui/icons-material/Edit';
-import { green, blue } from '@mui/material/colors';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import { green, red } from '@mui/material/colors';
 
 const drawerWidth = 240;
 
@@ -32,17 +33,32 @@ const themedStyles = (theme) => {
             marginTop: '20px',
             textAlign: 'center',
         },
+        addButton: {
+            backgroundColor: green[500],
+            color: '#fff',
+            '&:hover': {
+                backgroundColor: green[700],
+            },
+           
+        },
+        removeButton: {
+            backgroundColor: red[500],
+            color: '#fff',
+            '&:hover': {
+                backgroundColor: red[700],
+            },
+        },
     }
 }
 
 const RecruitmentProcessPage = () => {
     // Définir les étapes du processus de recrutement
-    const recruitmentSteps = [
+    const [recruitmentSteps, setRecruitmentSteps] = useState([
         'Présélection des CV',
         'Entretien téléphonique',
         'Entretien en personne',
         'Offre d\'emploi'
-    ];
+    ]);
 
     const theme = useTheme();
 
@@ -51,9 +67,20 @@ const RecruitmentProcessPage = () => {
         console.log("Étapes confirmées !");
     };
 
-    const handleEditSteps = () => {
-        // Logique pour modifier les étapes
-        console.log("Modification des étapes...");
+    const handleStepChange = (index, value) => {
+        const newSteps = [...recruitmentSteps];
+        newSteps[index] = value;
+        setRecruitmentSteps(newSteps);
+    };
+
+    const handleAddStep = () => {
+        setRecruitmentSteps([...recruitmentSteps, '']);
+    };
+
+    const handleRemoveStep = (index) => {
+        const newSteps = [...recruitmentSteps];
+        newSteps.splice(index, 1);
+        setRecruitmentSteps(newSteps);
     };
 
     return (
@@ -61,23 +88,29 @@ const RecruitmentProcessPage = () => {
             <Box p="20px">
                 <main style={{ ...themedStyles(theme).content }}>
                     <Paper elevation={3} sx={themedStyles(theme).paper}>
-                        <Typography variant="h5" gutterBottom align="center">Modifier Processus de Recrutement</Typography>
-                  
-                        
-                           <Grid container spacing={2}>
+                        <Typography variant="h4" gutterBottom align="center" style={{margin:"10px"}}>Modifier Processus de Recrutement</Typography>
+                        <Grid container spacing={2}>
                             {recruitmentSteps.map((step, index) => (
                                 <Grid item xs={12} key={index}>
                                     <Box sx={themedStyles(theme).stepBox}>
                                         <Typography variant="h6" sx={{ marginRight: '10px' }}>{index + 1}.</Typography>
                                         <CheckCircleOutlineIcon sx={{ color: green[500] }} />
-                                        <Typography variant="body1">{step}</Typography>
+                                        <TextField
+                                            variant="outlined"
+                                            value={step}
+                                            onChange={(e) => handleStepChange(index, e.target.value)}
+                                            style={{ width: "900px", marginTop: "8px", marginRight: "8px", marginBottom: "8px"}}
+                                        />
+                                        <IconButton onClick={() => handleRemoveStep(index)} sx={themedStyles(theme).removeButton}>
+                                            <DeleteIcon style={{marginLeft:"12px"}}/>
+                                        </IconButton>
                                     </Box>
                                 </Grid>
                             ))}
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
-                            <Button href="/company/RecruitmentProcess" variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>Conforme Modification</Button>
-
+                            <Button onClick={handleAddStep} variant="contained" color="primary" startIcon={<AddIcon />} sx={themedStyles(theme).addButton} style={{margin:"10px"}}>Ajouter une étape</Button>
+                            <Button href="/company/RecruitmentProcessCandidate" variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>Conforme Modification</Button>
                         </Box>
                     </Paper>
                 </main>
