@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { useTheme } from "@mui/material/styles";
 // import { Button, TextField, Box, Typography, Paper, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { Button, TextField, Box, Typography, Paper, Select, MenuItem, FormControlLabel, Checkbox ,FormGroup} from '@mui/material';
+import { useNavigate, Navigate } from 'react-router-dom';import { Button, TextField, Box, Typography, Paper, Select, MenuItem, FormControlLabel, Checkbox ,FormGroup} from '@mui/material';
 
 // Dans votre composant React
 const drawerWidth = 240;
@@ -17,6 +16,7 @@ const themedStyles = (theme) => {
     }
 }
 export default function Product() {
+    const navigate = useNavigate();
     const [offer, setOffer] = useState({
         image: '',
         title: '',
@@ -31,7 +31,7 @@ export default function Product() {
         Emplacement: 'Paris',
         Qualification: 'Qualification',
         Contrat: '',
-        Exigence: []
+        type: ''
 
     });
 
@@ -85,22 +85,8 @@ h5Elements.forEach((element) => {
     axios.post('http://localhost:3001/offres', offer)
         .then(response => {
             console.log('Offre ajoutée avec succès :', response.data);
-            // Réinitialiser le formulaire après l'ajout de l'offre
-            setOffer({
-                image: '',
-                title: '',
-                mission: '',
-                profile: '',
-                technicalSkills: '',
-                interpersonalSkills: '',
-                languages: '',
-                Experience: '',
-                jobType: 'Type de travail',
-                Salaire: '',
-                Emplacement: 'Paris',
-                Qualification: 'Qualification',
-                Contrat: ''
-            });
+            const addedOffer = response.data;
+            navigate(`/company/RecruitmentProcess/${addedOffer._id}`);
         })
         .catch(error => {
             console.error('Erreur lors de l\'ajout de l\'offre :', error);
@@ -192,15 +178,24 @@ const handleImageChange = (event) => {
                                 <MenuItem key={index} value={qualification.value}>{qualification.label}</MenuItem>
                             ))}
                         </Select>
-                        <h5 htmlFor="mission" >  Exigence d'emploi :</h5>
-                        <FormGroup>
-  <FormControlLabel control={<Checkbox defaultChecked />} label="Technique" />
-  <FormControlLabel  control={<Checkbox />} label="commerciale" />
-  <FormControlLabel  control={<Checkbox />} label="Emplacement" />
-</FormGroup>
+                        <Select
+    value={offer.type}
+    onChange={(e) => setOffer({ ...offer, type: e.target.value })}
+    fullWidth
+    displayEmpty
+    inputProps={{ 'aria-label': 'Without label' }}
+    sx={{ mt: 3, mb: 2 }}
+>
+    <MenuItem value="" disabled>
+        Sélectionnez le type d'emploi
+    </MenuItem>
+    <MenuItem value="Technique">Technique</MenuItem>
+    <MenuItem value="Communication">Communication</MenuItem>
+    <MenuItem value="Emplacement">Emplacement</MenuItem>
+</Select>
                       
 
-                        <Button component={Link} to="/company/ListeOffres" fullWidth variant="contained" onClick={addOffer} sx={{ mt: 3, mb: 2 }}>
+                        <Button fullWidth variant="contained" onClick={addOffer} sx={{ mt: 3, mb: 2 }}>
             Ajouter Offre
         </Button>
                     </Paper>

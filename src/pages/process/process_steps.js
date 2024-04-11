@@ -1,9 +1,11 @@
-import React from 'react';
 import { Typography, Box, Paper, Grid, Button } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { green, blue } from '@mui/material/colors';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState,useEffect } from 'react';
 
 const drawerWidth = 240;
 
@@ -36,18 +38,55 @@ const themedStyles = (theme) => {
 }
 
 const RecruitmentProcessPage = () => {
-    // Définir les étapes du processus de recrutement
-    const recruitmentSteps = [
+    const recruitmentSteps = [[
         'Présélection des CV',
         'Entretien téléphonique',
         'Entretien en personne',
         'Offre d\'emploi'
+    ]  
+    ,[ 'Présélection des CV2',
+    'Entretien téléphonique2',
+    'Entretien en personne2',
+    'Offre d\'emploi2', 'Offre d\'emploi2'],
+    [ 'Présélection des CV3',
+    'Entretien téléphonique3',
+    'Entretien en personne3',
+    'Offre d\'emploi3']
+        
     ];
+    const [recruitmentStep, setRecruitmentStep] = useState([]);
+    const [offer, setOffer] = useState({});
+    const {idOffer}=useParams();
+    useEffect(() => {
+        const getOfferById = (idOffer, setOffer) => {
+            axios.get(`http://localhost:3001/offres/${idOffer}`)
+                .then((response) => {
+                    console.log(response.data);
+                    setOffer(response.data);
+                })
+                .catch((error) => {
+                    console.error('Error fetching offer:', error);
+                });
+        };
+        
+        getOfferById(idOffer, setOffer);
+    }, [idOffer]); 
+    
+    useEffect(() => {
+        if (offer.type==="Technique") {
+            setRecruitmentStep(recruitmentSteps[0]);
+        }else{ if (offer.type==="Communication") {
+            setRecruitmentStep(recruitmentSteps[1]);
+        }else{ if (offer.type==="Emplacement") {
+            setRecruitmentStep(recruitmentSteps[2]);
+        }}}
+    }, [offer]); 
 
+    console.log(idOffer)
     const theme = useTheme();
 
     const handleConfirmSteps = () => {
-        // Logique pour confirmer les étapes
+        
         console.log("Étapes confirmées !");
     };
 
@@ -55,7 +94,9 @@ const RecruitmentProcessPage = () => {
         // Logique pour modifier les étapes
         console.log("Modification des étapes...");
     };
-
+    
+    
+      
     return (
         <div sx={{ backgroundColor: '#f0f2f5' }}>
             <Box p="20px">
@@ -63,7 +104,7 @@ const RecruitmentProcessPage = () => {
                     <Paper elevation={3} sx={themedStyles(theme).paper}>
                         <Typography variant="h5" gutterBottom>Processus de Recrutement</Typography>
                         <Grid container spacing={2}>
-                            {recruitmentSteps.map((step, index) => (
+                            {recruitmentStep.map((step, index) => (
                                 <Grid item xs={12} key={index}>
                                     <Box sx={themedStyles(theme).stepBox}>
                                         <Typography variant="h6" sx={{ marginRight: '10px' }}>{index + 1}.</Typography>

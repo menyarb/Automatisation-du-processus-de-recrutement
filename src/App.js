@@ -23,7 +23,6 @@ import RecruitmentProcess from './pages/process/process_steps';
 import RecruitmentProcessCondidat from './pages/process/process_candidate';
 import EditProcess from './pages/process/edit_process';
 import EditProcessCandidate from './pages/process/edit_process_candidate';
-
 function App() {
   return (
     <BrowserRouter>
@@ -144,7 +143,7 @@ function App() {
             }
           />
           <Route
-            path="/company/RecruitmentProcess"
+            path="/company/RecruitmentProcess/:idOffer"
             element={
               <RouteHandler>
                 <RecruitmentProcess />

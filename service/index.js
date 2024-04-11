@@ -4,6 +4,9 @@ const candidatRoutes = require('./routes/candidat.routes');
 const entrepriseRoutes = require('./routes/entreprise.routes');
 const offreRoutes = require('./routes/offre.routes');
 const candidatureRoutes = require('./routes/candidature.routes');
+const processOffreRoutes = require('./routes/processOffre.routes');
+const processCandidatRoutes = require('./routes/processCandidat.routes');
+
 
 const cors = require('cors');
 const app = express();
@@ -31,6 +34,10 @@ app.use('/candidats', candidatRoutes);
 app.use('/entreprises', entrepriseRoutes);
 app.use('/offres', offreRoutes);
 app.use('/candidatures', candidatureRoutes);
+app.use('/processOffre', processOffreRoutes);
+app.use('/processCandidat', processCandidatRoutes);
+
+
 
 
 // Démarrer le serveur
