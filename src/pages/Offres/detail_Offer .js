@@ -1,6 +1,9 @@
-import React from 'react';
-import { Typography, Paper, Button, Box, Grid,useTheme } from '@mui/material';
+import React, { useState,useEffect } from 'react';import { Typography, Paper, Button, Box, Grid,useTheme } from '@mui/material';
 import Image from '../../assets/images/logoo.png';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 const themedStyles = (theme) => {
     return {
@@ -14,45 +17,45 @@ const themedStyles = (theme) => {
       }
     }
   }
-const offers = [
-  {
-      image: require('../../assets/images/logoo.png').default,
-      title: 'Title 1',
-      mission: 'Mission 1',
-      profile: 'Profile 1',
-      technicalSkills: 'Technical Skills 1',
-      interpersonalSkills: 'Interpersonal Skills 1',
-      languages: 'Languages 1'
-  },
-  
-  // Ajoutez d'autres offres si nécessaire
-];
-const OfferDetailsPage = ({ offer }) => {
+  const getOfferById = (offreId, setOffer) => {
+    axios.get(`http://localhost:3001/offres/${offreId}`)
+      .then((response) => {
+        setOffer(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching offer:', error);
+      });
+  }
+ 
+const OfferDetailsPage = () => {
   const theme = useTheme();
-  
-  return (
+  const { idOffer } = useParams();
+  const [offer, setOffer] = useState({});
+  useEffect(() => {
+    getOfferById(idOffer, setOffer); 
+  }, [idOffer]);  return (
     
     <div sx={{backgroundColor: '#ced4da', }}>
     <Box p="20px">
       <main style={{ ...themedStyles(theme).content }}>
       <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
         <Typography variant="h5" gutterBottom>Détails de l'offre</Typography>
-        {offers.map((offer) => (
+        {/* {offers.map((offer) => ( */}
         <Grid container spacing={3}>
 
           <Grid item xs={12} md={6}>
             
-            <img src={Image}alt={offer.title} style={{ width: '100%', borderRadius: '8px' }} />
+            <img src={Image}alt={offer.titre} style={{ width: '100%', borderRadius: '8px' }} />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom>{offer.title}</Typography>
+            <Typography variant="h6" gutterBottom>{offer.titre}</Typography>
             <Typography variant="body1" gutterBottom>{offer.mission}</Typography>
             <Typography variant="body1" gutterBottom>{offer.profile}</Typography>
             <Typography variant="body1" gutterBottom>{offer.technicalSkills}</Typography>
             <Typography variant="body1" gutterBottom>{offer.interpersonalSkills}</Typography>
             <Typography variant="body1" gutterBottom>{offer.languages}</Typography>
             <Box mt={3}>
-              <Button variant="contained" color="primary" href="/company/EditOffres">
+              <Button variant="contained" color="primary" component={Link} to={`/company/EditOffres/${offer._id}`}>
                 Modifier l'offre
               </Button>
               <Button variant="contained" color="secondary" href="/company/ListeOffres" sx={{ marginLeft: '10px' }}>
@@ -65,7 +68,8 @@ const OfferDetailsPage = ({ offer }) => {
             </Box>
           </Grid>
         </Grid>
-        ))}
+       
+        {/* } */}
       </Paper>
       </main>
       </Box>

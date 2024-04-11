@@ -40,6 +40,9 @@ const offreSchema = new mongoose.Schema({
     Contrat: {
         type: String,
     },
+    type: {
+        type: String,
+    },
    
 });
 
