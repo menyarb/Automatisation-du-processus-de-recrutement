@@ -48,3 +48,19 @@ exports.modifyProcessById = async (req, res) => {
         res.status(400).send(err);
     }
 };
+exports.getAllProcesses = async (req, res) => {
+    try {
+        const processes = await ProcessOffre.find();
+        res.send(processes);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+exports.deleteAllProcesses = async (req, res) => {
+    try {
+        const result = await ProcessOffre.deleteMany({});
+        res.send(result);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};

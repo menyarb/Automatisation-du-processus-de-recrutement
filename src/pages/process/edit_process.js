@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { Typography, Box, Paper, Grid, Button, TextField, IconButton } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Typography, Box, Paper, Grid, Button, Select, MenuItem, IconButton } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { green, red } from '@mui/material/colors';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -39,7 +41,6 @@ const themedStyles = (theme) => {
             '&:hover': {
                 backgroundColor: green[700],
             },
-           
         },
         removeButton: {
             backgroundColor: red[500],
@@ -52,18 +53,64 @@ const themedStyles = (theme) => {
 }
 
 const RecruitmentProcessPage = () => {
-    // Définir les étapes du processus de recrutement
-    const [recruitmentSteps, setRecruitmentSteps] = useState([
-        'Présélection des CV',
-        'Entretien téléphonique',
-        'Entretien en personne',
-        'Offre d\'emploi'
-    ]);
+    const [recruitmentSteps, setRecruitmentSteps] = useState([]);
+    const [stepOptions, setStepOptions] = useState(["Présélection des CV","Entretien téléphonique","Entretien en personne","Offre d\'emploi","Présélection des CV1","Entretien téléphonique1","Entretien en personne1","Offre d\'emploi1","Présélection des CV2","Entretien téléphonique2","Entretien en personne2","Offre d\'emploi2","entretien1","entretien2","entretien1"]);
+
+    const { idOffer } = useParams();
+    useEffect(() => {
+        const getProcessByIdOffre = (idOffer) => {
+            axios.get(`http://localhost:3001/processoffre/${idOffer}`)
+                .then((response) => {    
+                    // Mettre à jour recruitmentSteps après avoir défini process
+                    const newSteps = [];
+                    if (response.data.length > 0) {
+                        const stepsData = response.data[0];
+                        if (stepsData.etape1 !== undefined) {
+                            newSteps.push(stepsData.etape1);
+                            
+                        }
+                        if (stepsData.etape2 !== undefined) {
+                            newSteps.push(stepsData.etape2);
+                        }
+                        if (stepsData.etape3 !== undefined) {
+                            newSteps.push(stepsData.etape3);
+                        }
+                        if (stepsData.etape4 !== undefined) {
+                            newSteps.push(stepsData.etape4);
+                        }if (stepsData.etape5 !== undefined) {
+                            newSteps.push(stepsData.etape5);
+                        }
+                        if (stepsData.etape6 !== undefined) {
+                            newSteps.push(stepsData.etape6);
+                        }
+                        if (stepsData.etape7 !== undefined) {
+                            newSteps.push(stepsData.etape7);
+                        }
+                        if (stepsData.etape8 !== undefined) {
+                            newSteps.push(stepsData.etape8);
+                        }if (stepsData.etape9 !== undefined) {
+                            newSteps.push(stepsData.etape9);
+                        }if (stepsData.etape10 !== undefined) {
+                            newSteps.push(stepsData.etape10);
+                        }
+                        // Ajoutez les autres étapes de la même manière
+                    }
+                    setRecruitmentSteps(newSteps);
+                    console.log("recruitmentstep est ", newSteps);
+                })
+                .catch((error) => {
+                    console.error('Error fetching offer:', error);
+                });
+        };
+    
+        getProcessByIdOffre(idOffer)
+        
+    }, [idOffer]);
+    
 
     const theme = useTheme();
 
     const handleConfirmSteps = () => {
-        // Logique pour confirmer les étapes
         console.log("Étapes confirmées !");
     };
 
@@ -95,12 +142,16 @@ const RecruitmentProcessPage = () => {
                                     <Box sx={themedStyles(theme).stepBox}>
                                         <Typography variant="h6" sx={{ marginRight: '10px' }}>{index + 1}.</Typography>
                                         <CheckCircleOutlineIcon sx={{ color: green[500] }} />
-                                        <TextField
+                                        <Select
                                             variant="outlined"
                                             value={step}
                                             onChange={(e) => handleStepChange(index, e.target.value)}
                                             style={{ width: "900px", marginTop: "8px", marginRight: "8px", marginBottom: "8px"}}
-                                        />
+                                        >
+                                            {stepOptions.map((option, optionIndex) => (
+                                                <MenuItem key={optionIndex} value={option}>{option}</MenuItem>
+                                            ))}
+                                        </Select>
                                         <IconButton onClick={() => handleRemoveStep(index)} sx={themedStyles(theme).removeButton}>
                                             <DeleteIcon style={{marginLeft:"12px"}}/>
                                         </IconButton>

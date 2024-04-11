@@ -9,5 +9,8 @@ router.get('/:idOffre', processOffreController.getAllProcessByOffreId);
 router.delete('/:id', processOffreController.deleteProcessById);
 
 router.put('/:id', processOffreController.modifyProcessById);
+router.get('/', processOffreController.getAllProcesses);
+
+router.delete('/', processOffreController.deleteAllProcesses);
 
 module.exports = router;
