@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Typography, Button, TextField, Box,Grid,Paper} from "@mui/material";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useTheme } from "@mui/material/styles";
 import MenuNavbarAddCandidat from '../NavBar/NavbarCondidat';
 const AddCandidateForm = ({ handleAddCandidate }) => {
@@ -77,6 +78,7 @@ const AddCandidateForm = ({ handleAddCandidate }) => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
+
         <TextField margin="normal" required fullWidth id="name" label="Nom" name="name" value={candidate.name} onChange={handleChange} />
       <TextField margin="normal" required fullWidth id="email" label="Email" name="email" value={candidate.email} onChange={handleChange} />
       <TextField margin="normal" fullWidth id="naissance" label="Date de naissance" name="naissance" value={candidate.naissance} onChange={handleChange} />
@@ -99,6 +101,21 @@ const AddCandidateForm = ({ handleAddCandidate }) => {
        
       <TextField margin="normal" fullWidth id="competencesinterprsonnelles" label="competencesinterprsonnelles" name="competencesinterprsonnelles" value={candidate.competencesinterprsonnelles} onChange={handleChange} />
       <TextField margin="normal" fullWidth id="Certificats" label="Certificats" name="Certificats" value={candidate.Certificats} onChange={handleChange} />
+      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+
+<input
+    accept=".pdf, .doc, .docx, .jpg, .jpeg, .png"
+    id="file"
+    type="file"
+    onChange={handleChange}
+    style={{ display: 'none' }} 
+/>
+<label htmlFor="file"  >
+    <Button  sx={{ marginTop: '50px' }}  variant="contained" component="span"  startIcon={<CloudUploadIcon />} >
+        Importer un fichier
+    </Button>
+</label>
+</Box>
         </Grid>
       </Grid>
 

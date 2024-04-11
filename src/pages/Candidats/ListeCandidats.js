@@ -7,10 +7,10 @@ const CandidatesList = () => {
 
   // Mock data des candidats
   const candidates = [
-    { id: 1, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng" },
-    { id: 2, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng" },
-    { id: 3, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng" },
-    { id: 4, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng" },
+    { id: 1, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://example.com/cv1.pdf" },
+    { id: 2, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://example.com/cv2.pdf" },
+    { id: 3, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://example.com/cv3.pdf" },
+    { id: 4, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://drive.google.com/file/d/1sMuw1RFdn6o5RwTiMFChRTIbDAupTPjR/view?usp=sharing" },
     // Ajoutez d'autres candidats selon vos besoins
   ];
 
@@ -19,6 +19,13 @@ const CandidatesList = () => {
     // Mettez en œuvre la logique d'évaluation du candidat ici
     console.log(`Évaluation du candidat avec l'ID ${candidateId}`);
   };
+
+  // Fonction pour télécharger le CV du candidat
+  const downloadCV = (cvUrl) => {
+    // Redirigez l'utilisateur vers l'URL du CV à télécharger
+    window.open(cvUrl, '_blank');
+  };
+
   const drawerWidth = 240;
   const themedStyles = (theme) => {
       return {
@@ -75,6 +82,9 @@ const CandidatesList = () => {
                   <TableCell>
                     <Button variant="contained" color="primary" onClick={() => evaluateCandidate(candidate.id)}>
                       Évaluer
+                    </Button>
+                    <Button sx={{marginTop:"12px"}} variant="outlined" color="success" onClick={() => downloadCV(candidate.cv)} >
+                      Télécharger CV
                     </Button>
                   </TableCell>
                 </TableRow>

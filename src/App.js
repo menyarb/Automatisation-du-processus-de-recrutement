@@ -23,6 +23,7 @@ import RecruitmentProcess from './pages/process/process_steps';
 import RecruitmentProcessCondidat from './pages/process/process_candidate';
 import EditProcess from './pages/process/edit_process';
 import EditProcessCandidate from './pages/process/edit_process_candidate';
+import TelephonePreselection from './pages/process/Standard_recruitment_process/telephone_preselection';
 
 function App() {
   return (
@@ -172,6 +173,14 @@ function App() {
             element={
               <RouteHandler>
                 <EditProcessCandidate />
+              </RouteHandler>
+            }
+          />
+                      <Route
+            path="/company/telephone_preselection"
+            element={
+              <RouteHandler>
+                <TelephonePreselection />
               </RouteHandler>
             }
           />
