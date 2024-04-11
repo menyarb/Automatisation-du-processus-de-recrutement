@@ -23,7 +23,12 @@ import RecruitmentProcess from './pages/process/process_steps';
 import RecruitmentProcessCondidat from './pages/process/process_candidate';
 import EditProcess from './pages/process/edit_process';
 import EditProcessCandidate from './pages/process/edit_process_candidate';
+<<<<<<< HEAD
 import TelephonePreselection from './pages/process/Standard_recruitment_process/telephone_preselection';
+=======
+import TelephonePreselection from './pages/process/Standard_recruitment_process/standard';
+import CalendarProcess from './pages/process/Standard_recruitment_process/calendar';
+>>>>>>> 54195832b149825dfabdb248a2a2e91927dc451e
 
 function App() {
   return (
@@ -180,10 +185,18 @@ function App() {
             path="/company/telephone_preselection"
             element={
               <RouteHandler>
-                <TelephonePreselection />
+                <TelephonePreselection/>
               </RouteHandler>
             }
           />
+                      <Route
+            path="/company/Calendar_Process"
+            element={
+              <RouteHandler>
+                <CalendarProcess/>
+              </RouteHandler>
+            }
+          />          
         </Routes>
       </div>
     </BrowserRouter>

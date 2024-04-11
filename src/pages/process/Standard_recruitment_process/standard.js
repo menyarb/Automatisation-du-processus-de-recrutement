@@ -56,32 +56,7 @@ h5Elements.forEach((element) => {
         // Votre logique pour gérer le changement de fichier ici
     };
 
-  const addOffer = () => {
-    axios.post('http://localhost:3001/offres', offer)
-        .then(response => {
-            console.log('Offre ajoutée avec succès :', response.data);
-            // Réinitialiser le formulaire après l'ajout de l'offre
-            setOffer({
-                ficher: '',
-                title: '',
-                mission: '',
-                profile: '',
-                technicalSkills: '',
-                interpersonalSkills: '',
-                languages: '',
-                Experience: '',
-                jobType: 'Type de travail',
-                Salaire: '',
-                Emplacement: 'Paris',
-                Qualification: 'Qualification',
-                Contrat: ''
-            });
-        })
-        .catch(error => {
-            console.error('Erreur lors de l\'ajout de l\'offre :', error);
-        });
-
-};
+ 
 
     const theme = useTheme();
     return (
@@ -130,7 +105,7 @@ h5Elements.forEach((element) => {
 />
 
 
- <Button component={Link} to="" fullWidth variant="contained" onClick={addOffer} sx={{ mt: 3, mb: 2 }} color="success">
+ <Button component={Link} to="" fullWidth variant="contained"  sx={{ mt: 3, mb: 2 }} color="success">
             Valideur
         </Button>
         <Button
