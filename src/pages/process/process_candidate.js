@@ -3,7 +3,7 @@ import { Typography, Box, Paper, Grid, Button } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import { green, blue } from '@mui/material/colors';
+import { green } from '@mui/material/colors';
 
 const drawerWidth = 240;
 
@@ -36,7 +36,6 @@ const themedStyles = (theme) => {
 }
 
 const RecruitmentProcessPage = () => {
-    // Définir les étapes du processus de recrutement
     const recruitmentSteps = [
         'Présélection des CV',
         'Entretien téléphonique',
@@ -47,12 +46,10 @@ const RecruitmentProcessPage = () => {
     const theme = useTheme();
 
     const handleConfirmSteps = () => {
-        // Logique pour confirmer les étapes
         console.log("Étapes confirmées !");
     };
 
     const handleEditSteps = () => {
-        // Logique pour modifier les étapes
         console.log("Modification des étapes...");
     };
 

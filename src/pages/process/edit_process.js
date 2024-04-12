@@ -7,6 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { green, red } from '@mui/material/colors';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -54,65 +55,71 @@ const themedStyles = (theme) => {
 
 const RecruitmentProcessPage = () => {
     const [recruitmentSteps, setRecruitmentSteps] = useState([]);
-    const [stepOptions, setStepOptions] = useState(["Présélection des CV","Entretien téléphonique","Entretien en personne","Offre d\'emploi","Présélection des CV1","Entretien téléphonique1","Entretien en personne1","Offre d\'emploi1","Présélection des CV2","Entretien téléphonique2","Entretien en personne2","Offre d\'emploi2","entretien1","entretien2","entretien1"]);
+    const [stepOptions] = useState([
+        "Présélection des CV",
+        "Entretien téléphonique",
+        "Entretien en personne",
+        "Offre d'emploi",
+        "Présélection des CV1",
+        "Entretien téléphonique1",
+        "Entretien en personne1",
+        "Offre d'emploi1",
+        "Présélection des CV2",
+        "Entretien téléphonique2",
+        "Entretien en personne2",
+        "Offre d'emploi2",
+        "entretien1",
+        "entretien2",
+        "entretien1"
+    ]);
 
-    const { idOffer } = useParams();
+    const { idProcess } = useParams();
+
+    const updateRecruitmentProcess = () => {
+        axios.put(`http://localhost:3001/processoffre/${idProcess}`, {
+            etapes: recruitmentSteps
+        })
+        .then((response) => {
+            console.log('Processus de recrutement mis à jour avec succès:', response.data);
+        })
+        .catch((error) => {
+            console.error('Erreur lors de la mise à jour du processus de recrutement:', error);
+        });
+    };
+    
     useEffect(() => {
-        const getProcessByIdOffre = (idOffer) => {
-            axios.get(`http://localhost:3001/processoffre/${idOffer}`)
+        const getProcessByidProcess = () => {
+            axios.get(`http://localhost:3001/processoffre/id/${idProcess}`)
                 .then((response) => {    
-                    // Mettre à jour recruitmentSteps après avoir défini process
                     const newSteps = [];
-                    if (response.data.length > 0) {
-                        const stepsData = response.data[0];
-                        if (stepsData.etape1 !== undefined) {
-                            newSteps.push(stepsData.etape1);
-                            
-                        }
-                        if (stepsData.etape2 !== undefined) {
-                            newSteps.push(stepsData.etape2);
-                        }
-                        if (stepsData.etape3 !== undefined) {
-                            newSteps.push(stepsData.etape3);
-                        }
-                        if (stepsData.etape4 !== undefined) {
-                            newSteps.push(stepsData.etape4);
-                        }if (stepsData.etape5 !== undefined) {
-                            newSteps.push(stepsData.etape5);
-                        }
-                        if (stepsData.etape6 !== undefined) {
-                            newSteps.push(stepsData.etape6);
-                        }
-                        if (stepsData.etape7 !== undefined) {
-                            newSteps.push(stepsData.etape7);
-                        }
-                        if (stepsData.etape8 !== undefined) {
-                            newSteps.push(stepsData.etape8);
-                        }if (stepsData.etape9 !== undefined) {
-                            newSteps.push(stepsData.etape9);
-                        }if (stepsData.etape10 !== undefined) {
-                            newSteps.push(stepsData.etape10);
-                        }
-                        // Ajoutez les autres étapes de la même manière
+                    if (response.data) {
+                        const stepsData = response.data;
+                        Object.keys(stepsData).forEach((key) => {
+                            if (key.startsWith('etape') && stepsData[key] !== undefined) {
+                                newSteps.push(stepsData[key]);
+                            }
+                        });
                     }
                     setRecruitmentSteps(newSteps);
-                    console.log("recruitmentstep est ", newSteps);
+                    console.log("recruitmentSteps mis à jour:", newSteps);
                 })
                 .catch((error) => {
-                    console.error('Error fetching offer:', error);
+                    console.error('Erreur lors de la récupération des étapes:', error);
                 });
         };
     
-        getProcessByIdOffre(idOffer)
+        getProcessByidProcess();
         
-    }, [idOffer]);
+    }, [idProcess]);
     
-
     const theme = useTheme();
 
     const handleConfirmSteps = () => {
         console.log("Étapes confirmées !");
     };
+    useEffect(() => {
+        updateRecruitmentProcess();
+    }, [recruitmentSteps]); 
 
     const handleStepChange = (index, value) => {
         const newSteps = [...recruitmentSteps];
@@ -161,7 +168,7 @@ const RecruitmentProcessPage = () => {
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
                             <Button onClick={handleAddStep} variant="contained" color="primary" startIcon={<AddIcon />} sx={themedStyles(theme).addButton} style={{margin:"10px"}}>Ajouter une étape</Button>
-                            <Button href="/company/RecruitmentProcessCandidate" variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>Conforme Modification</Button>
+                            <Button href="/company/RecruitmentProcessCandidate" variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} component={Link} to={'/company/listeoffres'}  onClick={handleConfirmSteps}>Enregistrer</Button>
                         </Box>
                     </Paper>
                 </main>

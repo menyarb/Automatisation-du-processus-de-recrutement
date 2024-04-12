@@ -64,3 +64,14 @@ exports.deleteAllProcesses = async (req, res) => {
         res.status(500).send(err);
     }
 };
+exports.getProcessById = async (req, res) => {
+    try {
+        const processOffre = await ProcessOffre.findById(req.params.id);
+        if (!processOffre) {
+            return res.status(404).send('Processus non trouvé');
+        }
+        res.send(processOffre);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};

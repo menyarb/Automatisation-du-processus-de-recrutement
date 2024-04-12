@@ -2,10 +2,11 @@ import { Typography, Box, Paper, Grid, Button } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
-import { green, blue } from '@mui/material/colors';
+import { green } from '@mui/material/colors';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+
 const drawerWidth = 240;
 
 const themedStyles = (theme) => {
@@ -42,28 +43,29 @@ const RecruitmentProcessPage = () => {
         ['Présélection des CV2', 'Entretien téléphonique2', 'Entretien en personne2', 'Offre d\'emploi2', 'Offre d\'emploi2'],
         ['Présélection des CV3', 'Entretien téléphonique3', 'Entretien en personne3', 'Offre d\'emploi3']
     ];
+
+    const [process1, setProcess1] = useState({});
     const [recruitmentStep, setRecruitmentStep] = useState([]);
     const [offer, setOffer] = useState({});
+    const [loading, setLoading] = useState(false);
     const { idOffer } = useParams();
 
-    useEffect(() => {
-        const getOfferById = (idOffer) => {
-            axios.get(`http://localhost:3001/offres/${idOffer}`)
-                .then((response) => {
-                    console.log(response.data);
-                    setOffer(response.data);
-                })
-                .catch((error) => {
-                    console.error('Error fetching offer:', error);
-                });
-        };
+    const theme = useTheme();
 
-        if (idOffer) {
-            getOfferById(idOffer);
+    const getOfferById = async (idOffer) => {
+        try {
+            const response = await axios.get(`http://localhost:3001/offres/${idOffer}`);
+            console.log(response.data);
+            setOffer(response.data);
+        } catch (error) {
+            console.error('Error fetching offer:', error);
         }
-    }, [idOffer]);
+    };
+
     const addProcessOffre = async (idOffre) => {
         try {
+            setLoading(true);
+
             const processOffreData = {
                 idOffre: idOffre,
             };
@@ -74,17 +76,23 @@ const RecruitmentProcessPage = () => {
 
             const response = await axios.post('http://localhost:3001/processOffre', processOffreData);
             console.log('Processus ajouté avec succès:', response.data);
-            // Mettez à jour l'interface ou effectuez d'autres actions nécessaires après l'ajout du processus
+            setProcess1(response.data);
+            console.log("Process ID est:", response.data._id);
+
+            setLoading(false);
         } catch (error) {
             console.error('Erreur lors de l\'ajout du processus:', error);
-            // Gérez l'erreur ici, par exemple en affichant un message à l'utilisateur
+            setLoading(false);
         }
+    };
 
-    };    
     useEffect(() => {
-          
+        if (idOffer) {
+            getOfferById(idOffer);
+        }
+    }, [idOffer]);
 
-
+    useEffect(() => {
         if (offer.type === "Technique") {
             setRecruitmentStep(recruitmentSteps[0]);
         } else if (offer.type === "Communication") {
@@ -94,19 +102,27 @@ const RecruitmentProcessPage = () => {
         }
     }, [offer]);
 
-    const theme = useTheme();
+    useEffect(() => {
+        if (loading === false && process1._id !== undefined) {
+            console.log("Process ID mis à jour:", process1._id);
+           
+        }
+    }, [process1, loading]);
 
     const handleConfirmSteps = () => {
         console.log("Étapes confirmées !");
-        addProcessOffre(offer._id)
+        addProcessOffre(offer._id);
     };
-
+    useEffect(() => {
+        if (process1._id) {
+            console.log("Redirection en cours...");
+            window.location.href = `/company/EditProcess/${process1._id}`;
+        }
+    }, [process1._id]);
     const handleEditSteps = () => {
         console.log("Modification des étapes...");
-        addProcessOffre(offer._id)
-        window.location.href = `/company/EditProcess/${offer._id}`;
-
-
+        addProcessOffre(offer._id);
+        console.log('id process est ', process1._id);
     };
 
     return (
@@ -127,8 +143,8 @@ const RecruitmentProcessPage = () => {
                             ))}
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
-                            <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>Confirmer les Étapes</Button>
-                            <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
+                            <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />}  onClick={handleConfirmSteps}>Enregistrer</Button>
+                            <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} disabled={loading} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
                         </Box>
                     </Paper>
                 </main>

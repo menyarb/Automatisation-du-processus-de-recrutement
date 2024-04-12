@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useTheme } from "@mui/material/styles";
 // import { Button, TextField, Box, Typography, Paper, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
-import { useNavigate, Navigate } from 'react-router-dom';import { Button, TextField, Box, Typography, Paper, Select, MenuItem, FormControlLabel, Checkbox ,FormGroup} from '@mui/material';
+import { useNavigate } from 'react-router-dom';import { Button, TextField, Box, Typography, Paper, Select, MenuItem, FormControlLabel, Checkbox ,FormGroup} from '@mui/material';
 
-// Dans votre composant React
 const drawerWidth = 240;
 const themedStyles = (theme) => {
     return {
@@ -47,7 +46,6 @@ export default function Product() {
       { value: 'Bac+3', label: 'Bac+3' },
       { value: 'Bac+4', label: 'Bac+4' },
       { value: 'Bac+5', label: 'Bac+5' },
-      // Ajoutez d'autres qualifications au besoin
   ];
     const jobTypes = [
       
@@ -58,7 +56,6 @@ export default function Product() {
         { value: 'Stage', label: 'Stage' },
         { value: 'CDD', label: 'CDD' },
         { value: 'CDI', label: 'CDI' },
-        // Ajoutez d'autres types d'emploi au besoin
     ];
 
     const locations = [
@@ -66,13 +63,11 @@ export default function Product() {
         { value: 'Lyon', label: 'Lyon' },
         { value: 'Marseille', label: 'Marseille' },
         { value: 'Toulouse', label: 'Toulouse' },
-        // Ajoutez d'autres emplacements au besoin
     ];
 
     const handleChange = (e) => {
         setOffer({ ...offer, [e.target.name]: e.target.value });
     };
-//modifer style de h5
 const h5Elements = document.querySelectorAll('h5');
 h5Elements.forEach((element) => {
   element.style.fontSize = '14px';
@@ -116,12 +111,7 @@ const handleImageChange = (event) => {
                     <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>Ajouter Offres</Typography>
                         
-                        <input accept="image/*" id="image" type="file" onChange={handleImageChange} />
-{imagePreview && (
-    <Box sx={{ mt: 1 }}>
-        <img src={imagePreview} alt="uploaded" style={{ maxWidth: '500px', height: '500px' }} />
-    </Box>
-)}
+                      
                         <h5 htmlFor="title">Title de Poste :</h5>
                         <TextField margin="normal" required fullWidth id="title" label="Title" name="title" onChange={handleChange} />
                         <h5 htmlFor="mission" >Mission :</h5>
