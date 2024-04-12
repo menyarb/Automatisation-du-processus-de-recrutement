@@ -1,9 +1,11 @@
-import React from 'react';
+import React , { useState,useEffect }  from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper ,Button,Box } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
+import axios from 'axios';
 import Image from '../../assets/images/mpbs.png';
 import MenuNavbarAddCandidat from '../NavBar/NavbarCondidat';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 const themedStyles = (theme) => {
@@ -15,53 +17,39 @@ const themedStyles = (theme) => {
       }
     }
   }
-// Sample data
-const offers = [
-  {
-    image: require('../../assets/images/logoo.png').default,
-    title: 'Title 1',
-    mission: '-Fixer les objectifs et les axes prioritaires des ventes à SFAX.',
-    responsibilities: [
-      '- être attentif aux évolutions du marché et aux offres de la concurrence afin dadapter en performance les offres de lentreprise.',
-      '- Reporter au Responsable Commercial.',
-      ' - Fidéliser et entretenir des bonnes relations avec les clients.',
-      '- Développer la zone commerciale avec lacquisition de nouveaux clients.',
-      '- Construction du plan d\'action commercial.',
-      '- Saisir le bon de livraison et les bon de commande.',
-      '- Définir les besoins techniques demander par les clients.',
-      'Assurer le développement du chiffre d\'affaires sur les régions dont vous êtes responsable.'
-    ],
-    profile: 'Profile 1',
-    technicalSkills: 'Technical Skills 1',
-    interpersonalSkills: 'Interpersonal Skills 1',
-    languages: 'Languages 1'
-  },
-  {
-    image: require('../../assets/images/logoo.png').default,
-    title: 'Title 2',
-    mission: '-Fixer les objectifs et les axes prioritaires des ventes à SFAX.',
-    responsibilities: [
-      '- être attentif aux évolutions du marché et aux offres de la concurrence afin dadapter en performance les offres de lentreprise.',
-      '- Reporter au Responsable Commercial.',
-      ' - Fidéliser et entretenir des bonnes relations avec les clients.',
-      '- Développer la zone commerciale avec lacquisition de nouveaux clients.',
-      '- Construction du plan d\'action commercial.',
-      '- Saisir le bon de livraison et les bon de commande.',
-      '- Définir les besoins techniques demander par les clients.',
-      'Assurer le développement du chiffre d\'affaires sur les régions dont vous êtes responsable.'
-    ],
-    profile: 'Profile 2',
-    technicalSkills: 'Technical Skills 2',
-    interpersonalSkills: 'Interpersonal Skills 2',
-    languages: 'Languages 2'
-  },
-  // Ajoutez d'autres offres si nécessaire
-];
+
 
 
 
 export default function ListeOffres() {
-   
+  const [offers, setOffers] = useState([]);
+
+  const addOffer = () => {
+    axios.get('http://localhost:3001/offres', offers)
+        .then(response => {
+            console.log('Offre ajoutée avec succès :', response.data);
+            setOffers(response.data);
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'ajout de l\'offre :', error);
+        });
+  
+  };
+  useEffect(() => {
+    addOffer();
+  });
+  const postulerOffre = (offerId) => {
+    // Vous devez envoyer une demande POST à votre API pour postuler à l'offre avec l'ID offerId
+    // Vous pouvez utiliser Axios ou toute autre méthode de requête AJAX que vous préférez
+    axios.post(`http://localhost:3001/offres/${offerId}/postuler`, {})
+        .then(response => {
+            console.log('Candidature envoyée avec succès :', response.data);
+            // Vous pouvez effectuer des actions supplémentaires ici, comme mettre à jour l'état pour refléter que l'utilisateur a postulé à l'offre
+        })
+        .catch(error => {
+            console.error('Erreur lors de l\'envoi de la candidature :', error);
+        });
+};
     const theme = useTheme();
     return (
       <div sx={{backgroundColor: '#ced4da', }}>
@@ -95,11 +83,11 @@ export default function ListeOffres() {
                             <TableCell>{offer.interpersonalSkills}</TableCell>
                             <TableCell>{offer.languages}</TableCell>
                             <TableCell>
-                            <Button variant="contained" color="primary" href="/candidate/DetailOffres">
+                            <Button sx={{ borderRadius: '16px', margin:'10px' }} variant="contained" color="primary" component={Link} to={`/candidate/DetailOffres/${offer._id}`}>
                                     Details 
                                 </Button>
                                 <br></br>
-                                <Button variant="contained" color="primary" href="">
+                                <Button sx={{ borderRadius: '16px', margin:'10px' }} variant="contained" color="success"  onClick={() => postulerOffre(offer._id)}>
                                 Postuler
                                 </Button>
                                 

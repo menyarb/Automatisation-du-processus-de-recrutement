@@ -1,4 +1,38 @@
 const Candidature = require('../models/Candidature.model');
+const Offre = require('../models/Offre.model'); 
+
+// Fonction pour traiter la demande de candidature
+const postulerOffre = async (req, res) => {
+    try {
+        const offreId = req.params.offreId;
+        const candidatData = req.body; 
+        const offre = await Offre.findById(offreId);
+
+        if (!offre) {
+            return res.status(404).json({ message: "L'offre n'existe pas" });
+        }
+
+        // Ajout des données du candidat à l'offre
+        offre.candidats.push(candidatData);
+        await offre.save();
+
+        // Créer une nouvelle candidature
+        const candidature = new Candidature({ 
+            idCandidat: candidatData.idCandidat,
+            idOffre: offreId,
+            etatCandidature: 'En attente' // Par défaut, la candidature est en attente
+        });
+        await candidature.save();
+
+        // Réponse réussie
+        return res.status(200).json({ message: 'Candidature envoyée avec succès' });
+    } catch (error) {
+        console.error('Erreur lors du traitement de la candidature :', error);
+        return res.status(500).json({ message: 'Une erreur s\'est produite lors de l\'envoi de la candidature' });
+    }
+};
+
+
 
 // Créer une nouvelle candidature
 const createCandidature = async (req, res) => {
@@ -66,5 +100,6 @@ module.exports = {
     getAllCandidatures,
     getCandidatureById,
     updateCandidatureById,
-    deleteCandidatureById
+    deleteCandidatureById,
+    postulerOffre
 };

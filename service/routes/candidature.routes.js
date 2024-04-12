@@ -8,5 +8,6 @@ router.get('/', candidatureController.getAllCandidatures);
 router.get('/:id', candidatureController.getCandidatureById);
 router.patch('/:id', candidatureController.updateCandidatureById);
 router.delete('/:id', candidatureController.deleteCandidatureById);
+router.post('/:offreId/postuler', candidatureController.postulerOffre);
 
 module.exports = router;
