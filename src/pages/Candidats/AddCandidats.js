@@ -20,7 +20,7 @@ const AddCandidateForm = ({ handleAddCandidate }) => {
     education: '',
     langues: '',
     competencesTechniques: '',
-    competencesinterprsonnelles: '',
+    
     certificats: '',
   });
 

@@ -1,18 +1,27 @@
-import React from 'react';
+
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@mui/material';
 import { useTheme } from "@mui/material";
-
+import axios from 'axios';
+import React, { useState,useEffect } from 'react';
 const CandidatesList = () => {
   const theme = useTheme();
 
-  // Mock data des candidats
-  const candidates = [
-    { id: 1, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://example.com/cv1.pdf" },
-    { id: 2, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://example.com/cv2.pdf" },
-    { id: 3, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://example.com/cv3.pdf" },
-    { id: 4, name: "John Doe", email: "john@example.com",naissance:"12/06/1999",genre:"femme",salaire:"125",lieux:"nabeul",adresse:'tunis',tele:"2555", Date:"12/1/1999",souhaite:"5ddd",Poste:"eng", cv: "https://drive.google.com/file/d/1sMuw1RFdn6o5RwTiMFChRTIbDAupTPjR/view?usp=sharing" },
-    // Ajoutez d'autres candidats selon vos besoins
-  ];
+  const [candidats, setcandidats] = useState([]);
+
+const AddCandidate = () => {
+  axios.get('http://localhost:3001/candidats', candidats)
+      .then(response => {
+          console.log('candidat ajoutée avec succès :', response.data);
+          setcandidats(response.data);
+      })
+      .catch(error => {
+          console.error('Erreur lors de l\'ajout de l\'candidat :', error);
+      });
+
+};
+useEffect(() => {
+  AddCandidate();
+});
 
   // Fonction pour évaluer un candidat
   const evaluateCandidate = (candidateId) => {
@@ -65,7 +74,7 @@ const CandidatesList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {candidates.map((candidate) => (
+              {candidats.map((candidate) => (
                 <TableRow key={candidate.id}>
                   <TableCell>{candidate.id}</TableCell>
                   <TableCell>{candidate.name}</TableCell>
