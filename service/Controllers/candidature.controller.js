@@ -4,33 +4,34 @@ const Offre = require('../models/Offre.model');
 // Fonction pour traiter la demande de candidature
 const postulerOffre = async (req, res) => {
     try {
-        const offreId = req.params.offreId;
-        const candidatData = req.body; 
-        const offre = await Offre.findById(offreId);
+        // Récupérer l'ID du candidat à partir des informations d'authentification (par exemple, JWT)
+        const candidatId = req.user.id; // Supposons que l'ID du candidat est stocké dans le champ user de la requête
 
-        if (!offre) {
-            return res.status(404).json({ message: "L'offre n'existe pas" });
+        // Récupérer l'ID de l'offre à laquelle le candidat postule à partir du corps de la requête
+        const { idOffre } = req.body;
+
+        // Vérifier si l'ID de l'offre est fourni dans la requête
+        if (!idOffre) {
+            return res.status(400).json({ message: "Veuillez fournir l'ID de l'offre à laquelle vous postulez." });
         }
 
-        // Ajout des données du candidat à l'offre
-        offre.candidats.push(candidatData);
-        await offre.save();
-
-        // Créer une nouvelle candidature
-        const candidature = new Candidature({ 
-            idCandidat: candidatData.idCandidat,
-            idOffre: offreId,
-            etatCandidature: 'En attente' // Par défaut, la candidature est en attente
+        // Créer une nouvelle instance de Candidature avec les données fournies
+        const candidature = new Candidature({
+            idCandidat: candidatId,
+            idOffre: idOffre
         });
+
+        // Enregistrer la candidature dans la base de données
         await candidature.save();
 
-        // Réponse réussie
-        return res.status(200).json({ message: 'Candidature envoyée avec succès' });
+        // Répondre avec un message de succès
+        return res.status(200).json({ message: "Votre candidature a été soumise avec succès." });
     } catch (error) {
-        console.error('Erreur lors du traitement de la candidature :', error);
-        return res.status(500).json({ message: 'Une erreur s\'est produite lors de l\'envoi de la candidature' });
+        console.error("Une erreur s'est produite lors de la soumission de la candidature :", error);
+        return res.status(500).json({ message: "Une erreur s'est produite lors de la soumission de votre candidature." });
     }
 };
+
 
 
 

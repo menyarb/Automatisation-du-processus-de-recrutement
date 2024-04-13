@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,38 +15,46 @@ import RecInovLogo from '../../assets/images/logo.png'; // Importez votre logo i
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import LockIcon from '@mui/icons-material/Lock'; // Importez l'icône de connexion ici
-
-
+import axios from 'axios'; // Importez axios pour les requêtes HTTP
 
 // Thème par défaut MUI
 const defaultTheme = createTheme();
 
-export default function SignIn() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+function LoginCandidat() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:3001/candidats/login', { email, password });
+      const candidatName = response.data.candidatName;
+      const token = response.data.token;
+      const candidatId = response.data.candidatId;
+      sessionStorage.setItem('token', token); // Stockage du token dans le sessionStorage
+      sessionStorage.setItem('candidatId', candidatId); // Stockage de l'ID du candidat dans le sessionStorage
+      sessionStorage.setItem('candidatName', candidatName); 
+      window.location.href = '/candidate/AddCondidat'; // Mettez ici le chemin de votre tableau de bord
+    } catch (err) {
+      setError('Adresse e-mail ou mot de passe incorrect');
+    }
   };
 
   return (
-    
     <ThemeProvider theme={defaultTheme}>
-          <AppBar position="static">
-      <Toolbar>
-        {/* Remplacez l'Avatar par votre logo */}
-        <Avatar sx={{ m: 2 }} src={RecInovLogo}>
+      <AppBar position="static">
+        <Toolbar>
+          {/* Remplacez l'Avatar par votre logo */}
+          <Avatar sx={{ m: 2 }} src={RecInovLogo}>
             {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
           </Avatar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        Rec-Inov
-        </Typography>
-   
-        <LockIcon />
-      </Toolbar>
-    </AppBar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Rec-Inov
+          </Typography>
+          <LockIcon />
+        </Toolbar>
+      </AppBar>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -62,7 +70,7 @@ export default function SignIn() {
             {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
           </Avatar>
           <Typography component="h1" variant="h5">
-          LOGIN CANDIDAT
+            LOGIN CANDIDAT
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -74,6 +82,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -84,6 +94,8 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -94,7 +106,6 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-             
             >
               Sign In
             </Button>
@@ -112,20 +123,21 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-       
       </Container>
-      <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2 ,marginTop:"110px"}}>
-      <Typography variant="body1" align="center">
-        Footer Content
-      </Typography>
-      <Typography variant="body2" align="center">
-        {' © '}
-        <Link color="inherit" href="#">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-      </Typography>
-    </Box>
+      <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2, marginTop: "110px" }}>
+        <Typography variant="body1" align="center">
+          Footer Content
+        </Typography>
+        <Typography variant="body2" align="center">
+          {' © '}
+          <Link color="inherit" href="#">
+            Your Website
+          </Link>{' '}
+          {new Date().getFullYear()}
+        </Typography>
+      </Box>
     </ThemeProvider>
   );
 }
+
+export default LoginCandidat;

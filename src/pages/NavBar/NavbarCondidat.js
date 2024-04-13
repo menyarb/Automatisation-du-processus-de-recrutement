@@ -1,5 +1,5 @@
-import React from 'react';
-import { AppBar, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Grid,Button } from "@mui/material"
+import React, { useState, useEffect } from 'react';
+import { AppBar, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Grid, Button } from "@mui/material"
 import { useTheme } from "@mui/material/styles";
 
 import RecInovLogo from '../../assets/images/logo.png';
@@ -8,6 +8,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { deepOrange } from '@mui/material/colors';
 import { Home, DesktopMac, Person, FormatListBulleted, Storage } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 
 const themedStyles = (theme) => ({
@@ -48,7 +49,15 @@ const themedStyles = (theme) => ({
 
 export default function CustomZIndexAppBar() {
   const theme = useTheme();
-  const userName = "John Doe";
+  const [candidatName, setCandidatName] = useState('');
+
+  useEffect(() => {
+    // Récupérer le nom du candidat depuis le sessionStorage
+    const candidatNameFromStorage = sessionStorage.getItem('candidatName');
+    if (candidatNameFromStorage) {
+      setCandidatName(candidatNameFromStorage);
+    }
+  }, []);
 
   return (
     <div>
@@ -66,7 +75,7 @@ export default function CustomZIndexAppBar() {
             </Grid>
             <Grid item >
               <Typography component="h3" variant="h5">
-                {userName}
+                {candidatName}
               </Typography>
             </Grid>
           </Grid>
@@ -79,7 +88,7 @@ export default function CustomZIndexAppBar() {
         PaperProps={{
           sx: themedStyles(theme).drawerPaper,
           elevation: 9
-        }}s>
+        }}>
       <List sx={{ mt: "5rem" }}>
         <ListItem button>
           <ListItemIcon>
@@ -87,12 +96,12 @@ export default function CustomZIndexAppBar() {
           </ListItemIcon>
           <ListItemText primary="Tableau de bord" />
         </ListItem>
-        <ListItem button  component={Link} to="/candidate/AddCondidat" >
+        <ListItemButton component={Link} to="/candidate/AddCondidat" >
           <ListItemIcon>
             <DesktopMac />
           </ListItemIcon>
           <ListItemText primary="Profil"/>
-        </ListItem>
+        </ListItemButton>
         
         <ListItem button component={Link}  to="/candidate/ListeOffres">
           <ListItemIcon>

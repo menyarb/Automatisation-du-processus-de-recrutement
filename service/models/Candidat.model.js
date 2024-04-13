@@ -10,6 +10,10 @@ const candidatSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    password: {
+        type: String,
+        required: true
+    },
     genre: {
         type: String,
         required: true

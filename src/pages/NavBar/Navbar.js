@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppBar, Drawer, List, ListItem, ListItemIcon, ListItemText, Toolbar, Typography, Grid } from "@mui/material"
 import { useTheme } from "@mui/material/styles";
 
@@ -8,6 +8,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { deepOrange } from '@mui/material/colors';
 import { Home, FormatListBulleted, Storage } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 
 const themedStyles = (theme) => ({
@@ -48,7 +49,15 @@ const themedStyles = (theme) => ({
 
 export default function CustomZIndexAppBar() {
   const theme = useTheme();
-  const userName = "John Doe";
+  const [companyName, setCompanyName] = useState('');
+
+  useEffect(() => {
+    // Récupérer le nom de l'entreprise depuis le sessionStorage
+    const companyNameFromStorage = sessionStorage.getItem('entrepriseName');
+    if (companyNameFromStorage) {
+      setCompanyName(companyNameFromStorage);
+    }
+  }, []);
 
   return (
     <div>
@@ -66,7 +75,7 @@ export default function CustomZIndexAppBar() {
             </Grid>
             <Grid item >
               <Typography component="h3" variant="h5">
-                {userName}
+                {companyName}
               </Typography>
             </Grid>
           </Grid>
@@ -79,31 +88,28 @@ export default function CustomZIndexAppBar() {
         PaperProps={{
           sx: themedStyles(theme).drawerPaper,
           elevation: 9
-        }}s>
-      <List sx={{ mt: "5rem" }}>
-        <ListItem button>
-          <ListItemIcon>
-            <Home />
-          </ListItemIcon>
-          <ListItemText primary="Tableau de bord" />
-        </ListItem>
-        
-      
-        <ListItem button component={Link} to="/company/ListeOffres" >
-          <ListItemIcon>
-            <FormatListBulleted />
-          </ListItemIcon>
-          <ListItemText primary="Liste Offres" />
-        </ListItem>
-        <ListItem button component={Link} to="/company/AddOffres">
-          <ListItemIcon>
-            <Storage />
-          </ListItemIcon>
-          <ListItemText primary="Ajouter Offres"  />
-        </ListItem>
-      </List>
-    </Drawer>
-    
+        }}>
+        <List sx={{ mt: "5rem" }}>
+          <ListItem button>
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Tableau de bord" />
+          </ListItem>
+          <ListItem button component={Link} to="/company/ListeOffres" >
+            <ListItemIcon>
+              <FormatListBulleted />
+            </ListItemIcon>
+            <ListItemText primary="Liste Offres" />
+          </ListItem>
+          <ListItem button component={Link} to="/company/AddOffres">
+            <ListItemIcon>
+              <Storage />
+            </ListItemIcon>
+            <ListItemText primary="Ajouter Offres" />
+          </ListItem>
+        </List>
+      </Drawer>
       <Toolbar />
     </div>
   )
