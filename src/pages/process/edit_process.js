@@ -74,11 +74,17 @@ const RecruitmentProcessPage = () => {
     ]);
 
     const { idProcess } = useParams();
+    const { idOffre } = useParams();
 
     const updateRecruitmentProcess = () => {
-        axios.put(`http://localhost:3001/processoffre/${idProcess}`, {
-            etapes: recruitmentSteps
-        })
+        const processOffreData = {
+            idOffre: idOffre,
+        };
+
+        for (let i = 0; i < recruitmentSteps.length; i++) {
+            processOffreData['etape' + (i + 1)] = recruitmentSteps[i];
+        }
+        axios.put(`http://localhost:3001/processoffre/${idProcess}`, processOffreData)
         .then((response) => {
             console.log('Processus de recrutement mis à jour avec succès:', response.data);
         })
@@ -86,6 +92,9 @@ const RecruitmentProcessPage = () => {
             console.error('Erreur lors de la mise à jour du processus de recrutement:', error);
         });
     };
+    useEffect(() => {
+        console.log("recruitementsteps est ", recruitmentSteps);
+    }, [recruitmentSteps]);
     
     useEffect(() => {
         const getProcessByidProcess = () => {
@@ -94,6 +103,7 @@ const RecruitmentProcessPage = () => {
                     const newSteps = [];
                     if (response.data) {
                         const stepsData = response.data;
+
                         Object.keys(stepsData).forEach((key) => {
                             if (key.startsWith('etape') && stepsData[key] !== undefined) {
                                 newSteps.push(stepsData[key]);
@@ -101,7 +111,6 @@ const RecruitmentProcessPage = () => {
                         });
                     }
                     setRecruitmentSteps(newSteps);
-                    console.log("recruitmentSteps mis à jour:", newSteps);
                 })
                 .catch((error) => {
                     console.error('Erreur lors de la récupération des étapes:', error);
@@ -125,10 +134,12 @@ const RecruitmentProcessPage = () => {
         const newSteps = [...recruitmentSteps];
         newSteps[index] = value;
         setRecruitmentSteps(newSteps);
+        console.log("recruitementsteps est ",recruitmentSteps);
     };
-
+    
     const handleAddStep = () => {
         setRecruitmentSteps([...recruitmentSteps, '']);
+        console.log("recruitementsteps");
     };
 
     const handleRemoveStep = (index) => {

@@ -59,3 +59,11 @@ exports.deleteOffreById = async (req, res) => {
         res.status(500).send(err);
     }
 };
+exports.deleteAllOffres = async (req, res) => {
+    try {
+        const result = await Offre.deleteMany();
+        res.send({ deletedCount: result.deletedCount });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};

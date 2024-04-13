@@ -8,5 +8,6 @@ router.get('/', offreController.getAllOffres);
 router.get('/:id', offreController.getOffreById);
 router.patch('/:id', offreController.updateOffreById);
 router.delete('/:id', offreController.deleteOffreById);
+router.delete('/', offreController.deleteAllOffres); 
 
 module.exports = router;

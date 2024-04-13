@@ -43,7 +43,7 @@ const RecruitmentProcessPage = () => {
         ['Présélection des CV2', 'Entretien téléphonique2', 'Entretien en personne2', 'Offre d\'emploi2', 'Offre d\'emploi2'],
         ['Présélection des CV3', 'Entretien téléphonique3', 'Entretien en personne3', 'Offre d\'emploi3']
     ];
-
+    const [redirect, setRedirect] = useState(false);
     const [process1, setProcess1] = useState({});
     const [recruitmentStep, setRecruitmentStep] = useState([]);
     const [offer, setOffer] = useState({});
@@ -112,14 +112,17 @@ const RecruitmentProcessPage = () => {
     const handleConfirmSteps = () => {
         console.log("Étapes confirmées !");
         addProcessOffre(offer._id);
+        window.location.href = `/company/listeoffres`;
+
     };
     useEffect(() => {
-        if (process1._id) {
+        if (redirect && process1._id) {
             console.log("Redirection en cours...");
-            window.location.href = `/company/EditProcess/${process1._id}`;
+            window.location.href = `/company/EditProcess/${process1._id}/${process1.idOffre}`;
         }
-    }, [process1._id]);
+    }, [process1._id,redirect]);
     const handleEditSteps = () => {
+        setRedirect(true);
         console.log("Modification des étapes...");
         addProcessOffre(offer._id);
         console.log('id process est ', process1._id);

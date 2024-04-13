@@ -163,7 +163,7 @@ function App() {
             }
           />
             <Route
-            path="/company/EditProcess/:idProcess"
+            path="/company/EditProcess/:idProcess/:idOffre"
             element={
               <RouteHandler>
                 <EditProcess />
