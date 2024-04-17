@@ -1,6 +1,6 @@
 const Entreprise = require('../models/Entreprise.model');
 const jwt = require('jsonwebtoken'); // Importez jsonwebtoken pour la création de jetons d'authentification
-
+const bcrypt = require('bcrypt');
 //login
 const loginEntreprise = async (req, res) => {
     const { email, password } = req.body;
@@ -31,7 +31,37 @@ const loginEntreprise = async (req, res) => {
         res.status(500).json({ message: 'Une erreur s\'est produite lors de la connexion' });
     }
 };
+// Inscription d'un nouveau Entreprise
+const registerEntreprise = async (req, res) => {
+    const { email, password, name } = req.body;
 
+    try {
+        // Vérifiez si un Entreprise avec cet email existe déjà
+        const existingEntreprise = await Entreprise.findOne({ email });
+
+        if (existingEntreprise) {
+            return res.status(400).json({ message: 'Un utilisateur avec cette adresse e-mail existe déjà' });
+        }
+
+        // Hachez le mot de passe avant de le sauvegarder dans la base de données
+        const hashedPassword = await bcrypt.hash(password, 10); // Utilisez bcrypt pour hacher le mot de passe
+
+        // Créez un nouveau Entreprise
+        const newEntreprise = new Entreprise({
+            email,
+            password: hashedPassword, // Enregistrez le mot de passe haché
+            name
+        });
+
+        // Sauvegardez le Entreprise dans la base de données
+        await newEntreprise.save();
+
+        res.status(201).json(newEntreprise);
+    } catch (error) {
+        console.error('Erreur lors de l\'inscription :', error);
+        res.status(500).json({ message: 'Une erreur s\'est produite lors de l\'inscription' });
+    }
+};
 // Create
 const createEntreprise = async (req, res) => {
     try {
@@ -98,5 +128,6 @@ module.exports = {
     getEntrepriseById,
     updateEntrepriseById,
     deleteEntrepriseById,
-    loginEntreprise
+    loginEntreprise,
+    registerEntreprise
 };

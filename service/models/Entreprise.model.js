@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const EntrepriseShema = new mongoose.Schema({
-    nom: {
+    name: {
         type: String,
         required: true
     },

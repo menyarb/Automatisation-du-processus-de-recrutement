@@ -16,55 +16,55 @@ const candidatSchema = new mongoose.Schema({
     },
     genre: {
         type: String,
-        required: true
+     //   required: true
     },
     salaire: {
         type: Number,
-        required: true
+     //   required: true
     },
     lieux: {
         type: String,
-        required: true
+        //required: true
     },
     adresse: {
         type: String,
-        required: true
+       // required: true
     },
     tele: {
         type: String,
-        required: true
+      //  required: true
     },
     date: {
         type: Date,
-        default: Date.now
+       // default: Date.now
     },
     souhaite: {
         type: String,
-        required: true
+       // required: true
     },
     poste: {
         type: String,
-        required: true
+       // required: true
     },
     experience: {
         type: String,
-        required: true
+       // required: true
     },
     education: {
         type: String,
-        required: true
+       // required: true
     },
     langues: {
         type: String,
-        required: true
+      //  required: true
     },
     competencesTechniques: {
         type: String,
-        required: true
+      //  required: true
     },
     certificats: {
         type: String,
-        required: true
+      //  required: true
     }
 });
 

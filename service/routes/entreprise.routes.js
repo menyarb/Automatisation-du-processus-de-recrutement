@@ -9,5 +9,6 @@ router.get('/:id', entrepriseController.getEntrepriseById);
 router.patch('/:id', entrepriseController.updateEntrepriseById);
 router.delete('/:id', entrepriseController.deleteEntrepriseById);
 router.post('/login',entrepriseController.loginEntreprise);
+router.post('/register',entrepriseController.registerEntreprise);
 
 module.exports = router;

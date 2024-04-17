@@ -1,10 +1,7 @@
 const Candidat = require('../models/Candidat.model');
 //login
-// controllers/loginController.js
-
-
 const jwt = require('jsonwebtoken'); // Importez jsonwebtoken pour la création de jetons d'authentification
-
+const bcrypt = require('bcrypt');
 const loginCandidat = async (req, res) => {
     const { email, password } = req.body;
 
@@ -32,6 +29,37 @@ const loginCandidat = async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de la connexion :', error);
         res.status(500).json({ message: 'Une erreur s\'est produite lors de la connexion' });
+    }
+};
+// Inscription d'un nouveau candidat
+const registerCandidat = async (req, res) => {
+    const { email, password, name } = req.body;
+
+    try {
+        // Vérifiez si un candidat avec cet email existe déjà
+        const existingCandidat = await Candidat.findOne({ email });
+
+        if (existingCandidat) {
+            return res.status(400).json({ message: 'Un utilisateur avec cette adresse e-mail existe déjà' });
+        }
+
+        // Hachez le mot de passe avant de le sauvegarder dans la base de données
+        const hashedPassword = await bcrypt.hash(password, 10); // Utilisez bcrypt pour hacher le mot de passe
+
+        // Créez un nouveau candidat
+        const newCandidat = new Candidat({
+            email,
+            password: hashedPassword, // Enregistrez le mot de passe haché
+            name
+        });
+
+        // Sauvegardez le candidat dans la base de données
+        await newCandidat.save();
+
+        res.status(201).json(newCandidat);
+    } catch (error) {
+        console.error('Erreur lors de l\'inscription :', error);
+        res.status(500).json({ message: 'Une erreur s\'est produite lors de l\'inscription' });
     }
 };
 
@@ -102,5 +130,6 @@ module.exports = {
     getCandidatById,
     updateCandidatById,
     deleteCandidatById,
-    loginCandidat
+    loginCandidat,
+    registerCandidat
 };

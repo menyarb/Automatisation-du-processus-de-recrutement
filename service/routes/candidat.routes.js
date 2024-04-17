@@ -9,4 +9,5 @@ router.get('/:id', candidatController.getCandidatById);
 router.patch('/:id', candidatController.updateCandidatById);
 router.delete('/:id', candidatController.deleteCandidatById);
 router.post('/login',candidatController.loginCandidat);
+router.post('/register',candidatController.registerCandidat);
 module.exports = router;
