@@ -62,7 +62,7 @@ const OfferDetailsPage = () => {
                 Voir la liste des offres
               </Button>
               <br></br>
-              <Button variant="contained" color="error" href="/company/RecruitmentProcess" sx={{ marginTop: '10px' }}>
+              <Button variant="contained" color="error" href="/company/RecruitmentProcessCandidate" sx={{ marginTop: '10px' }}>
               Affichez les étapes du processus de recrutement
               </Button>
             </Box>

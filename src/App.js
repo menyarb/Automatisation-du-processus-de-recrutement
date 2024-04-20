@@ -208,6 +208,7 @@ function RouteHandler({ children, excludeNavbar }) {
 
   return (
     <>
+    
     {/* Affichage du bon Navbar en fonction de la page */}
     {!(isLoginPage || isSignupPage) && !excludeNavbar && (
       // Vérifiez si c'est la page AddCandidat pour afficher le bon navbar

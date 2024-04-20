@@ -19,12 +19,12 @@ function NavBar() {
   return (
     <AppBar position="static">
       <Toolbar>
-             {/* Remplacez l'Avatar par votre logo */}
-             <Avatar sx={{ m: 1 }} src={RecInovLogo}>
-            {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
-          </Avatar>
+        {/* Remplacez l'Avatar par votre logo */}
+        <Avatar sx={{ m: 1 }} src={RecInovLogo}>
+          {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
+        </Avatar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        Rec-Inov 
+          Rec-Inov
         </Typography>
         <Button color="inherit" href="/signin/company">Sign In</Button>
       </Toolbar>
@@ -34,7 +34,7 @@ function NavBar() {
 
 function Footer() {
   return (
-    <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2 ,marginTop:'30px'}} >
+    <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2, marginTop: '30px' }} >
       <Typography variant="body1" align="center">
         Footer Content
       </Typography>
@@ -79,7 +79,7 @@ function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-          INSCRIPTION ENTREPRISE
+            INSCRIPTION ENTREPRISE
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -94,7 +94,7 @@ function SignUp() {
                   autoFocus
                 />
               </Grid>
-              
+
               <Grid item xs={12}>
                 <TextField
                   required

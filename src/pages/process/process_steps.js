@@ -43,6 +43,7 @@ const RecruitmentProcessPage = () => {
         ['Présélection des CV2', 'Entretien téléphonique2', 'Entretien en personne2', 'Offre d\'emploi2', 'Offre d\'emploi2'],
         ['Présélection des CV3', 'Entretien téléphonique3', 'Entretien en personne3', 'Offre d\'emploi3']
     ];
+  
     const [redirect, setRedirect] = useState(false);
     const [process1, setProcess1] = useState({});
     const [recruitmentStep, setRecruitmentStep] = useState([]);
@@ -125,6 +126,7 @@ const RecruitmentProcessPage = () => {
         setRedirect(true);
         console.log("Modification des étapes...");
         addProcessOffre(offer._id);
+        
         console.log('id process est ', process1._id);
     };
 
