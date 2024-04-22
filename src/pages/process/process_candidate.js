@@ -4,6 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import { green } from '@mui/material/colors';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -72,9 +73,19 @@ const RecruitmentProcessPage = () => {
                             ))}
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
-                            <Button href="/candidate/DetailOffres" variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>Lancer le Processus</Button>
-                            <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
-                        </Box>
+    <Link to="/company/Standard_Process" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>
+            Lancer le Processus
+        </Button>
+    </Link>
+    <Link to="/company/EditProcessCandidate" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>
+        Modifier les Étapes
+        </Button>
+    </Link>
+    
+</Box>
+
                     </Paper>
                 </main>
             </Box>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Typography, Box, Paper, Grid, Button } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -148,8 +149,20 @@ const RecruitmentProcessPage = () => {
                             ))}
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
-                            <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />}  onClick={handleConfirmSteps}>Enregistrer</Button>
-                            <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} disabled={loading} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
+                            
+
+                        
+                        <Link to={"/company/ListeOffres"} style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />}>
+            Enregistrer
+        </Button>
+    </Link>
+
+    <Link to="/autre-page" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="info" startIcon={<EditIcon />} disabled={loading} sx={{ marginLeft: '10px' }}>
+            Modifier les Étapes
+        </Button>
+    </Link>
                         </Box>
                     </Paper>
                 </main>
