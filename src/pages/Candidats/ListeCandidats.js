@@ -3,13 +3,15 @@ import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, Ta
 import { useTheme } from "@mui/material";
 import axios from 'axios';
 import React, { useState,useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 const CandidatesList = () => {
   const theme = useTheme();
 
   const [candidats, setcandidats] = useState([]);
-
-const AddCandidate = () => {
-  axios.get('http://localhost:3001/candidats', candidats)
+  const { idOffer } = useParams();
+  const getCandidate = () => {
+  axios.get(`http://localhost:3001/candidatures/byoffreId/:${idOffer}`, candidats)
       .then(response => {
           console.log('candidat ajoutée avec succès :', response.data);
           setcandidats(response.data);
@@ -20,7 +22,7 @@ const AddCandidate = () => {
 
 };
 useEffect(() => {
-  AddCandidate();
+  getCandidate();
 });
 
   // Fonction pour évaluer un candidat

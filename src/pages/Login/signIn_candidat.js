@@ -32,10 +32,10 @@ function LoginCandidat() {
       const candidatName = response.data.candidatName;
       const token = response.data.token;
       const candidatId = response.data.candidatId;
-      sessionStorage.setItem('token', token); // Stockage du token dans le sessionStorage
-      sessionStorage.setItem('candidatId', candidatId); // Stockage de l'ID du candidat dans le sessionStorage
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('candidatId', candidatId); 
       sessionStorage.setItem('candidatName', candidatName); 
-      window.location.href = '/candidate/AddCondidat'; // Mettez ici le chemin de votre tableau de bord
+      window.location.href = '/candidate/AddCondidat';
     } catch (err) {
       setError('Adresse e-mail ou mot de passe incorrect');
     }

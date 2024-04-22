@@ -39,9 +39,7 @@ export default function ListeOffres() {
     getOffer();
   });
   const postulerOffre = (offerId) => {
-    // Vous devez envoyer une demande POST à votre API pour postuler à l'offre avec l'ID offerId
-    // Vous pouvez utiliser Axios ou toute autre méthode de requête AJAX que vous préférez
-    axios.post(`http://localhost:3001/candidatures/`, {
+      axios.post(`http://localhost:3001/candidatures/`, {
       idCandidat: sessionStorage.getItem("candidatId"),
         idOffre:offerId,
         etatCandidature: 'EN_ATTENTE'

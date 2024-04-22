@@ -1,5 +1,5 @@
 const Candidature = require('../models/Candidature.model');
-const Offre = require('../models/Offre.model'); 
+const Candidats = require('../models/Candidat.model');
 
 // Fonction pour traiter la demande de candidature
 const postulerOffre = async (req, res) => {
@@ -95,6 +95,39 @@ const deleteCandidatureById = async (req, res) => {
         res.status(500).send(err);
     }
 };
+const getCandidatureByIdOffre = async (req, res) => {
+    try {
+        const { idOffre } = req.params; 
+
+        const candidatures = await Candidature.find({ idOffre });
+
+        if (!candidatures || candidatures.length === 0) {
+            return res.status(404).send('Aucune candidature trouvée pour cette offre');
+        }
+        res.send(candidatures);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+const getCandidatsByIdOffre = async (req, res) => {
+    try {
+        const candidatures = await Candidature.find({ idOffre: req.params.idOffre });
+
+        if (!candidatures || candidatures.length === 0) {
+            return res.status(404).send('Aucune candidature trouvée pour cette offre');
+        }
+
+        const candidatIds = candidatures.map(candidature => candidature.idCandidat);
+        const candidats = candidatIds.map(id => Candidats.findById(id));
+
+        res.send(candidatIds);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
+
+
+
 
 module.exports = {
     createCandidature,
@@ -102,5 +135,7 @@ module.exports = {
     getCandidatureById,
     updateCandidatureById,
     deleteCandidatureById,
-    postulerOffre
+    postulerOffre,
+    getCandidatureByIdOffre,
+    getCandidatsByIdOffre
 };

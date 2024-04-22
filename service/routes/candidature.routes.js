@@ -6,6 +6,8 @@ const candidatureController = require('../Controllers/candidature.controller');
 router.post('/', candidatureController.createCandidature);
 router.get('/', candidatureController.getAllCandidatures);
 router.get('/:id', candidatureController.getCandidatureById);
+router.get('/byoffreId/:id', candidatureController.getCandidatureByIdOffre);
+router.get('/getcandidatsbyoffreId/:idOffre', candidatureController.getCandidatsByIdOffre);
 router.patch('/:id', candidatureController.updateCandidatureById);
 router.delete('/:id', candidatureController.deleteCandidatureById);
 router.post('/postuler', candidatureController.postulerOffre);

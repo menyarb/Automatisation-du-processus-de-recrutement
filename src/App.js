@@ -139,7 +139,7 @@ function App() {
             }
           />
           <Route
-            path="/company/ListeCandidat"
+            path="/company/ListeCandidat/:idOffer"
             element={
               <RouteHandler>
                 <ListeCondidat />

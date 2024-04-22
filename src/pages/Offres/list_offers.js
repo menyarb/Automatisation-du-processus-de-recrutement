@@ -73,7 +73,7 @@ useEffect(() => {
                                     Details 
                                 </Button>
                                 <br></br>
-                                <Button style={{ marginTop:'10px'}} variant="contained" color="primary" > 
+                                <Button style={{ marginTop:'10px'}} variant="contained" color="primary" component={Link} to={`/company/ListeCandidat/${offer._id}`}> 
                                      liste des candidats
                                 </Button>
                             </TableCell>
