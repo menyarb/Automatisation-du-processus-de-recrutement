@@ -24,7 +24,7 @@ const themedStyles = (theme) => {
 export default function ListeOffres() {
   const [offers, setOffers] = useState([]);
 
-  const addOffer = () => {
+  const getOffer = () => {
     axios.get('http://localhost:3001/offres', offers)
         .then(response => {
             console.log('Offre ajoutée avec succès :', response.data);
@@ -36,15 +36,18 @@ export default function ListeOffres() {
   
   };
   useEffect(() => {
-    addOffer();
+    getOffer();
   });
   const postulerOffre = (offerId) => {
     // Vous devez envoyer une demande POST à votre API pour postuler à l'offre avec l'ID offerId
     // Vous pouvez utiliser Axios ou toute autre méthode de requête AJAX que vous préférez
-    axios.post(`http://localhost:3001/offres/${offerId}/postuler`, {})
+    axios.post(`http://localhost:3001/candidatures/`, {
+      idCandidat: sessionStorage.getItem("candidatId"),
+        idOffre:offerId,
+        etatCandidature: 'EN_ATTENTE'
+    })
         .then(response => {
             console.log('Candidature envoyée avec succès :', response.data);
-            // Vous pouvez effectuer des actions supplémentaires ici, comme mettre à jour l'état pour refléter que l'utilisateur a postulé à l'offre
         })
         .catch(error => {
             console.error('Erreur lors de l\'envoi de la candidature :', error);
