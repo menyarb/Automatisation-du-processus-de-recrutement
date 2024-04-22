@@ -23,8 +23,8 @@ export default function ListeOffres() {
   const [offers, setOffers] = useState([]);
 
 const addOffer = () => {
-  axios.get('http://localhost:3001/offres')
-      .then(response => {
+  axios.get(`http://localhost:3001/offres/byentrepriseid/${sessionStorage.getItem("entrepriseId")}`)
+  .then(response => {
           console.log('Offre ajoutée avec succès :', response.data);
           setOffers(response.data);
       })

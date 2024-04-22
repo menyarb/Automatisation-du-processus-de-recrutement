@@ -90,7 +90,7 @@ h5Elements.forEach((element) => {
 };
 
 
-const [imagePreview, setImagePreview] = useState('');
+const [setImagePreview] = useState('');
 
 const handleImageChange = (event) => {
     const file = event.target.files[0];

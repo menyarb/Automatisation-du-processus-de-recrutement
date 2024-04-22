@@ -67,3 +67,11 @@ exports.deleteAllOffres = async (req, res) => {
         res.status(500).send(err);
     }
 };
+exports.getOffresByEntrepriseId = async (req, res) => {
+    try {
+        const offres = await Offre.find({ entrepriseId: req.params.entrepriseId });
+        res.send(offres);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
