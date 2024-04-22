@@ -52,7 +52,6 @@ export default function CustomZIndexAppBar() {
   const [companyName, setCompanyName] = useState('');
 
   useEffect(() => {
-    // Récupérer le nom de l'entreprise depuis le sessionStorage
     const companyNameFromStorage = sessionStorage.getItem('entrepriseName');
     if (companyNameFromStorage) {
       setCompanyName(companyNameFromStorage);

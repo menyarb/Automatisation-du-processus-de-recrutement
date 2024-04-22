@@ -35,7 +35,7 @@ function LoginEntreprise() {
       sessionStorage.setItem('token', token); // Stockage du token dans le sessionStorage
       sessionStorage.setItem('entrepriseId', entrepriseId); // Stockage de l'ID de l'entreprise dans le sessionStorage
       sessionStorage.setItem('entrepriseName', entrepriseName); 
-      window.location.href = '/company/ListeOffres'; // Mettez ici le chemin de votre tableau de bord
+      window.location.href = '/company/ListeOffres'; 
     } catch (err) {
       setError('Adresse e-mail ou mot de passe incorrect');
     }

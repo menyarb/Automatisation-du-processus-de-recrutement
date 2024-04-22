@@ -30,14 +30,14 @@ export default function Product() {
         Emplacement: 'Paris',
         Qualification: 'Qualification',
         Contrat: '',
-        type: ''
+        type: '',
+        entrepriseId: sessionStorage.getItem('entrepriseId'),
 
     });
 
     const contracts = [
       { value: 'CIVP', label: 'CIVP' },
       { value: 'CDD', label: 'CDD' },
-      // Ajoutez d'autres types de contrat au besoin
   ];
     const qualifications = [
       { value: 'Qualification', label: 'Qualification' },
@@ -111,7 +111,21 @@ const handleImageChange = (event) => {
                     <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>Ajouter Offres</Typography>
                         
-                      
+                        <Select
+    value={offer.type}
+    onChange={(e) => setOffer({ ...offer, type: e.target.value })}
+    fullWidth
+    displayEmpty
+    inputProps={{ 'aria-label': 'Without label' }}
+    sx={{ mt: 3, mb: 2 }}
+>
+    <MenuItem value="" disabled>
+        Sélectionnez le type d'emploi
+    </MenuItem>
+    <MenuItem value="Technique">Technique</MenuItem>
+    <MenuItem value="Communication">Communication</MenuItem>
+    <MenuItem value="Emplacement">Emplacement</MenuItem>
+</Select>
                         <h5 htmlFor="title">Title de Poste :</h5>
                         <TextField margin="normal" required fullWidth id="title" label="Title" name="title" onChange={handleChange} />
                         <h5 htmlFor="mission" >Mission :</h5>
@@ -168,21 +182,7 @@ const handleImageChange = (event) => {
                                 <MenuItem key={index} value={qualification.value}>{qualification.label}</MenuItem>
                             ))}
                         </Select>
-                        <Select
-    value={offer.type}
-    onChange={(e) => setOffer({ ...offer, type: e.target.value })}
-    fullWidth
-    displayEmpty
-    inputProps={{ 'aria-label': 'Without label' }}
-    sx={{ mt: 3, mb: 2 }}
->
-    <MenuItem value="" disabled>
-        Sélectionnez le type d'emploi
-    </MenuItem>
-    <MenuItem value="Technique">Technique</MenuItem>
-    <MenuItem value="Communication">Communication</MenuItem>
-    <MenuItem value="Emplacement">Emplacement</MenuItem>
-</Select>
+                        
                       
 
                         <Button fullWidth variant="contained" onClick={addOffer} sx={{ mt: 3, mb: 2 }}>

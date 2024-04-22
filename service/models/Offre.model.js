@@ -43,6 +43,9 @@ const offreSchema = new mongoose.Schema({
     type: {
         type: String,
     },
+    entrepriseId:{
+        type: String,
+    }
    
 });
 
