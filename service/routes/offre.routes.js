@@ -9,6 +9,6 @@ router.get('/:id', offreController.getOffreById);
 router.patch('/:id', offreController.updateOffreById);
 router.delete('/:id', offreController.deleteOffreById);
 router.delete('/', offreController.deleteAllOffres); 
-router.get('/byentrepriseid/:id', offreController.getOffresByEntrepriseId);
+router.get('/byentrepriseid/:entrepriseId', offreController.getOffresByEntrepriseId);
 
 module.exports = router;

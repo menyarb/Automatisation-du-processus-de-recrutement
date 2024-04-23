@@ -48,7 +48,6 @@ export default function Offres() {
           technicalSkills: offer.technicalSkills,
           interpersonalSkills: offer.interpersonalSkills,
           languages: offer.languages,
-          // Ajoutez d'autres champs d'offre selon vos besoins
         };
         axios.patch(`http://localhost:3001/offres/${offer._id}`, dataToSend).then((response) => {
           console.log(response.data)

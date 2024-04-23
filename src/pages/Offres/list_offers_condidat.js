@@ -23,7 +23,6 @@ const themedStyles = (theme) => {
 
 export default function ListeOffres() {
   const [offers, setOffers] = useState([]);
-
   const getOffer = () => {
     axios.get('http://localhost:3001/offres', offers)
         .then(response => {
@@ -36,8 +35,11 @@ export default function ListeOffres() {
   
   };
   useEffect(() => {
-    getOffer();
-  });
+ 
+  
+  getOffer();
+}, []);
+
   const postulerOffre = (offerId) => {
       axios.post(`http://localhost:3001/candidatures/`, {
       idCandidat: sessionStorage.getItem("candidatId"),
