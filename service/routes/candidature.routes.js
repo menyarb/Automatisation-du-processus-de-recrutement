@@ -11,4 +11,6 @@ router.get('/getcandidatsbyoffreId/:idOffre', candidatureController.getCandidats
 router.patch('/:id', candidatureController.updateCandidatureById);
 router.delete('/:id', candidatureController.deleteCandidatureById);
 router.post('/postuler', candidatureController.postulerOffre);
+
+
 module.exports = router;

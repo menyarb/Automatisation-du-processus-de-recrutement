@@ -1,30 +1,21 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+
+import React, { useState } from 'react';
+import {
+  Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link,
+  Grid, Box, Typography, Container, AppBar, Toolbar, Snackbar, Alert
+} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import RecInovLogo from '../../assets/images/logo.png'; // Importez votre logo ici
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import RecInovLogo from '../../assets/images/logo.png';
+
+
 function NavBar() {
   return (
     <AppBar position="static">
       <Toolbar>
-             {/* Remplacez l'Avatar par votre logo */}
-             <Avatar sx={{ m: 1 }} src={RecInovLogo}>
-            {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
-          </Avatar>
+        <Avatar sx={{ m: 1 }} src={RecInovLogo} />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        Rec-Inov 
+          Rec-Inov
         </Typography>
         <Button color="inherit" href="/signin/candidate">Sign In</Button>
       </Toolbar>
@@ -34,7 +25,7 @@ function NavBar() {
 
 function Footer() {
   return (
-    <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2 ,marginTop:'30px'}}>
+    <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2, marginTop: '30px' }}>
       <Typography variant="body1" align="center">
         Footer Content
       </Typography>
@@ -50,17 +41,47 @@ function Footer() {
 }
 
 function SignUp() {
-  const handleSubmit = (event) => {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('info'); // Options: error, warning, info, success
+  
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
+  
+    const postData = {
+      name: `${data.get('firstName')} ${data.get('lastName')}`,
       email: data.get('email'),
       password: data.get('password'),
-      allowExtraEmails: data.get('allowExtraEmails'),
-    });
+    };
+  
+    try {
+      const response = await fetch('http://localhost:3001/candidats/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(postData),
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        setSnackbarMessage('Registration successful! You can now sign in.');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+        // Optionally redirect to sign-in page or dashboard here
+      } else {
+        throw new Error(result.message || 'Failed to sign up.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Failed to sign up. Please try again.');
+      setSnackbarMessage(error.message || 'Failed to sign up. Please try again.');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+    }
   };
+  
 
   return (
     <ThemeProvider theme={createTheme()}>
@@ -79,7 +100,7 @@ function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-          INSCRIPTION CANDIDAT
+            INSCRIPTION CANDIDAT
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -132,6 +153,11 @@ function SignUp() {
                 />
               </Grid>
             </Grid>
+            {error && (
+              <Typography color="error" variant="body2" sx={{ mt: 2 }}>
+                {error}
+              </Typography>
+            )}
             <Button
               type="submit"
               fullWidth
@@ -150,6 +176,12 @@ function SignUp() {
           </Box>
         </Box>
       </Container>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
+  <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+    {snackbarMessage}
+  </Alert>
+</Snackbar>
+
       <Footer />
     </ThemeProvider>
   );

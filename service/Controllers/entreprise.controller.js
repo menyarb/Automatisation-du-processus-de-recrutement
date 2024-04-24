@@ -22,7 +22,7 @@ const loginEntreprise = async (req, res) => {
 
         const token = jwt.sign({ id: entreprise._id }, 'votre_clé_secrète', { expiresIn: '1h' });
 
-        res.status(200).json({ token, entrepriseId: entreprise._id , entrepriseName: entreprise.nom }); 
+        res.status(200).json({ token, entrepriseId: entreprise._id , entrepriseName: entreprise.name }); 
     } catch (error) {
         console.error('Erreur lors de la connexion :', error);
         res.status(500).json({ message: 'Une erreur s\'est produite lors de la connexion' });

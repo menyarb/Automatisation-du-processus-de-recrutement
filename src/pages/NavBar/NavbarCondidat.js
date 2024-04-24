@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Grid, Button } from "@mui/material"
 import { useTheme } from "@mui/material/styles";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 import RecInovLogo from '../../assets/images/logo.png';
 import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { deepOrange } from '@mui/material/colors';
 import { Home, DesktopMac, Person, FormatListBulleted, Storage } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
+import axios from 'axios'; // Make sure to import axios if using it for HTTP requests
 
+const handleLogout = async () => {
+   // Clear JWT from localStorage or sessionStorage
+   sessionStorage.removeItem('token');
+   sessionStorage.removeItem('candidatId');
+   sessionStorage.removeItem('candidatName');
+   window.location.href = '/signin/candidate';
+};
 const drawerWidth = 240;
 
 const themedStyles = (theme) => ({
@@ -68,16 +76,21 @@ export default function CustomZIndexAppBar() {
             Rec_inov 
           </Typography>
           <Grid container alignItems="center">
-            <Grid item>
-              <Avatar sx={themedStyles(theme).avatar}>
-                <AccountCircleIcon />
-              </Avatar>
-            </Grid>
-            <Grid item >
-              <Typography component="h3" variant="h5">
-                {candidatName}
-              </Typography>
-            </Grid>
+           
+            <Grid container justifyContent="flex-end" alignItems="center">
+          <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
+              <AccountCircleIcon />
+            </Avatar>
+            <Typography component="div" variant="h6" sx={{ marginRight: 2 }}>
+              {candidatName}
+            </Typography>
+            
+            <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />} sx={{ marginLeft: 1 }}>
+              Logout
+            </Button>
+          </Grid>
+            
+
           </Grid>
         </Toolbar>
       </AppBar>

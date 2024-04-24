@@ -31,6 +31,26 @@ const loginCandidat = async (req, res) => {
         res.status(500).json({ message: 'Une erreur s\'est produite lors de la connexion' });
     }
 };
+//logout
+const logoutCandidat = (req, res) => {
+    console.log('Logging out token:', req.token);
+  
+  // You can destroy a session here if session-based
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send({ message: "Failed to logout due to session error" });
+    }
+
+    // Clear cookie if set during login
+    res.clearCookie('sessionId'); // Adjust this to your cookie key
+
+    res.status(200).json({ message: "Successfully logged out" });
+  });
+
+  // If not using sessions, just return success
+  // res.status(200).send({ message: "Successfully logged out" });
+};
+
 // Inscription d'un nouveau candidat
 const registerCandidat = async (req, res) => {
     const { email, password, name } = req.body;
@@ -131,5 +151,6 @@ module.exports = {
     updateCandidatById,
     deleteCandidatById,
     loginCandidat,
-    registerCandidat
+    registerCandidat,
+    logoutCandidat
 };

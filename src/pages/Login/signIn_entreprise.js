@@ -1,54 +1,55 @@
 import React, { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {
+  Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link,
+  Grid, Box, Typography, Container, AppBar, Toolbar, Snackbar, Alert
+} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import RecInovLogo from '../../assets/images/logo.png'; // Importez votre logo ici
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import LockIcon from '@mui/icons-material/Lock'; // Importez l'icône de connexion ici
-import axios from 'axios'; // Importez axios pour les requêtes HTTP
+import LockIcon from '@mui/icons-material/Lock';
+import axios from 'axios';
+import RecInovLogo from '../../assets/images/logo.png'; // Ensure your logo is imported correctly
 
-// Thème par défaut MUI
+// Default MUI theme
 const defaultTheme = createTheme();
 
 function LoginEntreprise() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('info');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/entreprises/login', { email, password });
-      const entrepriseName = response.data.entrepriseName;
-      const token = response.data.token;
-      const entrepriseId = response.data.entrepriseId;
-      sessionStorage.setItem('token', token); // Stockage du token dans le sessionStorage
-      sessionStorage.setItem('entrepriseId', entrepriseId); // Stockage de l'ID de l'entreprise dans le sessionStorage
-      sessionStorage.setItem('entrepriseName', entrepriseName); 
+      const { entrepriseName, token, entrepriseId } = response.data;
+      sessionStorage.setItem('token', token);
+      sessionStorage.setItem('entrepriseId', entrepriseId);
+      sessionStorage.setItem('entrepriseName', entrepriseName);
       window.location.href = '/company/ListeOffres'; 
+      // Set success message
+      setSnackbarMessage('Login successful!');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
     } catch (err) {
       setError('Adresse e-mail ou mot de passe incorrect');
+      setSnackbarMessage('Login failed: Email or password is incorrect.');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
       <AppBar position="static">
         <Toolbar>
-          {/* Remplacez l'Avatar par votre logo */}
-          <Avatar sx={{ m: 2 }} src={RecInovLogo}>
-            {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
-          </Avatar>
+          <Avatar sx={{ m: 2 }} src={RecInovLogo} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Rec-Inov
           </Typography>
@@ -56,19 +57,8 @@ function LoginEntreprise() {
         </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          {/* Remplacez l'Avatar par votre logo */}
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} src={RecInovLogo}>
-            {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
-          </Avatar>
+        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} src={RecInovLogo} />
           <Typography component="h1" variant="h5">
             LOGIN ENTREPRISE
           </Typography>
@@ -101,12 +91,7 @@ function LoginEntreprise() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign In
             </Button>
             <Grid container>
@@ -116,7 +101,7 @@ function LoginEntreprise() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link variant="body2" href="/signup/entreprise">
+                <Link href="/signup/company" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -124,16 +109,17 @@ function LoginEntreprise() {
           </Box>
         </Box>
       </Container>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2, marginTop: '110px' }}>
         <Typography variant="body1" align="center">
           Footer Content
         </Typography>
         <Typography variant="body2" align="center">
-          {' © '}
-          <Link color="inherit" href="#">
-            Your Website
-          </Link>{' '}
-          {new Date().getFullYear()}
+          © {new Date().getFullYear()} Your Website
         </Typography>
       </Box>
     </ThemeProvider>

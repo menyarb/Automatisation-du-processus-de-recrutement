@@ -1,29 +1,21 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {
+  Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox,
+  Link, Grid, Box, Typography, Container, Snackbar, Alert, AppBar, Toolbar
+} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import RecInovLogo from '../../assets/images/logo.png'; // Importez votre logo ici
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { useNavigate } from 'react-router-dom';
+
+import RecInovLogo from '../../assets/images/logo.png'; // Import your logo here
+
 function NavBar() {
   return (
     <AppBar position="static">
       <Toolbar>
-        {/* Remplacez l'Avatar par votre logo */}
-        <Avatar sx={{ m: 1 }} src={RecInovLogo}>
-          {/* Vous pouvez également utiliser votre propre composant d'Avatar */}
-        </Avatar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Avatar sx={{ m: 1 }} src={RecInovLogo} />
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
           Rec-Inov
         </Typography>
         <Button color="inherit" href="/signin/company">Sign In</Button>
@@ -34,32 +26,63 @@ function NavBar() {
 
 function Footer() {
   return (
-    <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2, marginTop: '30px' }} >
+    <Box sx={{ bgcolor: 'primary.main', color: 'white', p: 2, marginTop: '30px' }}>
       <Typography variant="body1" align="center">
         Footer Content
       </Typography>
       <Typography variant="body2" align="center">
-        {' © '}
-        <Link color="inherit" href="#">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
+        © {new Date().getFullYear()} Your Website
       </Typography>
     </Box>
   );
 }
 
 function SignUp() {
-  const handleSubmit = (event) => {
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] = React.useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = React.useState('info');
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
-      allowExtraEmails: data.get('allowExtraEmails'),
-    });
+    const formData = new FormData(event.currentTarget);
+    const requestData = {
+      name: formData.get('entrepriseName'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+      phoneNumber: formData.get('phoneNumber'),
+      site: formData.get('site'),
+      address: formData.get('adress'),
+      logo: formData.get('logo'),
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/entreprises/register', {
+        method: 'POST',
+        body: JSON.stringify(requestData),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Registration successful:', data);
+        setSnackbarMessage('Registration successful! Redirecting to login...');
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
+        setTimeout(() => navigate('/signin/company'), 3000);
+      } else {
+        console.error('Registration failed:', response.statusText);
+        setSnackbarMessage('Registration failed. Please try again.');
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+      setSnackbarMessage('An error occurred. Please try again.');
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
+    }
   };
 
   return (
@@ -67,14 +90,7 @@ function SignUp() {
       <CssBaseline />
       <NavBar />
       <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
@@ -83,18 +99,33 @@ function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} >
-                <TextField
-                  autoComplete="given-name"
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                />
+            <Grid item xs={12}>
+                <Grid item xs={12} container spacing={1} alignItems="center">
+                  <Grid item>
+                    <Typography variant="h6" gutterBottom>
+                      Ajouter un logo
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Avatar variant="rounded">
+                      <AddPhotoAlternateIcon />
+                    </Avatar>
+                  </Grid>
+                </Grid>
+                <input accept="../../assets/images" id="logo" type="file" name="logo"  />
               </Grid>
 
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="entrepriseName"
+                  label="Nom de l'entreprise"
+                  name="entrepriseName"
+                  autoComplete="entrepriseName"
+                />
+              </Grid>
+              
               <Grid item xs={12}>
                 <TextField
                   required
@@ -117,18 +148,31 @@ function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Numéro de téléphone"
+                  name="phoneNumber"
+                  autoComplete="phoneNumber"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField required fullWidth id="site" label="Site web" name="site" autoComplete="site" />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField required fullWidth id="adress" label="Adresse" name="adress" autoComplete="adress" />
+              </Grid>
+
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
+           
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
@@ -141,6 +185,11 @@ function SignUp() {
           </Box>
         </Box>
       </Container>
+      <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={() => setOpenSnackbar(false)}>
+        <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Footer />
     </ThemeProvider>
   );

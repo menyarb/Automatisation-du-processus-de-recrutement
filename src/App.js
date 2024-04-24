@@ -26,12 +26,13 @@ import EditProcessCandidate from './pages/process/edit_process_candidate';
 
 import StandardProcess from './pages/process/Standard_recruitment_process/standard';
 import CalendarProcess from './pages/process/Standard_recruitment_process/calendar';
-
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         {/* Affichage de MenuNavbar sauf sur les pages de connexion et de création de compte */}
+       
+
         <Routes>
           <Route
             path="/home"
@@ -115,12 +116,11 @@ function App() {
             }
           />
               <Route
-            path="/candidate/AddCondidat"
-            element={
-              <RouteHandler>
+               path="/candidate/AddCondidat"
+              element={ <RouteHandler>
                 <AddCondidat />
-              </RouteHandler>
-            }
+              </RouteHandler>}
+          
           />
            <Route
             path="/candidate/ListeOffres"
@@ -195,6 +195,8 @@ function App() {
             }
           />          
         </Routes>
+       
+
       </div>
     </BrowserRouter>
   );
