@@ -33,7 +33,13 @@ const OfferDetailsPage = () => {
   const [offer, setOffer] = useState({});
   useEffect(() => {
     getOfferById(idOffer, setOffer); 
-  }, [idOffer]);  return (
+  }, [idOffer]);  
+ 
+  useEffect(() => {if(!sessionStorage.getItem('candidatId')){
+    window.location.href="/signin/candidate";}})
+
+  
+  return (
     
     <div sx={{backgroundColor: '#ced4da', }}>
     <Box p="20px">

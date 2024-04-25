@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Typography, Button, TextField, Box, Grid, Paper } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import axios from 'axios';
@@ -75,6 +75,9 @@ const AddCandidateForm = ({ handleAddCandidate }) => {
     }
   }
   const theme = useTheme();
+  useEffect(() => {if(!sessionStorage.getItem('candidatId')){
+    window.location.href="/signin/candidate";}})
+
   return (
 
     <div sx={{ backgroundColor: '#ced4da', }}>

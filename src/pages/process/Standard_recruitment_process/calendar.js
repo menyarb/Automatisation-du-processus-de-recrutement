@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { Box, Typography, Paper, TextField, Button} from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,9 @@ export default function CalendarLink() {
       
       ]);
 
-
+      useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
     const theme = useTheme();
     return (
         <div sx={{ backgroundColor: '#ced4da', }}>
