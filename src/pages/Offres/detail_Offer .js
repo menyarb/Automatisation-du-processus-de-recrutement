@@ -1,4 +1,5 @@
-import React, { useState,useEffect } from 'react';import { Typography, Paper, Button, Box, Grid,useTheme } from '@mui/material';
+import React, { useState,useEffect }  from 'react';
+import { Typography, Paper, Button, Box, Grid,useTheme } from '@mui/material';
 import Image from '../../assets/images/logoo.png';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -26,14 +27,18 @@ const themedStyles = (theme) => {
         console.error('Error fetching offer:', error);
       });
   }
- 
+
 const OfferDetailsPage = () => {
   const theme = useTheme();
   const { idOffer } = useParams();
   const [offer, setOffer] = useState({});
   useEffect(() => {
     getOfferById(idOffer, setOffer); 
-  }, [idOffer]);  return (
+  }, [idOffer]); 
+  useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+    window.location.href="/signin/company";}})
+
+   return (
     
     <div sx={{backgroundColor: '#ced4da', }}>
     <Box p="20px">

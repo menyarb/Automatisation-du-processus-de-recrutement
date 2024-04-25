@@ -18,6 +18,7 @@ const themedStyles = (theme) => {
             height: 'calc(100vh - 200px)',
             overflowY: 'auto',
             marginLeft: drawerWidth + 15,
+            marginTop: 95,
         },
         paper: {
             borderRadius: '16px',
@@ -147,6 +148,10 @@ const RecruitmentProcessPage = () => {
         newSteps.splice(index, 1);
         setRecruitmentSteps(newSteps);
     };
+    
+    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
 
     return (
         <div sx={{ backgroundColor: '#f0f2f5' }}>

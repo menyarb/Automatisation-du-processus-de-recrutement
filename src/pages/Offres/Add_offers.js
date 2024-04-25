@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect }  from 'react';
 import { useTheme } from "@mui/material/styles";
 // import { Button, TextField, Box, Typography, Paper, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
@@ -11,6 +11,7 @@ const themedStyles = (theme) => {
             padding: 3,
             height: 'calc(100vh - 200px )', overflowY: 'auto',
             marginLeft: drawerWidth + 15,
+            marginTop: 95,
         }
     }
 }
@@ -102,6 +103,8 @@ const handleImageChange = (event) => {
         reader.readAsDataURL(file);
     }
 };
+useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+    window.location.href="/signin/company";}})
 
     const theme = useTheme();
     return (

@@ -14,6 +14,7 @@ const themedStyles = (theme) => {
         padding: 3,
            height: 'calc(100vh - 200px)', overflowY: 'auto',
           marginLeft: drawerWidth + 15,
+        //  marginTop:96,
       }
     }
   }
@@ -54,6 +55,10 @@ export default function ListeOffres() {
         });
 };
     const theme = useTheme();
+
+    useEffect(() => {if(!sessionStorage.getItem('candidatId')){
+      window.location.href="/signin/candidate";}})
+  
     return (
       <div sx={{backgroundColor: '#ced4da', }}>
            <MenuNavbarAddCandidat />

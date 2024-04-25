@@ -12,6 +12,7 @@ const themedStyles = (theme) => {
         padding: 3,
            height: 'calc(100vh - 200px)', overflowY: 'auto',
           marginLeft: drawerWidth + 15,
+          marginTop: 95,
       }
     }
   }
@@ -33,8 +34,12 @@ const addOffer = () => {
       });
       
 
-};
+};  
+useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+  window.location.href="/signin/company";}})
+  
 useEffect(() => {
+  
   addOffer();
 }, [])
     const theme = useTheme();

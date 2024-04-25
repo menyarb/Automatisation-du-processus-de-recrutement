@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link,
   Grid, Box, Typography, Container, AppBar, Toolbar, Snackbar, Alert
@@ -82,6 +82,9 @@ function SignUp() {
     }
   };
   
+  useEffect(() => {if(sessionStorage.getItem('candidatId'&&'entrepriseId' )){
+    window.location.href="/candidate/AddCondidat";}})
+
 
   return (
     <ThemeProvider theme={createTheme()}>
