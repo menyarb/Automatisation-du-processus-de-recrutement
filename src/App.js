@@ -84,7 +84,7 @@ function App() {
           />
           
           <Route
-            path="/company/AddOffres/:candidatId"
+            path="/company/AddOffres/"
             element={
               <RouteHandler>
                 <AddOffres />
@@ -105,7 +105,7 @@ function App() {
               <RouteHandler>
                 <EditOffres />
               </RouteHandler>
-            }
+            }s
           />
           <Route
             path="/company/DetailOffres/:idOffer"

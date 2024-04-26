@@ -14,6 +14,7 @@ const themedStyles = (theme) => {
         minWidth: 375,
         height: 'calc(100vh - 200px)', overflowY: 'auto',
        marginLeft: drawerWidth + 15,
+       marginTop: 95,
       }
     }
   }

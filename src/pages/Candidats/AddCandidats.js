@@ -27,6 +27,8 @@ function CandidateProfile() {
     const navigate = useNavigate();
     const theme = useTheme();
     const drawerWidth = 240;
+    const candidatId = sessionStorage.getItem('candidatId');
+
     const themedStyles = (theme) => {
       return {
   
@@ -38,7 +40,6 @@ function CandidateProfile() {
       }
     }
     useEffect(() => {
-        const candidatId = sessionStorage.getItem('candidatId');
         if (!candidatId) {
             navigate("/signin/candidate");
             return;
@@ -47,6 +48,7 @@ function CandidateProfile() {
         async function fetchProfile() {
             try {
                 const response = await axios.get(`http://localhost:3001/candidats/${candidatId}`);
+                console.log("profile",response.data);
                 setProfile(response.data);
             } catch (err) {
                 setError('Failed to fetch profile');
@@ -65,8 +67,8 @@ function CandidateProfile() {
     
       const dataToSend = {
         _id: candidate._id, 
-        name: '',
-        email:'',
+        name: candidate.name,
+        email: candidate.email,
         genre: candidate.genre,
         salaire: candidate.salaire,
         lieux: candidate.lieux,
@@ -81,7 +83,6 @@ function CandidateProfile() {
         competencesTechniques: candidate.competencesTechniques,
         certificats: candidate.certificats,
       };
-        const candidatId = sessionStorage.getItem('candidatId');
         try {
             const response = await axios.patch(`http://localhost:3001/candidats/${candidate._id}`, dataToSend);
             console.log('Profile updated:', response.data);
@@ -115,7 +116,9 @@ function CandidateProfile() {
                  
                     <Grid container spacing={2}>
                             <Grid item xs={12} md={6}>
-
+                            <TextField margin="normal" required fullWidth id="name" label="Nom" name="name" value={candidate.name} onChange={handleChange} />
+                <TextField margin="normal" required fullWidth id="email" label="Email" name="email" value={candidate.email} onChange={handleChange} />
+               
                                 <TextField margin="normal" fullWidth id="genre" label="Genre" name="genre" value={candidate.genre} onChange={handleChange} />
                                 <TextField margin="normal" fullWidth id="salaire" label="Salaire" name="salaire" value={candidate.salaire} onChange={handleChange} />
                                 <TextField margin="normal" fullWidth id="lieux" label="Lieux" name="lieux" value={candidate.lieux} onChange={handleChange} />

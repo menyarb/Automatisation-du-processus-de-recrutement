@@ -11,7 +11,7 @@ const CandidatesList = () => {
   const [candidats, setcandidats] = useState([]);
   const { idOffer } = useParams();
   const getCandidate = () => {
-  axios.get(`http://localhost:3001/candidatures/byoffreId/:${idOffer}`, candidats)
+  axios.get(`http://localhost:3001/candidatures/byoffreId/${idOffer}`, candidats)
       .then(response => {
           console.log('candidat ajoutée avec succès :', response.data);
           setcandidats(response.data);
@@ -98,9 +98,9 @@ useEffect(() => {
                     <Button variant="contained" color="primary" onClick={() => evaluateCandidate(candidate.id)}>
                       Évaluer
                     </Button>
-                    <Button sx={{marginTop:"12px"}} variant="outlined" color="success" onClick={() => downloadCV(candidate.cv)} >
+                    {/* <Button sx={{marginTop:"12px"}} variant="outlined" color="success" onClick={() => downloadCV(candidate.cv)} >
                       Télécharger CV
-                    </Button>
+                    </Button> */}
                   </TableCell>
                 </TableRow>
               ))}
