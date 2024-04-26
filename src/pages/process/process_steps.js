@@ -163,11 +163,7 @@ const RecruitmentProcessPage = () => {
         </Button>
     </Link>
 
-    <Link to="/autre-page" style={{ textDecoration: 'none' }}>
-        <Button variant="contained" color="info" startIcon={<EditIcon />} disabled={loading} sx={{ marginLeft: '10px' }}>
-            Modifier les Étapes
-        </Button>
-    </Link>
+    <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} disabled={loading} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
                         </Box>
                     </Paper>
                 </main>

@@ -2,61 +2,42 @@
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Paper } from '@mui/material';
 import { useTheme } from "@mui/material";
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-const drawerWidth = 240;
-const themedStyles = (theme) => {
-  return {
-
-
-    content: {
-      padding: 3,
-      minWidth: 1100,
-      height: 'calc(100vh - 200px )', overflowY: 'auto',
-      marginLeft: drawerWidth + 15,
-      marginTop: 96,
-    }
-  }
-}
-
-export default function CandidatesList() {
-    const theme = useTheme();
+const CandidatesList = () => {
+  const theme = useTheme();
 
   const [candidats, setcandidats] = useState([]);
   const { idOffer } = useParams();
+  useEffect(() => {
+
   const getCandidate = () => {
-  axios.get(`http://localhost:3001/candidatures/byoffreId/:${idOffer}`, candidats)
+  axios.get(`http://localhost:3001/candidatures/byoffreId/${idOffer}`)
       .then(response => {
           console.log('candidat ajoutée avec succès :', response.data);
           setcandidats(response.data);
-        })
-        .catch(error => {
-          console.error('Erreur lors de l\'ajout de l\'candidat :', error);
-        });
+      })
+      .catch(error => {
+          console.error('erreur', error);
+      });
 
-    };
-    useEffect(() => {
-      if (!sessionStorage.getItem('entrepriseId')) {
-        window.location.href = "/signin/company";
-      }
-    })
+};
+  console.log("offreid est",idOffer)
+  getCandidate();
+},[]);
 
-    useEffect(() => {
-      getCandidate();
-    }, [])
+  // Fonction pour évaluer un candidat
+  const evaluateCandidate = (candidateId) => {
+    // Mettez en œuvre la logique d'évaluation du candidat ici
+    console.log(`Évaluation du candidat avec l'ID ${candidateId}`);
+  };
 
-    // Fonction pour évaluer un candidat
-    const evaluateCandidate = (candidateId) => {
-      // Mettez en œuvre la logique d'évaluation du candidat ici
-      console.log(`Évaluation du candidat avec l'ID ${candidateId}`);
-    };
-
-    // Fonction pour télécharger le CV du candidat
-    const downloadCV = (cvUrl) => {
-      // Redirigez l'utilisateur vers l'URL du CV à télécharger
-      window.open(cvUrl, '_blank');
-    };
+  // Fonction pour télécharger le CV du candidat
+  const downloadCV = (cvUrl) => {
+    // Redirigez l'utilisateur vers l'URL du CV à télécharger
+    window.open(cvUrl, '_blank');
+  };
 
   const drawerWidth = 240;
   const themedStyles = (theme) => {
@@ -119,9 +100,9 @@ export default function CandidatesList() {
                     <Button variant="contained" color="primary" onClick={() => evaluateCandidate(candidate.id)}>
                       Évaluer
                     </Button>
-                    <Button sx={{marginTop:"12px"}} variant="outlined" color="success" onClick={() => downloadCV(candidate.cv)} >
+                    {/* <Button sx={{marginTop:"12px"}} variant="outlined" color="success" onClick={() => downloadCV(candidate.cv)} >
                       Télécharger CV
-                    </Button>
+                    </Button> */}
                   </TableCell>
                 </TableRow>
               ))}
@@ -135,3 +116,4 @@ export default function CandidatesList() {
   );
 };
 
+export default CandidatesList;
