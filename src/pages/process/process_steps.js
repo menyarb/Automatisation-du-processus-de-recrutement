@@ -151,12 +151,12 @@ const RecruitmentProcessPage = () => {
                         <Box sx={themedStyles(theme).buttonContainer}>
                             
 
-                        
+{                       
                         <Link to={"/company/ListeOffres"} style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />}>
             Enregistrer
         </Button>
-    </Link>
+    </Link> }
 
     <Link to="/autre-page" style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="info" startIcon={<EditIcon />} disabled={loading} sx={{ marginLeft: '10px' }}>

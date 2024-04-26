@@ -36,13 +36,13 @@ export default function CustomZIndexAppBar() {
             Rec_inov
           </Typography>
           <Grid container justifyContent="flex-end" alignItems="center">
-          <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
+            <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
               <AccountCircleIcon />
             </Avatar>
             <Typography component="div" variant="h6" sx={{ marginRight: 2 }}>
               {companyName}
             </Typography>
-            
+
             <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />} sx={{ marginLeft: 1 }}>
               Logout
             </Button>
@@ -51,7 +51,7 @@ export default function CustomZIndexAppBar() {
       </AppBar>
       <Drawer
         variant="permanent"
-        sx={{ width: 240, '& .MuiBackdrop-root': { display: 'none' }, '& .MuiDrawer-paper': { width: 240, backgroundColor: 'linear-gradient(180deg, #FDFEFF, #fff)' }}}
+        sx={{ width: 200, '& .MuiBackdrop-root': { display: 'none' }, '& .MuiDrawer-paper': { width: 240, backgroundColor: 'linear-gradient(180deg, #FDFEFF, #fff)' } }}
       >
         <div sx={{ ...theme.mixins.toolbar }} />
         <List sx={{ mt: "5rem" }}>
