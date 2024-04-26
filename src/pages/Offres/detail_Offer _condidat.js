@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from 'react';import { Typography, Paper, Button, Box, Grid,useTheme } from '@mui/material';
+import React, { useState,useEffect } from 'react';import { Typography, Paper, Button, Box, Grid,useTheme,Snackbar } from '@mui/material';
 import Image from '../../assets/images/logoo.png';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import MuiAlert from '@mui/material/Alert';
 
 const drawerWidth = 240;
 const themedStyles = (theme) => {
@@ -18,6 +18,7 @@ const themedStyles = (theme) => {
       }
     }
   }
+
   const getOfferById = (offreId, setOffer) => {
     axios.get(`http://localhost:3001/offres/${offreId}`)
       .then((response) => {
@@ -38,7 +39,26 @@ const OfferDetailsPage = () => {
  
   useEffect(() => {if(!sessionStorage.getItem('candidatId')){
     window.location.href="/signin/candidate";}})
+    const [showAlert, setShowAlert] = useState(false); // État pour gérer l'affichage de l'alerte
 
+    const postulerOffre = (offerId) => {
+      axios.post(`http://localhost:3001/candidatures/`, {
+        idCandidat: sessionStorage.getItem("candidatId"),
+        idOffre: offerId,
+        etatCandidature: 'EN_ATTENTE'
+      })
+        .then(response => {
+          console.log('Candidature envoyée avec succès :', response.data);
+          setShowAlert(true); // Afficher l'alerte lorsque la candidature est réussie
+        })
+        .catch(error => {
+          console.error('Erreur lors de l\'envoi de la candidature :', error);
+        });
+    };
+  
+    const handleAlertClose = () => {
+      setShowAlert(false); // Fermer l'alerte lorsqu'elle est cliquée ou après un délai
+    };
   
   return (
     
@@ -67,13 +87,18 @@ const OfferDetailsPage = () => {
                la liste des offres
               </Button>
              
-              <Button sx={{ margin:'10px' }}variant="contained" color="success" href="">
-                                Postuler
-                                </Button>
+              <Button sx={{ borderRadius: '16px', margin: '10px' }} variant="contained" color="success" onClick={() => postulerOffre(offer._id)}>
+                          Postuler
+                        </Button>
             </Box>
           </Grid>
         </Grid>
       </Paper>
+      <Snackbar open={showAlert} autoHideDuration={6000} onClose={handleAlertClose}>
+            <MuiAlert onClose={handleAlertClose} severity="success" sx={{ width: '100%' }}>
+              La postulation a été envoyée avec succès.
+            </MuiAlert>
+          </Snackbar>
       </main>
       </Box>
     </div>
