@@ -156,7 +156,7 @@ const RecruitmentProcessPage = () => {
                         <Box sx={themedStyles(theme).buttonContainer}>
                             
 
-{                       
+                        
                         <Link to={"/company/ListeOffres"} style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />}>
             Enregistrer

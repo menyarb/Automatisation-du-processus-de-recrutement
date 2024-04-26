@@ -12,4 +12,6 @@ router.delete('/:id', candidatController.deleteCandidatById);
 router.post('/login',candidatController.loginCandidat);
 router.post('/register',candidatController.registerCandidat);
 router.post('/logout', candidatController.logoutCandidat);
+router.delete('/', candidatController.deleteAllCandidats);
+
 module.exports = router;

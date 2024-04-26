@@ -135,6 +135,14 @@ const getCandidatsByIdOffre = async (req, res) => {
         res.status(500).send(err);
     }
 };
+const deleteAllCandidatures = async (req, res) => {
+    try {
+        const result = await Candidature.deleteMany();
+        res.send({ deletedCount: result.deletedCount });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
 
 
 
@@ -147,5 +155,6 @@ module.exports = {
     deleteCandidatureById,
     postulerOffre,
     getCandidatureByIdOffre,
-    getCandidatsByIdOffre
+    getCandidatsByIdOffre,
+    deleteAllCandidatures
 };

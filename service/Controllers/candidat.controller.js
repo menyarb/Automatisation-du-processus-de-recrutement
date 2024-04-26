@@ -143,8 +143,17 @@ const deleteCandidatById = async (req, res) => {
         res.status(500).send(err);
     }
 };
+const deleteAllCandidats = async (req, res) => {
+    try {
+        const result = await Candidat.deleteMany();
+        res.send({ deletedCount: result.deletedCount });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
 
 module.exports = {
+    deleteAllCandidats,
     createCandidat,
     getAllCandidats,
     getCandidatById,
