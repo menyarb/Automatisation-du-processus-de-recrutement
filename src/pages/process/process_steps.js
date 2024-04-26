@@ -17,6 +17,7 @@ const themedStyles = (theme) => {
             height: 'calc(100vh - 200px)',
             overflowY: 'auto',
             marginLeft: drawerWidth + 15,
+            marginTop: 95,
         },
         paper: {
             borderRadius: '16px',
@@ -110,7 +111,9 @@ const RecruitmentProcessPage = () => {
            
         }
     }, [process1, loading]);
-
+    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
     const handleConfirmSteps = () => {
         console.log("Étapes confirmées !");
         addProcessOffre(offer._id);
@@ -130,7 +133,9 @@ const RecruitmentProcessPage = () => {
         
         console.log('id process est ', process1._id);
     };
-
+    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
     return (
         <div sx={{ backgroundColor: '#f0f2f5' }}>
             <Box p="20px">

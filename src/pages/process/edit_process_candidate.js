@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Box, Paper, Grid, Button, TextField, IconButton } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -15,6 +15,7 @@ const themedStyles = (theme) => {
             height: 'calc(100vh - 200px)',
             overflowY: 'auto',
             marginLeft: drawerWidth + 15,
+            marginTop: 95,
         },
         paper: {
             borderRadius: '16px',
@@ -83,6 +84,9 @@ const RecruitmentProcessPage = () => {
         setRecruitmentSteps(newSteps);
     };
 
+    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
     return (
         <div sx={{ backgroundColor: '#f0f2f5' }}>
             <Box p="20px">

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox,
   Link, Grid, Box, Typography, Container, Snackbar, Alert, AppBar, Toolbar
@@ -84,6 +84,8 @@ function SignUp() {
       setOpenSnackbar(true);
     }
   };
+  useEffect(() => {if(sessionStorage.getItem('candidatId'&&'entrepriseId' )){
+    window.location.href="/company/ListeOffres";}})
 
   return (
     <ThemeProvider theme={createTheme()}>

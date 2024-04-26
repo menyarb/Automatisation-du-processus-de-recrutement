@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link,
   Grid, Box, Typography, Container, AppBar, Toolbar, Snackbar, Alert
@@ -43,6 +43,8 @@ function LoginEntreprise() {
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
   };
+  useEffect(() => {if(sessionStorage.getItem( 'entrepriseId' )){
+    window.location.href="/company/ListeOffres";}})
 
   return (
     <ThemeProvider theme={defaultTheme}>

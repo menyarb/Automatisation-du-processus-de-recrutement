@@ -61,6 +61,9 @@ export default function Offres() {
       const handleImageChange = (e) => {
         setOffer({ ...offer, image: e.target.files[0] });
       };
+      useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
     const theme = useTheme();
   return (
     <div sx={{backgroundColor: '#ced4da', }}>

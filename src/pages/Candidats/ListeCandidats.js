@@ -47,9 +47,13 @@ useEffect(() => {
           minWidth: 1100,
           height: 'calc(100vh - 200px )', overflowY: 'auto',
          marginLeft: drawerWidth + 15,
+         marginTop:96,
         }
       }
     }
+    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+      window.location.href="/signin/company";}})
+  
   return (
     <div sx={{backgroundColor: '#ced4da', }}>
     <Box p="20px">

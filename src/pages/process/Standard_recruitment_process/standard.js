@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from "@mui/material/styles";
 
 import { Link } from 'react-router-dom';
@@ -30,14 +30,16 @@ const RecruitmentProcessPage = () => {
     const handlePreviousStep = () => {
         setCurrentStep((prevStep) => prevStep > 0 ? prevStep - 1 : prevStep);
     };
-
+    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
     const theme = useTheme();
 
     return (
         <div style={{ backgroundColor: '#ced4da', padding: '20px' }}>
             <Box>
                 <main style={{ padding: '10px' }}>
-                    <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto' }}>
+                    <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto',marginTop:'96' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>
                             Etape {currentStep + 1}: {recruitmentSteps[currentStep][0]}
                         </Typography>

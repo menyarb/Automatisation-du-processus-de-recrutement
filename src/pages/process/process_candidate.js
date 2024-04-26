@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Box, Paper, Grid, Button } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import EditIcon from '@mui/icons-material/Edit';
 import { green } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
 
@@ -50,9 +49,9 @@ const RecruitmentProcessPage = () => {
         console.log("Étapes confirmées !");
     };
 
-    const handleEditSteps = () => {
-        console.log("Modification des étapes...");
-    };
+    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
+        window.location.href="/signin/company";}})
+    
 
     return (
         <div sx={{ backgroundColor: '#f0f2f5' }}>
