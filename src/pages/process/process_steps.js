@@ -156,13 +156,18 @@ const RecruitmentProcessPage = () => {
                         <Box sx={themedStyles(theme).buttonContainer}>
                             
 
-                        
+{                       
                         <Link to={"/company/ListeOffres"} style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />}>
             Enregistrer
         </Button>
     </Link>
-    <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} disabled={loading} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
+
+    <Link to="/autre-page" style={{ textDecoration: 'none' }}>
+        <Button variant="contained" color="info" startIcon={<EditIcon />} disabled={loading} sx={{ marginLeft: '10px' }}>
+            Modifier les Étapes
+        </Button>
+    </Link>
                         </Box>
                     </Paper>
                 </main>

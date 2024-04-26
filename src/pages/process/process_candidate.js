@@ -72,11 +72,11 @@ const RecruitmentProcessPage = () => {
                             ))}
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
-    <Link to="/company/Standard_Process" style={{ textDecoration: 'none' }}>
+    {/* <Link to="/company/Standard_Process" style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>
             Lancer le Processus
         </Button>
-    </Link>
+    </Link> */}
     <Link to="/company/EditProcessCandidate" style={{ textDecoration: 'none' }}>
         <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />} onClick={handleConfirmSteps}>
         Modifier les Étapes

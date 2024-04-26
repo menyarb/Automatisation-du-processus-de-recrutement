@@ -130,6 +130,7 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
     <MenuItem value="Emplacement">Emplacement</MenuItem>
 </Select>
                         <h5 htmlFor="title">Title de Poste :</h5>
+                      
                         <TextField margin="normal" required fullWidth id="title" label="Title" name="title" onChange={handleChange} />
                         <h5 htmlFor="mission" >Mission :</h5>
                         <TextField margin="normal" required fullWidth id="mission" label="Mission" name="mission" onChange={handleChange} />

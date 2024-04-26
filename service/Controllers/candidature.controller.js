@@ -1,5 +1,6 @@
 const Candidature = require('../models/Candidature.model');
 const Candidats = require('../models/Candidat.model');
+const Candidat = require('../models/Candidat.model');
 
 // Fonction pour traiter la demande de candidature
 const postulerOffre = async (req, res) => {
@@ -97,9 +98,10 @@ const deleteCandidatureById = async (req, res) => {
 };
 const getCandidatureByIdOffre = async (req, res) => {
     try {
-        const { idOffre } = req.params; 
+        const { idOffre } = req.params;
 
         const candidatures = await Candidature.find({ idOffre });
+        console.log(candidatures)
 
         if (!candidatures || candidatures.length === 0) {
             return res.status(404).send('Aucune candidature trouvée pour cette offre');
@@ -111,16 +113,24 @@ const getCandidatureByIdOffre = async (req, res) => {
 };
 const getCandidatsByIdOffre = async (req, res) => {
     try {
-        const candidatures = await Candidature.find({ idOffre: req.params.idOffre });
+        const { idOffre } = req.params;
+
+        const candidatures = await Candidature.find({ idOffre });
 
         if (!candidatures || candidatures.length === 0) {
             return res.status(404).send('Aucune candidature trouvée pour cette offre');
         }
 
         const candidatIds = candidatures.map(candidature => candidature.idCandidat);
-        const candidats = candidatIds.map(id => Candidats.findById(id));
+        let candidats = [];
 
-        res.send(candidatIds);
+        for (const id of candidatIds) {
+            const candidat = await Candidat.findById(id);
+            candidats.push(candidat);
+        }
+
+
+        res.send(candidats);
     } catch (err) {
         res.status(500).send(err);
     }
