@@ -127,9 +127,8 @@ const getCandidatsByIdOffre = async (req, res) => {
         }
 
         const candidatIds = candidatures.map(candidature => candidature.idCandidat);
-        const candidats = candidatIds.map(id => Candidats.findById(id));
-
-        res.send(candidatIds);
+        const candidats = await Candidats.find({ _id: { $in: candidatIds } });
+        res.send(candidats);
     } catch (err) {
         res.status(500).send(err);
     }

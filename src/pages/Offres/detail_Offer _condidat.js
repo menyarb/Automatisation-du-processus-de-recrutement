@@ -55,9 +55,7 @@ const OfferDetailsPage = () => {
           console.error('Erreur lors de l\'envoi de la candidature :', error);
           if (error.response && error.response.status === 400) {
             setShowErrorAlert(true); // Afficher l'alerte si vous avez déjà postulé sur cette offre
-          } else {
-            // Gérer d'autres types d'erreurs ici si nécessaire
-          }
+          } 
         });
     };
     const [showErrorAlert, setShowErrorAlert] = useState(false); // État pour gérer l'affichage de l'alerte d'erreur

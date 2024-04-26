@@ -12,8 +12,8 @@ const CandidatesList = () => {
   const { idOffer } = useParams();
   useEffect(() => {
 
-  const getCandidate = () => {
-  axios.get(`http://localhost:3001/candidatures/byoffreId/${idOffer}`)
+  const getCandidatures = () => {
+  axios.get(`http://localhost:3001/candidatures/getcandidatsbyoffreId/${idOffer}`)
       .then(response => {
           console.log('candidat ajoutée avec succès :', response.data);
           setcandidats(response.data);
@@ -24,7 +24,7 @@ const CandidatesList = () => {
 
 };
   console.log("offreid est",idOffer)
-  getCandidate();
+  getCandidatures();
 },[]);
 
   // Fonction pour évaluer un candidat
@@ -33,7 +33,6 @@ const CandidatesList = () => {
     console.log(`Évaluation du candidat avec l'ID ${candidateId}`);
   };
 
-  // Fonction pour télécharger le CV du candidat
   const downloadCV = (cvUrl) => {
     // Redirigez l'utilisateur vers l'URL du CV à télécharger
     window.open(cvUrl, '_blank');
