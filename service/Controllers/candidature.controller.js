@@ -39,6 +39,14 @@ const postulerOffre = async (req, res) => {
 const createCandidature = async (req, res) => {
     try {
         const { idCandidat, idOffre, etatCandidature } = req.body;
+
+        // Vérifier si une candidature avec les mêmes idCandidat et idOffre existe déjà
+        const existingCandidature = await Candidature.findOne({ idCandidat, idOffre });
+
+        if (existingCandidature) {
+            return res.status(400).send({ error: 'Cette candidature existe déjà.' });
+        }
+
         const candidature = new Candidature({ idCandidat, idOffre, etatCandidature });
         await candidature.save();
         res.status(201).send(candidature);
@@ -46,6 +54,7 @@ const createCandidature = async (req, res) => {
         res.status(400).send(err);
     }
 };
+
 
 // Obtenir toutes les candidatures
 const getAllCandidatures = async (req, res) => {

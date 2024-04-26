@@ -53,9 +53,19 @@ const OfferDetailsPage = () => {
         })
         .catch(error => {
           console.error('Erreur lors de l\'envoi de la candidature :', error);
+          if (error.response && error.response.status === 400) {
+            setShowErrorAlert(true); // Afficher l'alerte si vous avez déjà postulé sur cette offre
+          } else {
+            // Gérer d'autres types d'erreurs ici si nécessaire
+          }
         });
     };
-  
+    const [showErrorAlert, setShowErrorAlert] = useState(false); // État pour gérer l'affichage de l'alerte d'erreur
+
+    // Fonction pour gérer la fermeture de l'alerte d'erreur
+    const handleErrorAlertClose = () => {
+      setShowErrorAlert(false);
+    };
     const handleAlertClose = () => {
       setShowAlert(false); // Fermer l'alerte lorsqu'elle est cliquée ou après un délai
     };
@@ -99,6 +109,11 @@ const OfferDetailsPage = () => {
               La postulation a été envoyée avec succès.
             </MuiAlert>
           </Snackbar>
+          <Snackbar open={showErrorAlert} autoHideDuration={6000} onClose={handleErrorAlertClose}>
+  <MuiAlert onClose={handleErrorAlertClose} severity="error" sx={{ width: '100%' }}>
+    Vous avez déjà postulé sur cette offre.
+  </MuiAlert>
+</Snackbar>
       </main>
       </Box>
     </div>
