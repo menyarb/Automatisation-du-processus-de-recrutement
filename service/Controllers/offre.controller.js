@@ -10,7 +10,15 @@ exports.createOffre = async (req, res) => {
         res.status(400).send(err);
     }
 };
-
+exports.getOffersCount = async (req, res) => {
+    try {
+        const count = await Offre.countDocuments({});
+        res.json({ count });
+    } catch (error) {
+        console.error('Failed to fetch offer count:', error);
+        res.status(500).send('Error fetching offer count');
+    }
+};
 // Récupérer toutes les offres
 exports.getAllOffres = async (req, res) => {
     try {

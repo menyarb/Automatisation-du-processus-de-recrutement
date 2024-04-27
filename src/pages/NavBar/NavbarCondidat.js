@@ -103,7 +103,7 @@ export default function CustomZIndexAppBar() {
           elevation: 9
         }}>
       <List sx={{ mt: "5rem" }}>
-        <ListItem button>
+        <ListItem button component={Link} to="/candidate/DashboardCandidat">
           <ListItemIcon>
             <Home />
           </ListItemIcon>
@@ -122,7 +122,7 @@ export default function CustomZIndexAppBar() {
           </ListItemIcon>
           <ListItemText primary="Liste Offres" />
         </ListItem>
-        <ListItem button>
+        <ListItem button component={Link}  to="/candidate/JobApplicationHistory" >
           <ListItemIcon>
             <Storage />
           </ListItemIcon>

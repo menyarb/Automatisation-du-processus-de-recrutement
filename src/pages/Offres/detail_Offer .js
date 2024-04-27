@@ -36,6 +36,7 @@ const OfferDetailsPage = () => {
   useEffect(() => {
     getOfferById(idOffer, setOffer); 
   }, [idOffer]); 
+
   useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
     window.location.href="/signin/company";}})
 
@@ -51,15 +52,30 @@ const OfferDetailsPage = () => {
 
           <Grid item xs={12} md={6}>
             
-            <img src={Image}alt={offer.titre} style={{ width: '100%', borderRadius: '8px' }} />
+            <img src={Image}  style={{ width: '100%', borderRadius: '8px' }} />
           </Grid>
           <Grid item xs={12} md={6}>
-            <Typography variant="h6" gutterBottom>{offer.titre}</Typography>
+          <h5 htmlFor="title">Title de Poste :</h5>
+            <Typography variant="h6" gutterBottom>{offer.title}</Typography>
+            <h5 htmlFor="mission" >Mission :</h5>
             <Typography variant="body1" gutterBottom>{offer.mission}</Typography>
+            <h5 htmlFor="mission" >profile Demende :</h5>
             <Typography variant="body1" gutterBottom>{offer.profile}</Typography>
+            <h5 htmlFor="mission" >Compétences techniques :</h5>
             <Typography variant="body1" gutterBottom>{offer.technicalSkills}</Typography>
+            <h5 htmlFor="mission" >Compétences interpersonnelles :</h5>
             <Typography variant="body1" gutterBottom>{offer.interpersonalSkills}</Typography>
+            <h5 htmlFor="mission" >languages :</h5>
             <Typography variant="body1" gutterBottom>{offer.languages}</Typography>
+            <h5 htmlFor="mission" >Salaire :</h5>
+            <Typography variant="body1" gutterBottom>{offer.Salaire}</Typography>
+            <h5 htmlFor="mission" >Type de travail :</h5>
+            <Typography variant="body1" gutterBottom>{offer.jobType}</Typography>
+            <h5 htmlFor="mission" >Emplacement :</h5>
+            <Typography variant="body1" gutterBottom>{offer.Emplacement}</Typography>
+            <h5 htmlFor="mission" >Qualification :</h5>
+            <Typography variant="body1" gutterBottom>{offer.Qualification}</Typography>
+          
             <Box mt={3}>
               <Button variant="contained" color="primary" component={Link} to={`/company/EditOffres/${offer._id}`}>
                 Modifier l'offre
