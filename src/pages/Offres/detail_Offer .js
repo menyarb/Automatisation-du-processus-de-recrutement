@@ -84,7 +84,7 @@ const OfferDetailsPage = () => {
                 Voir la liste des offres
               </Button>
               <br></br>
-              <Button variant="contained" color="error"component={Link} to={`/company/processCandidat/${offer._id}`} sx={{ marginTop: '10px' }}>
+              <Button variant="contained" color="error"component={Link} to={`/company/process2/${offer._id}`} sx={{ marginTop: '10px' }}>
               Affichez le processus de recrutement
               </Button>
             </Box>
