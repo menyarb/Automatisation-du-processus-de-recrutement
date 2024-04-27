@@ -45,7 +45,7 @@ const RecruitmentProcessPage = () => {
     ];
 
     const [currentStep, setCurrentStep] = useState(0);
-    const totalSteps = recruitmentSteps.length;
+    const totalSteps = recruitmentSteps[0].length;
 
     const handleChange = (e) => {
         // handle your input changes
@@ -76,7 +76,7 @@ const RecruitmentProcessPage = () => {
                 <main style={{ padding: '10px',margin: '60px' }}>
                     <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto', marginTop: '96' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>
-                            Etape {currentStep + 1}: {recruitmentSteps[currentStep][0]}
+                            Etape {currentStep + 1}: {recruitmentSteps[0][currentStep]}
                         </Typography>
 
                         <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
