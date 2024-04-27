@@ -20,11 +20,12 @@ import MenuNavbarAddCandidat from './pages/NavBar/NavbarCandidat';
 import ListeOffresCandidat from './pages/Offres/list_offers_candidat';
 import DetailOffresCandidat from './pages/Offres/detail_Offer _candidat';
 import RecruitmentProcess from './pages/process/process_steps';
-import RecruitmentProcessCandidat from './pages/process/process_candidate';
+import ProcessSteps2 from './pages/process/process_steps2';
 import EditProcess from './pages/process/edit_process';
 import EditProcessCandidate from './pages/process/edit_process_candidate';
 import JobApplicationHistory from './pages/Candidats/JobApplicationHistory';
 import DashboardCandidat from './pages/Dashboard/DashboardCandidat';
+import EditProcess2 from './pages/process/edit_process2';
 
 
 import StandardProcess from './pages/process/Standard_recruitment_process/standard';
@@ -174,10 +175,10 @@ function App() {
             }
           />
           <Route
-            path="/company/processCandidat/:idOffre"
+            path="/company/process2/:idOffre"
             element={
               <RouteHandler>
-                <RecruitmentProcessCandidat />
+                <ProcessSteps2 />
               </RouteHandler>
             }
           />
@@ -186,6 +187,14 @@ function App() {
             element={
               <RouteHandler>
                 <EditProcess />
+              </RouteHandler>
+            }
+          />
+          <Route
+            path="/company/EditProcess2/:idProcess/:idOffre"
+            element={
+              <RouteHandler>
+                <EditProcess2 />
               </RouteHandler>
             }
           />
