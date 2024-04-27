@@ -14,8 +14,8 @@ exports.createProcess = async (req, res) => {
 // Récupérer tous les processus liés à une offre par son ID
 exports.getAllProcessByOffreId = async (req, res) => {
     try {
-        const processes = await ProcessOffre.find({ idOffre: req.params.idOffre });
-        res.send(processes);
+        const process = await ProcessOffre.findOne({ idOffre: req.params.idOffre });
+        res.send(process);
     } catch (err) {
         res.status(500).send(err);
     }
