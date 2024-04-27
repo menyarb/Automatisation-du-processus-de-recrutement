@@ -16,17 +16,10 @@ const getOfferById = (offreId, setOffer) => {
         });
 }
 
-const getProcessByOfferAndCandidateIds = (offreId, candidatId, setProcess) => {
-    axios.get(`http://localhost:3001/processCandidat/${offreId}/${candidatId}`)
-        .then((response) => {
-            setProcess(response.data);
-        })
-        .catch((error) => {
-            console.error('Error fetching process:', error);
-        });
-}
+
 
 const RecruitmentProcessPage = () => {
+    const [recruitmentSteps, setRecruitmentSteps] = useState([]);
     const { idOffer } = useParams();
     const { idCandidat } = useParams();
     const [offer, setOffer] = useState({});
@@ -38,12 +31,31 @@ const RecruitmentProcessPage = () => {
     useEffect(() => {
         getProcessByOfferAndCandidateIds(idOffer, idCandidat, setProcess);
     }, [idOffer, idCandidat]);
-    const recruitmentSteps = [
-        ['Présélection des CV', 'Entretien téléphonique', 'Entretien en personne', 'Offre d\'emploi'],
-    ];
-
+    // const recruitmentSteps = [
+    //     ['Présélection des CV', 'Entretien téléphonique', 'Entretien en personne', 'Offre d\'emploi'],
+    // ];
+    const getProcessByOfferAndCandidateIds = (offreId, candidatId, setProcess) => {
+        axios.get(`http://localhost:3001/processCandidat/${offreId}/${candidatId}`)
+            .then((response) => {
+                const processSteps = [];
+                if (response.data ) {
+                    setProcess(response.data);
+                    Object.keys(response.data).forEach((key) => {
+                        if (key.startsWith('etape') && response.data[key] !== undefined) {
+                            processSteps.push(response.data[key]);
+                        }
+                    });
+                }
+                setRecruitmentSteps(processSteps);
+                setCurrentStep(response.data.step);
+                console.log("new steps",processSteps);
+            })
+            .catch((error) => {
+                console.error('Error fetching process:', error);
+            });
+    }
     const [currentStep, setCurrentStep] = useState(0);
-    const totalSteps = recruitmentSteps[0].length;
+    const totalSteps = recruitmentSteps.length;
 
     const handleChange = (e) => {
         // handle your input changes
@@ -74,7 +86,7 @@ const RecruitmentProcessPage = () => {
                 <main style={{ padding: '10px', margin: '60px' }}>
                     <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto', marginTop: '96' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>
-                            Etape {currentStep + 1}: {recruitmentSteps[0][currentStep]}
+                            Etape {currentStep + 1}: {recruitmentSteps[currentStep]}
                         </Typography>
 
                         <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>

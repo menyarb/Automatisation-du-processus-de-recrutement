@@ -55,8 +55,17 @@ const createCandidature = async (req, res) => {
             idCandidat: idCandidat,
             idOffre: idOffre,
             idProcessOffre: processOffre._id,
-
-        });
+            etape1:processOffre.etape1, 
+            etape2:processOffre.etape2,
+            etape3:processOffre.etape3,
+            etape4:processOffre.etape4,
+            etape5:processOffre.etape5,
+            etape6:processOffre.etape6,
+            etape7:processOffre.etape7,
+            etape8:processOffre.etape8,
+            etape9:processOffre.etape9,
+            etape10:processOffre.etape10,
+});
         await candidature.save();
         await processCandidat.save();
         res.status(201).send(processCandidat);
