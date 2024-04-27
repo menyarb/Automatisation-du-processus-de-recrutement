@@ -157,11 +157,9 @@ const RecruitmentProcessPage = () => {
                             
 
                         
-                        <Link to={"/company/ListeOffres"} style={{ textDecoration: 'none' }}>
-        <Button variant="contained" color="primary" startIcon={<CheckCircleOutlineIcon />}>
+                            <Button variant="contained" color="primary" onClick={handleConfirmSteps} disabled={loading} startIcon={<CheckCircleOutlineIcon />}>
             Enregistrer
         </Button>
-    </Link>
 
     <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} disabled={loading} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
                         </Box>

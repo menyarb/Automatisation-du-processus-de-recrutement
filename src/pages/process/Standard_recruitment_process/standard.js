@@ -40,7 +40,7 @@ const RecruitmentProcessPage = () => {
     }, [idOffer, idCandidat]);
     const recruitmentSteps = [
         ['Présélection des CV', 'Entretien téléphonique', 'Entretien en personne', 'Offre d\'emploi'],
-        ];
+    ];
 
     const [currentStep, setCurrentStep] = useState(0);
     const totalSteps = recruitmentSteps[0].length;
@@ -71,7 +71,7 @@ const RecruitmentProcessPage = () => {
     return (
         <div style={{ backgroundColor: '#ced4da', padding: '20px' }}>
             <Box>
-                <main style={{ padding: '10px',margin: '60px' }}>
+                <main style={{ padding: '10px', margin: '60px' }}>
                     <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto', marginTop: '96' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>
                             Etape {currentStep + 1}: {recruitmentSteps[0][currentStep]}
@@ -125,7 +125,7 @@ const RecruitmentProcessPage = () => {
                         </Box>
 
                         <Button component={Link} to="" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success">
-                            Valideur
+                            valider
                         </Button>
 
                         <Button fullWidth variant="outlined" color="error">
