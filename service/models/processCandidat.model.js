@@ -7,6 +7,10 @@ const ProcessShema = new mongoose.Schema({
     idCandidat: {
         type: String,
     },
+    step: {
+        type: Number,
+        default: 0,
+    },
     etape1: {
         type: String,
     },
