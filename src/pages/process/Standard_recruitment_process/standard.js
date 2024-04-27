@@ -40,9 +40,7 @@ const RecruitmentProcessPage = () => {
     }, [idOffer, idCandidat]);
     const recruitmentSteps = [
         ['Présélection des CV', 'Entretien téléphonique', 'Entretien en personne', 'Offre d\'emploi'],
-        ['Présélection des CV2', 'Entretien téléphonique2', 'Entretien en personne2', 'Offre d\'emploi2', 'Offre d\'emploi2'],
-        ['Présélection des CV3', 'Entretien téléphonique3', 'Entretien en personne3', 'Offre d\'emploi3']
-    ];
+        ];
 
     const [currentStep, setCurrentStep] = useState(0);
     const totalSteps = recruitmentSteps[0].length;
