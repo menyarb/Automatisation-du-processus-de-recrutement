@@ -4,9 +4,10 @@ import { useTheme } from "@mui/material/styles";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green } from '@mui/material/colors';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const drawerWidth = 240;
-
 const themedStyles = (theme) => {
     return {
         content: {
@@ -42,7 +43,17 @@ const RecruitmentProcessPage = () => {
         'Entretien en personne',
         'Offre d\'emploi'
     ];
+    const { idOffre }=useParams();
 
+const getprocessbyidoffre= async() =>{
+    try {
+        const response = await axios.get(`http://localhost:3001/processoffre/${idOffre}`);
+        console.log("process est ",response.data);
+    } catch (error) {
+        console.error('Error fetching offer:', error);
+    }
+}
+useEffect(()=>{getprocessbyidoffre()},[])
     const theme = useTheme();
 
     const handleConfirmSteps = () => {

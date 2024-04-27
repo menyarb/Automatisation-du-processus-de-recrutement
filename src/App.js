@@ -174,7 +174,7 @@ function App() {
             }
           />
              <Route
-            path="/company/RecruitmentProcessCandidate"
+            path="/company/processCandidat/:idOffre"
             element={
               <RouteHandler>
                 <RecruitmentProcessCondidat />
