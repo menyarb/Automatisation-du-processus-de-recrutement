@@ -45,7 +45,7 @@ const RecruitmentProcessPage = () => {
         ['Présélection des CV2', 'Entretien téléphonique2', 'Entretien en personne2', 'Offre d\'emploi2', 'Offre d\'emploi2'],
         ['Présélection des CV3', 'Entretien téléphonique3', 'Entretien en personne3', 'Offre d\'emploi3']
     ];
-  
+
     const [redirect, setRedirect] = useState(false);
     const [process1, setProcess1] = useState({});
     const [recruitmentStep, setRecruitmentStep] = useState([]);
@@ -108,12 +108,15 @@ const RecruitmentProcessPage = () => {
     useEffect(() => {
         if (loading === false && process1._id !== undefined) {
             console.log("Process ID mis à jour:", process1._id);
-           
+
         }
     }, [process1, loading]);
-    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
-        window.location.href="/signin/company";}})
-    
+    useEffect(() => {
+        if (!sessionStorage.getItem('entrepriseId')) {
+            window.location.href = "/signin/company";
+        }
+    })
+
     const handleConfirmSteps = () => {
         console.log("Étapes confirmées !");
         addProcessOffre(offer._id);
@@ -125,17 +128,20 @@ const RecruitmentProcessPage = () => {
             console.log("Redirection en cours...");
             window.location.href = `/company/EditProcess/${process1._id}/${process1.idOffre}`;
         }
-    }, [process1._id,redirect]);
+    }, [process1._id, redirect]);
     const handleEditSteps = () => {
         setRedirect(true);
         console.log("Modification des étapes...");
         addProcessOffre(offer._id);
-        
+
         console.log('id process est ', process1._id);
     };
-    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
-        window.location.href="/signin/company";}})
-    
+    useEffect(() => {
+        if (!sessionStorage.getItem('entrepriseId')) {
+            window.location.href = "/signin/company";
+        }
+    })
+
     return (
         <div sx={{ backgroundColor: '#f0f2f5' }}>
             <Box p="20px">
@@ -154,14 +160,14 @@ const RecruitmentProcessPage = () => {
                             ))}
                         </Grid>
                         <Box sx={themedStyles(theme).buttonContainer}>
-                            
 
-                        
+
+
                             <Button variant="contained" color="primary" onClick={handleConfirmSteps} disabled={loading} startIcon={<CheckCircleOutlineIcon />}>
-            Enregistrer
-        </Button>
+                                Enregistrer
+                            </Button>
 
-    <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} disabled={loading} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
+                            <Button variant="contained" color="info" startIcon={<EditIcon />} onClick={handleEditSteps} disabled={loading} sx={{ marginLeft: '10px' }}>Modifier les Étapes</Button>
                         </Box>
                     </Paper>
                 </main>

@@ -1,5 +1,7 @@
 const Candidature = require('../models/Candidature.model');
 const Candidats = require('../models/Candidat.model');
+const ProcessOffre = require('../models/ProcessOffre.model');
+const ProcessCandidat = require('../models/processCandidat.model');
 
 // Fonction pour traiter la demande de candidature
 const postulerOffre = async (req, res) => {
@@ -48,8 +50,16 @@ const createCandidature = async (req, res) => {
         }
 
         const candidature = new Candidature({ idCandidat, idOffre, etatCandidature });
+        const processOffre = await ProcessOffre.findOne({ idOffre: idOffre }); // Utiliser findOne() pour récupérer un seul document
+        const processCandidat = new ProcessCandidat({
+            idCandidat: idCandidat,
+            idOffre: idOffre,
+            idProcessOffre: processOffre._id,
+
+        });
         await candidature.save();
-        res.status(201).send(candidature);
+        await processCandidat.save();
+        res.status(201).send(processCandidat);
     } catch (err) {
         res.status(400).send(err);
     }
@@ -106,7 +116,7 @@ const deleteCandidatureById = async (req, res) => {
 };
 const getCandidatureByIdOffre = async (req, res) => {
     try {
-        const { idOffre } = req.params; 
+        const { idOffre } = req.params;
 
         const candidatures = await Candidature.find({ idOffre });
 
