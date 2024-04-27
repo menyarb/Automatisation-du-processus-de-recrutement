@@ -1,11 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from "@mui/material/styles";
-
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, TextField, Box, Typography, Paper } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
+const getOfferById = (offreId, setOffer) => {
+    axios.get(`http://localhost:3001/offres/${offreId}`)
+        .then((response) => {
+            setOffer(response.data);
+        })
+        .catch((error) => {
+            console.error('Error fetching offer:', error);
+        });
+}
+
+const getProcessByOfferAndCandidateIds = (offreId, candidatId, setProcess) => {
+    axios.get(`http://localhost:3001/processCandidat/${offreId}/${candidatId}`)
+        .then((response) => {
+            setProcess(response.data);
+        })
+        .catch((error) => {
+            console.error('Error fetching process:', error);
+        });
+}
+
 const RecruitmentProcessPage = () => {
+    const { idOffer } = useParams();
+    const { idCandidat } = useParams();
+    const [offer, setOffer] = useState({});
+    console.log(idCandidat);
+    const [process, setProcess] = useState({});
+    useEffect(() => {
+        getOfferById(idOffer, setOffer);
+    }, [idOffer]);
+    useEffect(() => {
+        getProcessByOfferAndCandidateIds(idOffer, idCandidat, setProcess);
+    }, [idOffer, idCandidat]);
     const recruitmentSteps = [
         ['Présélection des CV', 'Entretien téléphonique', 'Entretien en personne', 'Offre d\'emploi'],
         ['Présélection des CV2', 'Entretien téléphonique2', 'Entretien en personne2', 'Offre d\'emploi2', 'Offre d\'emploi2'],
@@ -30,16 +62,19 @@ const RecruitmentProcessPage = () => {
     const handlePreviousStep = () => {
         setCurrentStep((prevStep) => prevStep > 0 ? prevStep - 1 : prevStep);
     };
-    useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
-        window.location.href="/signin/company";}})
-    
+    useEffect(() => {
+        if (!sessionStorage.getItem('entrepriseId')) {
+            window.location.href = "/signin/company";
+        }
+    })
+
     const theme = useTheme();
 
     return (
         <div style={{ backgroundColor: '#ced4da', padding: '20px' }}>
             <Box>
                 <main style={{ padding: '10px' }}>
-                    <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto',marginTop:'96' }}>
+                    <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto', marginTop: '96' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>
                             Etape {currentStep + 1}: {recruitmentSteps[currentStep][0]}
                         </Typography>
@@ -50,17 +85,17 @@ const RecruitmentProcessPage = () => {
                                 id="file"
                                 type="file"
                                 onChange={handleFileChange}
-                                style={{ display: 'none' }} 
+                                style={{ display: 'none' }}
                             />
                             <label htmlFor="file"  >
-                                <Button  sx={{ marginTop: '50px' }}  variant="contained" component="span"  startIcon={<CloudUploadIcon />} >
+                                <Button sx={{ marginTop: '50px' }} variant="contained" component="span" startIcon={<CloudUploadIcon />} >
                                     Importer un fichier
                                 </Button>
                             </label>
                         </Box>
 
                         <TextField
-                            sx={{ marginTop: '20px' }} 
+                            sx={{ marginTop: '20px' }}
                             margin="normal"
                             fullWidth
                             id="comment"

@@ -31,7 +31,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         {/* Affichage de MenuNavbar sauf sur les pages de connexion et de création de compte */}
-       
+
 
         <Routes>
           <Route
@@ -42,14 +42,14 @@ function App() {
               </RouteHandler>
             }
           />
-                <Route
+          <Route
             path="/"
             element={
               <RouteHandler excludeNavbar >
                 <Home />
               </RouteHandler>
             }
-          />    
+          />
           <Route
             path="/signin/candidate"
             element={
@@ -74,7 +74,7 @@ function App() {
               </RouteHandler>
             }
           />
-           <Route
+          <Route
             path="/signup/company"
             element={
               <RouteHandler excludeNavbar>
@@ -82,7 +82,7 @@ function App() {
               </RouteHandler>
             }
           />
-          
+
           <Route
             path="/company/AddOffres/"
             element={
@@ -105,7 +105,7 @@ function App() {
               <RouteHandler>
                 <EditOffres />
               </RouteHandler>
-            }s
+            } s
           />
           <Route
             path="/company/DetailOffres/:idOffer"
@@ -115,14 +115,14 @@ function App() {
               </RouteHandler>
             }
           />
-              <Route
-               path="/candidate/AddCondidat"
-              element={ <RouteHandler>
-                <AddCondidat />
-              </RouteHandler>}
-          
+          <Route
+            path="/candidate/AddCondidat"
+            element={<RouteHandler>
+              <AddCondidat />
+            </RouteHandler>}
+
           />
-           <Route
+          <Route
             path="/candidate/ListeOffres"
             element={
               <RouteHandler>
@@ -130,7 +130,7 @@ function App() {
               </RouteHandler>
             }
           />
-           <Route
+          <Route
             path="/candidate/DetailOffres/:idOffer"
             element={
               <RouteHandler>
@@ -154,7 +154,7 @@ function App() {
               </RouteHandler>
             }
           />
-             <Route
+          <Route
             path="/company/RecruitmentProcessCandidate"
             element={
               <RouteHandler>
@@ -162,7 +162,7 @@ function App() {
               </RouteHandler>
             }
           />
-            <Route
+          <Route
             path="/company/EditProcess/:idProcess/:idOffre"
             element={
               <RouteHandler>
@@ -170,7 +170,7 @@ function App() {
               </RouteHandler>
             }
           />
-                      <Route
+          <Route
             path="/company/EditProcessCandidate"
             element={
               <RouteHandler>
@@ -178,24 +178,24 @@ function App() {
               </RouteHandler>
             }
           />
-                      <Route
-            path="/company/Standard_Process"
+          <Route
+            path="/company/Standard_Process/:idCandidat/:idOffer"
             element={
               <RouteHandler>
-                <StandardProcess/>
+                <StandardProcess />
               </RouteHandler>
             }
           />
-                      <Route
+          <Route
             path="/company/Calendar_Process"
             element={
               <RouteHandler>
-                <CalendarProcess/>
+                <CalendarProcess />
               </RouteHandler>
             }
-          />          
+          />
         </Routes>
-       
+
 
       </div>
     </BrowserRouter>
@@ -210,15 +210,15 @@ function RouteHandler({ children, excludeNavbar }) {
 
   return (
     <>
-    
-    {/* Affichage du bon Navbar en fonction de la page */}
-    {!(isLoginPage || isSignupPage) && !excludeNavbar && (
-      // Vérifiez si c'est la page AddCandidat pour afficher le bon navbar
-      location.pathname === '/candidate/AddCondidat' ? <MenuNavbarAddCandidat /> : <MenuNavbar />
-     
-    )}
-    {children}
-  </>
+
+      {/* Affichage du bon Navbar en fonction de la page */}
+      {!(isLoginPage || isSignupPage) && !excludeNavbar && (
+        // Vérifiez si c'est la page AddCandidat pour afficher le bon navbar
+        location.pathname === '/candidate/AddCondidat' ? <MenuNavbarAddCandidat /> : <MenuNavbar />
+
+      )}
+      {children}
+    </>
   );
 }
 

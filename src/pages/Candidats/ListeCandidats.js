@@ -4,6 +4,7 @@ import { useTheme } from "@mui/material";
 import axios from 'axios';
 import React, { useState,useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import{Link} from 'react-router-dom';
 
 const CandidatesList = () => {
   const theme = useTheme();
@@ -83,7 +84,7 @@ const CandidatesList = () => {
             <TableBody>
               {candidats.map((candidate) => (
                 <TableRow key={candidate.id}>
-                  <TableCell>{candidate.id}</TableCell>
+                  <TableCell>{candidate._id}</TableCell>
                   <TableCell>{candidate.name}</TableCell>
                   <TableCell>{candidate.email}</TableCell>
                   <TableCell>{candidate.naissance}</TableCell>
@@ -96,9 +97,12 @@ const CandidatesList = () => {
                   <TableCell>{candidate.souhaite}</TableCell>
                   <TableCell>{candidate.Poste}</TableCell>
                   <TableCell>
-                    <Button variant="contained" color="primary" onClick={() => evaluateCandidate(candidate.id)}>
+                    {/* <Button variant="contained" color="primary" onClick={() => evaluateCandidate(candidate.id)}>
                       Évaluer
-                    </Button>
+                    </Button> */}
+                    <Button variant="contained" color="primary" component={Link} to={`/company/Standard_Process/${candidate._id}/${idOffer}`}>
+                Evaluer
+              </Button>
                     {/* <Button sx={{marginTop:"12px"}} variant="outlined" color="success" onClick={() => downloadCV(candidate.cv)} >
                       Télécharger CV
                     </Button> */}
