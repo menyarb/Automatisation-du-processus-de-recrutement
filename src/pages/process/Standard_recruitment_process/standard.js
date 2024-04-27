@@ -73,7 +73,7 @@ const RecruitmentProcessPage = () => {
     return (
         <div style={{ backgroundColor: '#ced4da', padding: '20px' }}>
             <Box>
-                <main style={{ padding: '10px' }}>
+                <main style={{ padding: '10px',margin: '60px' }}>
                     <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto', marginTop: '96' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>
                             Etape {currentStep + 1}: {recruitmentSteps[currentStep][0]}

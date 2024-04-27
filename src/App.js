@@ -198,10 +198,10 @@ function App() {
             }
           />
                       <Route
-            path="/company/Standard_Process"
+            path="/company/Standard_Process/:idCandidat/:idOffer"
             element={
               <RouteHandler>
-                <StandardProcess/>
+                <StandardProcess />
               </RouteHandler>
             }
           />
