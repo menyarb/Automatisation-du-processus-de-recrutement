@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -33,16 +33,19 @@ function LoginCandidat() {
       const token = response.data.token;
       const candidatId = response.data.candidatId;
       sessionStorage.setItem('token', token);
-      sessionStorage.setItem('candidatId', candidatId); 
-      sessionStorage.setItem('candidatName', candidatName); 
-      window.location.href = '/candidate/AddCondidat';
+      sessionStorage.setItem('candidatId', candidatId);
+      sessionStorage.setItem('candidatName', candidatName);
+      window.location.href = '/candidate/AddCandidat';
     } catch (err) {
       setError('Adresse e-mail ou mot de passe incorrect');
     }
   };
 
-  useEffect(() => {if(sessionStorage.getItem('candidatId'&&'entrepriseId' )){
-    window.location.href="/candidate/AddCondidat";}})
+  useEffect(() => {
+    if (sessionStorage.getItem('candidatId' && 'entrepriseId')) {
+      window.location.href = "/candidate/AddCandidat";
+    }
+  })
 
 
   return (

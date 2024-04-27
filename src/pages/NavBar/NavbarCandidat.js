@@ -11,11 +11,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'; // Make sure to import axios if using it for HTTP requests
 
 const handleLogout = async () => {
-   // Clear JWT from localStorage or sessionStorage
-   sessionStorage.removeItem('token');
-   sessionStorage.removeItem('candidatId');
-   sessionStorage.removeItem('candidatName');
-   window.location.href = '/signin/candidate';
+  // Clear JWT from localStorage or sessionStorage
+  sessionStorage.removeItem('token');
+  sessionStorage.removeItem('candidatId');
+  sessionStorage.removeItem('candidatName');
+  window.location.href = '/signin/candidate';
 };
 const drawerWidth = 240;
 
@@ -73,23 +73,23 @@ export default function CustomZIndexAppBar() {
         <Toolbar>
           <Avatar sx={{ m: 1 }} src={RecInovLogo} />
           <Typography variant="h6" >
-            Rec_inov 
+            Rec_inov
           </Typography>
           <Grid container alignItems="center">
-           
+
             <Grid container justifyContent="flex-end" alignItems="center">
-          <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
-              <AccountCircleIcon />
-            </Avatar>
-            <Typography component="div" variant="h6" sx={{ marginRight: 2 }}>
-              {candidatName}
-            </Typography>
-            
-            <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />} sx={{ marginLeft: 1 }}>
-              Logout
-            </Button>
-          </Grid>
-            
+              <Avatar sx={{ bgcolor: theme.palette.secondary.main }}>
+                <AccountCircleIcon />
+              </Avatar>
+              <Typography component="div" variant="h6" sx={{ marginRight: 2 }}>
+                {candidatName}
+              </Typography>
+
+              <Button color="inherit" onClick={handleLogout} startIcon={<LogoutIcon />} sx={{ marginLeft: 1 }}>
+                Logout
+              </Button>
+            </Grid>
+
 
           </Grid>
         </Toolbar>
@@ -102,35 +102,35 @@ export default function CustomZIndexAppBar() {
           sx: themedStyles(theme).drawerPaper,
           elevation: 9
         }}>
-      <List sx={{ mt: "5rem" }}>
-        <ListItem button component={Link} to="/candidate/DashboardCandidat">
-          <ListItemIcon>
-            <Home />
-          </ListItemIcon>
-          <ListItemText primary="Tableau de bord" />
-        </ListItem>
-        <ListItemButton component={Link} to="/candidate/AddCondidat" >
-          <ListItemIcon>
-            <DesktopMac />
-          </ListItemIcon>
-          <ListItemText primary="Profil"/>
-        </ListItemButton>
-        
-        <ListItem button component={Link}  to="/candidate/ListeOffres">
-          <ListItemIcon>
-            <FormatListBulleted />
-          </ListItemIcon>
-          <ListItemText primary="Liste Offres" />
-        </ListItem>
-        <ListItem button component={Link}  to="/candidate/JobApplicationHistory" >
-          <ListItemIcon>
-            <Storage />
-          </ListItemIcon>
-          <ListItemText primary="Mes Candidatures" />
-        </ListItem>
-      </List>
-    </Drawer>
-    
+        <List sx={{ mt: "5rem" }}>
+          <ListItem button component={Link} to="/candidate/DashboardCandidat">
+            <ListItemIcon>
+              <Home />
+            </ListItemIcon>
+            <ListItemText primary="Tableau de bord" />
+          </ListItem>
+          <ListItemButton component={Link} to="/candidate/AddCandidat" >
+            <ListItemIcon>
+              <DesktopMac />
+            </ListItemIcon>
+            <ListItemText primary="Profil" />
+          </ListItemButton>
+
+          <ListItem button component={Link} to="/candidate/ListeOffres">
+            <ListItemIcon>
+              <FormatListBulleted />
+            </ListItemIcon>
+            <ListItemText primary="Liste Offres" />
+          </ListItem>
+          <ListItem button component={Link} to="/candidate/JobApplicationHistory" >
+            <ListItemIcon>
+              <Storage />
+            </ListItemIcon>
+            <ListItemText primary="Mes Candidatures" />
+          </ListItem>
+        </List>
+      </Drawer>
+
       <Toolbar />
     </div>
   )
