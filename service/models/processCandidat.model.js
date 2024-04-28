@@ -12,7 +12,7 @@ const ProcessShema = new mongoose.Schema({
     },
     step: {
         type: Number,
-        default: 0,
+        default: 1,
     },
     etape1: {
         type: String,
@@ -69,14 +69,14 @@ const ProcessShema = new mongoose.Schema({
     etat8: {
         type: Number,
         default: 0,
-    }, 
+    },
     etape9: {
         type: String,
     },
     etat9: {
         type: Number,
         default: 0,
-    }, 
+    },
     etape10: {
         type: String,
     },

@@ -38,7 +38,7 @@ const RecruitmentProcessPage = () => {
         axios.get(`http://localhost:3001/processCandidat/${offreId}/${candidatId}`)
             .then((response) => {
                 const processSteps = [];
-                if (response.data ) {
+                if (response.data) {
                     setProcess(response.data);
                     Object.keys(response.data).forEach((key) => {
                         if (key.startsWith('etape') && response.data[key] !== undefined) {
@@ -48,13 +48,13 @@ const RecruitmentProcessPage = () => {
                 }
                 setRecruitmentSteps(processSteps);
                 setCurrentStep(response.data.step);
-                console.log("new steps",processSteps);
+                console.log("new steps", processSteps);
             })
             .catch((error) => {
                 console.error('Error fetching process:', error);
             });
     }
-    const [currentStep, setCurrentStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(process.step || 0);
     const totalSteps = recruitmentSteps.length;
 
     const handleChange = (e) => {
@@ -66,17 +66,53 @@ const RecruitmentProcessPage = () => {
     };
 
     const handleNextStep = () => {
-        setCurrentStep((prevStep) => prevStep < totalSteps - 1 ? prevStep + 1 : prevStep);
+
+        const nextStep = currentStep < totalSteps ? currentStep + 1 : currentStep;
+        setCurrentStep(nextStep);
+
+        process[`etat${currentStep}`] = 1;
+        process.step = nextStep;
+        // console.log("process step", process);
+
+
+        // updateProcessCandidat(process);
     };
 
+    const handleValidate = () => {
+        process[`etat${currentStep}`] = 1;
+
+        // console.log("process step", process);
+
+
+        updateProcessCandidat(process);
+    };
+
+
     const handlePreviousStep = () => {
-        setCurrentStep((prevStep) => prevStep > 0 ? prevStep - 1 : prevStep);
+        const previousStep = currentStep > 0 ? currentStep - 1 : currentStep;
+
+        setCurrentStep(previousStep);
+
+        process[`etat${currentStep}`] = 0;
+        process[`etat${previousStep}`] = 0;
+        process.step = previousStep;
+        // console.log("process step", process);
+        //updateProcessCandidat(process);
     };
     useEffect(() => {
         if (!sessionStorage.getItem('entrepriseId')) {
             window.location.href = "/signin/company";
         }
     })
+    const updateProcessCandidat = (updatedProcessCandidat) => {
+        axios.put(`http://localhost:3001/processCandidat/${process._id}`, updatedProcessCandidat)
+            .then((response) => {
+                console.log('Processus candidat mis à jour avec succès:', response.data);
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la mise à jour du processus candidat:', error);
+            });
+    };
 
     const theme = useTheme();
 
@@ -86,7 +122,7 @@ const RecruitmentProcessPage = () => {
                 <main style={{ padding: '10px', margin: '60px' }}>
                     <Paper elevation={3} style={{ borderRadius: '16px', padding: '20px', maxWidth: '600px', margin: 'auto', marginTop: '96' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>
-                            Etape {currentStep + 1}: {recruitmentSteps[currentStep]}
+                            Etape {currentStep}: {recruitmentSteps[currentStep - 1]}
                         </Typography>
 
                         <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
@@ -128,15 +164,15 @@ const RecruitmentProcessPage = () => {
                         />
 
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-                            <Button disabled={currentStep === 0} onClick={handlePreviousStep}>
+                            <Button disabled={currentStep === 1} onClick={handlePreviousStep}>
                                 Étape précédente
                             </Button>
-                            <Button disabled={currentStep === totalSteps - 1} onClick={handleNextStep}>
+                            <Button disabled={currentStep === totalSteps} onClick={handleNextStep}>
                                 Étape suivante
                             </Button>
                         </Box>
 
-                        <Button component={Link} to="" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success">
+                        <Button component={Link} onClick={handleValidate} to="" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success">
                             valider
                         </Button>
 
