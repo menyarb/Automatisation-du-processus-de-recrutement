@@ -101,6 +101,7 @@ const RecruitmentProcessPage = () => {
     };
     useEffect(() => {
         if (!sessionStorage.getItem('entrepriseId')) {
+            
             window.location.href = "/signin/company";
         }
     })
