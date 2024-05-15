@@ -19,6 +19,7 @@ export default function Product() {
     const navigate = useNavigate();
     const [offer, setOffer] = useState({
         image: '',
+        domaine: '',
         title: '',
         mission: '',
         profile: '',
@@ -26,7 +27,8 @@ export default function Product() {
         interpersonalSkills: '',
         languages: '',
         Experience: '',
-        jobType: 'Type de travail',
+        TypeContrat: '',
+        TempsTravail: '',
         Salaire: '',
         Emplacement: 'Paris',
         Qualification: 'Qualification',
@@ -35,10 +37,18 @@ export default function Product() {
         entrepriseId: sessionStorage.getItem('entrepriseId'),
 
     });
-
+    const Temps= [
+        { value: 'Temps plein', label: 'Temps plein' },
+        { value: 'Temps partiel', label: 'Temps partiel' },
+        { value: 'Saisonnier', label: 'Saisonnier' },
+        { value: 'Freelance / Indépendant', label: 'Freelance / Indépendant' },
+    ];
     const contracts = [
       { value: 'CIVP', label: 'CIVP' },
       { value: 'CDD', label: 'CDD' },
+      { value: 'CDI', label: 'CDI' },
+      { value: 'Stage', label: 'Stage' },
+
   ];
     const qualifications = [
       { value: 'Qualification', label: 'Qualification' },
@@ -50,7 +60,6 @@ export default function Product() {
   ];
     const jobTypes = [
       
-      { value: 'Type de travail', label: 'Type de travail' },
         { value: 'Temps plein', label: 'Temps plein' },
         { value: 'Temps partiel', label: 'Temps partiel' },
         { value: 'Freelance', label: 'Freelance' },
@@ -58,12 +67,28 @@ export default function Product() {
         { value: 'CDD', label: 'CDD' },
         { value: 'CDI', label: 'CDI' },
     ];
-
+   const domaines=['Emploi Pharmaceutiques', 'Emploi Banque', 'Emploi Mécanique',
+   'Emploi Assurances', 'Emploi Immobilier', 'Emploi Electronique',
+   'Emploi Textile', 'Emploi Construction', 'Emploi Sante',
+   'Emploi Automobile', 'Emploi Ressources humaines',
+   'Emploi Consulting', 'Emploi Hôtellerie et Tourisme',
+   'Emploi Administration', 'Emploi Gestion', 'Emploi Design',
+   'Emploi Comptabilité', 'Emploi Finance', 'Emploi Vente',
+   'Emploi Télécommunications', 'Emploi Marketing', 'Emploi Commerce',
+   'Emploi Industrie', "Emploi Technologie de l'information",
+   'Emploi Ingénierie', "Emploi Centres d'appels",
+   'Emploi Informatique']
     const locations = [
-        { value: 'Paris', label: 'Paris' },
-        { value: 'Lyon', label: 'Lyon' },
-        { value: 'Marseille', label: 'Marseille' },
-        { value: 'Toulouse', label: 'Toulouse' },
+        { value: 'Tunis', label: 'Tunis' },{ value: 'Mahdia', label: 'Mahdia' },{ value: 'Gafsa', label: 'Gafsa' },{ value: 'Bizerte', label: 'Bizerte' },{ value: 'Zaghouan', label: 'Zaghouan' },
+        { value: 'Sfax', label: 'Sfax' },{ value: 'Gafsa', label: 'Gafsa' },{ value: 'France', label: 'France' },{ value: 'Sousse', label: 'Sousse' },{ value: 'Cameroun', label: 'Cameroun' },
+        { value: 'Lybie', label: 'Lybie' },{ value: 'Canada', label: 'Canada' },{ value: 'Monastir', label: 'Monastir' },{ value: 'Congo', label: 'Congo' },
+        { value: 'Kairouan', label: 'Kairouan' },{ value: 'Kasserine', label: 'Kasserine' },{ value: 'Nabeul', label: 'Nabeul' },{ value: 'Switzerland', label: 'Switzerland' },
+        { value: 'Jordanie', label: 'Jordanie' },{ value: 'Angleterre', label: 'Angleterre' },{ value: 'Moknine', label: 'Moknine' },
+        { value: 'Qatar', label: 'Qatar' },{ value: 'Allemagne', label: 'Allemagne' },{ value: 'Afrique subsaharienne', label: 'Afrique subsaharienne' },{ value: 'Kelibia', label: 'Kelibia' },
+        { value: 'Siliana', label: 'Siliana' },{ value: 'KORBA', label: 'KORBA' },{ value: 'Sénégal', label: 'Sénégal' },{ value: 'Syrie', label: 'Syrie' },
+        { value: 'Burkina Faso', label: 'Burkina Faso' },{ value: 'khartoum', label: 'khartoum' },{ value: 'Djerba', label: 'Djerba' },
+        { value: 'Belgique', label: 'Belgique' },{ value: 'Libya', label: 'Libya' }
+
     ];
 
     const handleChange = (e) => {
@@ -114,24 +139,21 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                     <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>Ajouter Offres</Typography>
                         
-                        <Select
-    value={offer.type}
-    onChange={(e) => setOffer({ ...offer, type: e.target.value })}
-    fullWidth
-    displayEmpty
-    inputProps={{ 'aria-label': 'Without label' }}
-    sx={{ mt: 3, mb: 2 }}
->
-    <MenuItem value="" disabled>
-        Sélectionnez le type d'emploi
-    </MenuItem>
-    <MenuItem value="Technique">Technique</MenuItem>
-    <MenuItem value="Communication">Communication</MenuItem>
-    <MenuItem value="Emplacement">Emplacement</MenuItem>
-</Select>
                         <h5 htmlFor="title">Title de Poste :</h5>
                       
                         <TextField margin="normal" required fullWidth id="title" label="Title" name="title" onChange={handleChange} />
+                        <h5 htmlFor="mission" >Domaine :</h5>
+                        <Select
+                            value={offer.domaine}
+                            onChange={(e) => setOffer({ ...offer, domaine: e.target.value })}
+                            fullWidth
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            sx={{ mt: 3, mb: 2 }}>
+                            {domaines.map((domaine, index) => (
+                                <MenuItem key={index} value={domaine}>{domaine}</MenuItem>
+                            ))}
+                        </Select>
                         <h5 htmlFor="mission" >Mission :</h5>
                         <TextField margin="normal" required fullWidth id="mission" label="Mission" name="mission" onChange={handleChange} />
                         <h5 htmlFor="mission" >profile Demende :</h5>
@@ -142,21 +164,34 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                         <TextField margin="normal" required fullWidth id="technicalSkills" label="Compétences techniques" name="technicalSkills" onChange={handleChange} />
                         <h5 htmlFor="mission" >Compétences interpersonnelles :</h5>
                         <TextField margin="normal" required fullWidth id="interpersonalSkills" label="Compétences interpersonnelles" name="interpersonalSkills" onChange={handleChange} />
-                        <h5 htmlFor="mission" >languages :</h5>
+                        <h5 htmlFor="mission" >Langues :</h5>
                         <TextField margin="normal" required fullWidth id="languages" label="Langues" name="languages" onChange={handleChange} />
                         <h5 htmlFor="mission" >Salaire :</h5>
                         <TextField margin="normal" required fullWidth id="Salaire" label="Salaire" name="Salaire" onChange={handleChange} />
 
-                        <h5 htmlFor="mission" >Type de travail :</h5>
+                        <h5 htmlFor="mission" >Temps de Travail :</h5>
                         <Select
-                            value={offer.jobType}
-                            onChange={(e) => setOffer({ ...offer, jobType: e.target.value })}
+                            value={offer.TempsTravail}
+                            onChange={(e) => setOffer({ ...offer, TempsTravail: e.target.value })}
                             fullWidth
                             displayEmpty
                             inputProps={{ 'aria-label': 'Without label' }}
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            {jobTypes.map((type, index) => (
+                            {Temps.map((type, index) => (
+                                <MenuItem key={index} value={type.value}>{type.label}</MenuItem>
+                            ))}
+                        </Select>
+                        <h5 htmlFor="mission" >Type de Contrat :</h5>
+                        <Select
+                            value={offer.TypeContrat}
+                            onChange={(e) => setOffer({ ...offer, TypeContrat: e.target.value })}
+                            fullWidth
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            sx={{ mt: 3, mb: 2 }}
+                        >
+                            {contracts.map((type, index) => (
                                 <MenuItem key={index} value={type.value}>{type.label}</MenuItem>
                             ))}
                         </Select>
@@ -186,12 +221,9 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                                 <MenuItem key={index} value={qualification.value}>{qualification.label}</MenuItem>
                             ))}
                         </Select>
-                        
-                      
-
                         <Button fullWidth variant="contained" onClick={addOffer} sx={{ mt: 3, mb: 2 }}>
-            Ajouter Offre
-        </Button>
+                        Ajouter Offre
+                        </Button>
                     </Paper>
                 </main>
             </Box>

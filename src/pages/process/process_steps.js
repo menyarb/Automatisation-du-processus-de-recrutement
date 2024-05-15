@@ -45,16 +45,13 @@ const RecruitmentProcessPage = () => {
         ['Présélection des CV2', 'Entretien téléphonique2', 'Entretien en personne2', 'Offre d\'emploi2', 'Offre d\'emploi2'],
         ['Présélection des CV3', 'Entretien téléphonique3', 'Entretien en personne3', 'Offre d\'emploi3']
     ];
-
     const [redirect, setRedirect] = useState(false);
     const [process1, setProcess1] = useState({});
     const [recruitmentStep, setRecruitmentStep] = useState([]);
     const [offer, setOffer] = useState({});
     const [loading, setLoading] = useState(false);
     const { idOffer } = useParams();
-
     const theme = useTheme();
-
     const getOfferById = async (idOffer) => {
         try {
             const response = await axios.get(`http://localhost:3001/offres/${idOffer}`);
