@@ -49,6 +49,9 @@ const offreSchema = new mongoose.Schema({
     type: {
         type: String,
     },
+    genre: {
+        type: String,
+    },
     entrepriseId:{
         type: String,
     }

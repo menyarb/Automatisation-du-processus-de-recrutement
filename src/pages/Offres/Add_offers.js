@@ -34,15 +34,18 @@ export default function Product() {
         Qualification: 'Qualification',
         Contrat: '',
         type: '',
+        genre: '',
         entrepriseId: sessionStorage.getItem('entrepriseId'),
 
     });
+
     const Temps= [
         { value: 'Temps plein', label: 'Temps plein' },
         { value: 'Temps partiel', label: 'Temps partiel' },
         { value: 'Saisonnier', label: 'Saisonnier' },
         { value: 'Freelance / Indépendant', label: 'Freelance / Indépendant' },
     ];
+    const genres=['Indifférent', 'Masculin', 'Féminin']
     const contracts = [
       { value: 'CIVP', label: 'CIVP' },
       { value: 'CDD', label: 'CDD' },
@@ -53,10 +56,12 @@ export default function Product() {
     const qualifications = [
       { value: 'Qualification', label: 'Qualification' },
       { value: 'Bac', label: 'Bac' },
-      { value: 'Bac+2', label: 'Bac+2' },
-      { value: 'Bac+3', label: 'Bac+3' },
-      { value: 'Bac+4', label: 'Bac+4' },
-      { value: 'Bac+5', label: 'Bac+5' },
+      { value: 'Bac + 2', label: 'Bac + 2' },
+      { value: 'Bac + 3', label: 'Bac + 3' },
+      { value: 'Bac + 4', label: 'Bac + 4' },
+      { value: 'Bac + 5', label: 'Bac + 5' },
+      { value: 'Etudiant', label: 'Etudiant' },
+
   ];
     const jobTypes = [
       
@@ -103,6 +108,9 @@ h5Elements.forEach((element) => {
 });
 
   const addOffer = () => {
+    if ( !offer.Qualification || !offer.TypeContrat || !offer.title || !offer.domaine || !offer.genre || !offer.Emplacement) {
+        window.alert('Veuillez remplir tous les champs obligatoires.');        return; // Empêche la soumission du formulaire
+    }
     axios.post('http://localhost:3001/offres', offer)
         .then(response => {
             console.log('Offre ajoutée avec succès :', response.data);
@@ -139,10 +147,10 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                     <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
                         <Typography sx={{ fontSize: 24, fontWeight: 'bold', color: 'blue' }}>Ajouter Offres</Typography>
                         
-                        <h5 htmlFor="title">Title de Poste :</h5>
+                        <h5 htmlFor="title">Title de Poste* :</h5>
                       
                         <TextField margin="normal" required fullWidth id="title" label="Title" name="title" onChange={handleChange} />
-                        <h5 htmlFor="mission" >Domaine :</h5>
+                        <h5 htmlFor="mission" >Domaine* :</h5>
                         <Select
                             value={offer.domaine}
                             onChange={(e) => setOffer({ ...offer, domaine: e.target.value })}
@@ -156,7 +164,7 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                         </Select>
                         <h5 htmlFor="mission" >Mission :</h5>
                         <TextField margin="normal" required fullWidth id="mission" label="Mission" name="mission" onChange={handleChange} />
-                        <h5 htmlFor="mission" >profile Demende :</h5>
+                        <h5 htmlFor="mission" >profile Demandée :</h5>
                         <TextField margin="normal" required fullWidth id="profile" label="Profil recherché" name="profile" onChange={handleChange} />
                         <h5 htmlFor="mission" >Experience:</h5>
                         <TextField margin="normal" required fullWidth id="Experience" label="Experience" name="Experience" onChange={handleChange} />
@@ -169,7 +177,7 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                         <h5 htmlFor="mission" >Salaire :</h5>
                         <TextField margin="normal" required fullWidth id="Salaire" label="Salaire" name="Salaire" onChange={handleChange} />
 
-                        <h5 htmlFor="mission" >Temps de Travail :</h5>
+                        <h5 htmlFor="mission" >Temps de Travail* :</h5>
                         <Select
                             value={offer.TempsTravail}
                             onChange={(e) => setOffer({ ...offer, TempsTravail: e.target.value })}
@@ -182,7 +190,7 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                                 <MenuItem key={index} value={type.value}>{type.label}</MenuItem>
                             ))}
                         </Select>
-                        <h5 htmlFor="mission" >Type de Contrat :</h5>
+                        <h5 htmlFor="mission" >Type de Contrat* :</h5>
                         <Select
                             value={offer.TypeContrat}
                             onChange={(e) => setOffer({ ...offer, TypeContrat: e.target.value })}
@@ -195,7 +203,7 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                                 <MenuItem key={index} value={type.value}>{type.label}</MenuItem>
                             ))}
                         </Select>
-                        <h5 htmlFor="mission" >Emplacement :</h5>
+                        <h5 htmlFor="mission" >Emplacement* :</h5>
                         <Select
                             value={offer.Emplacement}
                             onChange={(e) => setOffer({ ...offer, Emplacement: e.target.value })}
@@ -208,7 +216,7 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                                 <MenuItem key={index} value={location.value}>{location.label}</MenuItem>
                             ))}
                         </Select>
-                        <h5 htmlFor="mission" >Qualification :</h5>
+                        <h5 htmlFor="mission" >Qualification* :</h5>
                         <Select
                             value={offer.Qualification}
                             onChange={(e) => setOffer({ ...offer, Qualification: e.target.value })}
@@ -219,6 +227,18 @@ useEffect(() => {if(!sessionStorage.getItem('entrepriseId')){
                         >
                             {qualifications.map((qualification, index) => (
                                 <MenuItem key={index} value={qualification.value}>{qualification.label}</MenuItem>
+                            ))}
+                        </Select>
+                        <h5 htmlFor="mission" >Genre* :</h5>
+                        <Select
+                            value={offer.genre}
+                            onChange={(e) => setOffer({ ...offer, genre: e.target.value })}
+                            fullWidth
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                            sx={{ mt: 3, mb: 2 }}>
+                            {genres.map((genre, index) => (
+                                <MenuItem key={index} value={genre}>{genre}</MenuItem>
                             ))}
                         </Select>
                         <Button fullWidth variant="contained" onClick={addOffer} sx={{ mt: 3, mb: 2 }}>
