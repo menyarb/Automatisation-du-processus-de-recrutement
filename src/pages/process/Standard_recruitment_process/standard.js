@@ -99,9 +99,6 @@ useEffect(() => {
 
     const handleValidate = async() => {
         process[`etat${currentStep}`] = 1;
-
-       
-
         updateProcessCandidat(process);
     };
 
@@ -222,13 +219,33 @@ useEffect(() => {
                           </form>
                          
                         ) : (
-                        <Button component={Link} onClick={handleValidate} to="" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success">
+                            <form ref={form} onSubmit={sendEmail}>
+                           
+                            <input hidden type="text" name="user_name" value={sessionStorage.getItem('entrepriseName')} />
+                      
+                            
+                            <input hidden type="email" name="user_email" value={emailcandidat} />
+                            
+                            <textarea hidden name="message" value="Congratulations! You have been accepted for the position." />
+                            <Button type='submit' component={Link} onClick={handleValidate}  fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success">
                         valider l'étape
                         </Button>
+                          </form>
+                       
                         )}
-                        <Button fullWidth variant="outlined" color="error">
+                        <form ref={form} onSubmit={sendEmail}>
+                           
+                           <input hidden type="text" name="user_name" value={sessionStorage.getItem('entrepriseName')} />
+                     
+                           
+                           <input hidden type="email" name="user_email" value={emailcandidat} />
+                           
+                           <textarea hidden name="message" value="Congratulations! You have been accepted for the position." />
+                           <Button type='submit'  fullWidth variant="outlined" color="error">
                             Refuser le candidat
                         </Button>
+                         </form>
+                       
                         
                 
                     </Paper>
