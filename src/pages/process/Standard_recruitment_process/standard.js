@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button, TextField, Box, Typography, Paper } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
+import emailjs from '@emailjs/browser';
 const getOfferById = (offreId, setOffer) => {
     axios.get(`http://localhost:3001/offres/${offreId}`)
         .then((response) => {
@@ -19,6 +19,7 @@ const getOfferById = (offreId, setOffer) => {
 
 
 const RecruitmentProcessPage = () => {
+    
     const [recruitmentSteps, setRecruitmentSteps] = useState([]);
     const { idOffer } = useParams();
     const { idCandidat } = useParams();
@@ -30,10 +31,28 @@ const RecruitmentProcessPage = () => {
     }, [idOffer]);
     useEffect(() => {
         getProcessByOfferAndCandidateIds(idOffer, idCandidat, setProcess);
+        console.log("current step",currentStep)
     }, [idOffer, idCandidat]);
-    // const recruitmentSteps = [
-    //     ['Présélection des CV', 'Entretien téléphonique', 'Entretien en personne', 'Offre d\'emploi'],
-    // ];
+   
+    const getemailCandidat = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/candidats/${idCandidat}`);
+            return response.data.email;
+        } catch (error) {
+            console.error(error);
+            return '';
+        }
+    };
+
+   const [emailcandidat, setEmailCandidat] = useState('');
+useEffect(() => {
+        const fetchEmail = async () => {
+            const email = await getemailCandidat();
+            setEmailCandidat(email);
+        };
+
+        fetchEmail();
+    }, [idCandidat]);
     const getProcessByOfferAndCandidateIds = (offreId, candidatId, setProcess) => {
         axios.get(`http://localhost:3001/processCandidat/${offreId}/${candidatId}`)
             .then((response) => {
@@ -47,7 +66,7 @@ const RecruitmentProcessPage = () => {
                     });
                 }
                 setRecruitmentSteps(processSteps);
-                setCurrentStep(response.data.step);
+                setCurrentStep(1);
                 console.log("new steps", processSteps);
             })
             .catch((error) => {
@@ -78,11 +97,10 @@ const RecruitmentProcessPage = () => {
         // updateProcessCandidat(process);
     };
 
-    const handleValidate = () => {
+    const handleValidate = async() => {
         process[`etat${currentStep}`] = 1;
 
-        // console.log("process step", process);
-
+       
 
         updateProcessCandidat(process);
     };
@@ -114,7 +132,24 @@ const RecruitmentProcessPage = () => {
                 console.error('Erreur lors de la mise à jour du processus candidat:', error);
             });
     };
-
+    const form = useRef();
+    const sendEmail = (e) => {
+        e.preventDefault();
+    
+        emailjs
+          .sendForm('service_p15abic', 'template_x3cbm1p', form.current, {
+            publicKey: 'ARYy7ZQizvUzEOzfU',
+          })
+          .then(
+            () => {
+              console.log('SUCCESS!');
+            },
+            (error) => {
+              console.log('FAILED...', error.text);
+            },
+          );
+      };
+    
     const theme = useTheme();
 
     return (
@@ -172,17 +207,34 @@ const RecruitmentProcessPage = () => {
                                 Étape suivante
                             </Button>
                         </Box>
-
+                        {currentStep === recruitmentSteps.length ? (
+                            <form ref={form} onSubmit={sendEmail}>
+                           
+                            <input hidden type="text" name="user_name" value={sessionStorage.getItem('entrepriseName')} />
+                      
+                            
+                            <input hidden type="email" name="user_email" value={emailcandidat} />
+                            
+                            <textarea hidden name="message" value="Congratulations! You have been accepted for the position." />
+                            <Button type='submit' component={Link} onClick={sendEmail} to="" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success">
+                         Accepter le candidat
+                         </Button>
+                          </form>
+                         
+                        ) : (
                         <Button component={Link} onClick={handleValidate} to="" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} color="success">
-                            valider
+                        valider l'étape
                         </Button>
-
+                        )}
                         <Button fullWidth variant="outlined" color="error">
-                            Annuler
+                            Refuser le candidat
                         </Button>
+                        
+                
                     </Paper>
                 </main>
             </Box>
+           
         </div>
     )
 }
