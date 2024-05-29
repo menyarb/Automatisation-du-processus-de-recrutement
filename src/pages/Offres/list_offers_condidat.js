@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import axios from 'axios';
 import Image from '../../assets/images/mpbs.png';
-import MenuNavbarAddCandidat from '../NavBar/NavbarCandidat';
+import MenuNavbarAddCandidat from '../NavBar/NavbarCondidat';
 import { Link } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 
@@ -130,10 +130,10 @@ const ListeOffres = () => {
             </MuiAlert>
           </Snackbar>
           <Snackbar open={showErrorAlert} autoHideDuration={6000} onClose={handleErrorAlertClose}>
-            <MuiAlert onClose={handleErrorAlertClose} severity="error" sx={{ width: '100%' }}>
-              Vous avez déjà postulé sur cette offre.
-            </MuiAlert>
-          </Snackbar>
+  <MuiAlert onClose={handleErrorAlertClose} severity="error" sx={{ width: '100%' }}>
+    Vous avez déjà postulé sur cette offre.
+  </MuiAlert>
+</Snackbar>
         </main>
       </Box>
     </div>

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link,
   Grid, Box, Typography, Container, AppBar, Toolbar, Snackbar, Alert
@@ -44,26 +44,26 @@ function SignUp() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('info'); // Options: error, warning, info, success
-
+  
   const [error, setError] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
+  
     const postData = {
       name: `${data.get('firstName')} ${data.get('lastName')}`,
       email: data.get('email'),
       password: data.get('password'),
     };
-
+  
     try {
       const response = await fetch('http://localhost:3001/candidats/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(postData),
       });
-
+  
       const result = await response.json();
       if (response.ok) {
         setSnackbarMessage('Registration successful! You can now sign in.');
@@ -81,12 +81,9 @@ function SignUp() {
       setSnackbarOpen(true);
     }
   };
-
-  useEffect(() => {
-    if (sessionStorage.getItem('candidatId' && 'entrepriseId')) {
-      window.location.href = "/candidate/AddCandidat";
-    }
-  })
+  
+  useEffect(() => {if(sessionStorage.getItem('candidatId'&&'entrepriseId' )){
+    window.location.href="/candidate/AddCondidat";}})
 
 
   return (
@@ -183,10 +180,10 @@ function SignUp() {
         </Box>
       </Container>
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)}>
-        <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+  <Alert onClose={() => setSnackbarOpen(false)} severity={snackbarSeverity} sx={{ width: '100%' }}>
+    {snackbarMessage}
+  </Alert>
+</Snackbar>
 
       <Footer />
     </ThemeProvider>
