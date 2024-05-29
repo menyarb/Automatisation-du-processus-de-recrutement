@@ -13,6 +13,7 @@ router.patch('/:id', candidatureController.updateCandidatureById);
 router.delete('/:id', candidatureController.deleteCandidatureById);
 router.post('/postuler', candidatureController.postulerOffre);
 router.delete('/', candidatureController.deleteAllCandidatures);
+router.get('/offreByCandidate/:candidatId', candidatureController.getApplicationsByCandidate);
 
 
 module.exports = router;

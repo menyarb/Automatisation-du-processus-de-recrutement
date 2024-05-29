@@ -1,6 +1,24 @@
 const Candidature = require('../models/Candidature.model');
 const Candidats = require('../models/Candidat.model');
+// Function to get job applications by candidate ID
+const getApplicationsByCandidate = async (req, res) => {
+    const { candidatId } = req.params;  // Get candidate ID from URL parameters
 
+    try {
+        const applications = await Candidature.find({ idCandidat: candidatId })
+            .populate('idCandidat')  // Optional: to include candidate details
+            .populate('idOffre');    // Optional: to include job offer details
+
+        if (applications.length === 0) {
+            return res.status(404).json({ message: 'No applications found for this candidate.' });
+        }
+
+        res.json(applications);
+    } catch (error) {
+        console.error('Failed to retrieve applications:', error);
+        res.status(500).json({ message: 'Error retrieving applications.' });
+    }
+};
 // Fonction pour traiter la demande de candidature
 const postulerOffre = async (req, res) => {
     try {
@@ -154,5 +172,6 @@ module.exports = {
     postulerOffre,
     getCandidatureByIdOffre,
     getCandidatsByIdOffre,
-    deleteAllCandidatures
+    deleteAllCandidatures,
+    getApplicationsByCandidate
 };

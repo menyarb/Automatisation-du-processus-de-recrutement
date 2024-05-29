@@ -1,66 +1,57 @@
 import React from 'react';
-import { Paper, Box, Typography, Button, Stepper, Step, StepLabel, Grid, Avatar ,useTheme} from '@mui/material';
-import { mdiHistory } from '@mdi/js';
+import {
+  Paper, Box, Typography, Button, Grid, Avatar, Stepper, Step, StepLabel
+} from '@mui/material';
 import Icon from '@mdi/react';
-import MenuNavbarAddCandidat from '../NavBar/NavbarCondidat';
+import { mdiHistory } from '@mdi/js';
 
-
-
-const drawerWidth = 240;
-const themedStyles = (theme) => {
-  return {
-
-    content: {
-      padding: 3,
-      height: 'calc(100vh - 200px)', overflowY: 'auto',
-      marginLeft: drawerWidth + 15,
-      marginTop:95,
-    }
-  }
-}
-
-function JobApplicationHistory() {
-  const theme = useTheme();
+function CandidaturesList({ candidatures }) {
   const steps = ['En attente', 'Test', 'Entretien', 'Accepté'];
 
   return (
-    <div>
-          <MenuNavbarAddCandidat /> 
- 
-
-    <div sx={{backgroundColor: '#ced4da', }}>
-    <Box p="20px">
-      <main style={{ ...themedStyles(theme).content }}>
-      <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <Avatar src="https://rec-inov.com/company/images/6ba80a20-1198-11ee-a8fa-43698a68bcb4.png" alt="Rec-Inov" sx={{ width: 56, height: 56 }} />
+    <Box sx={{ padding: 3 }}>
+      {candidatures.map((candidature, index) => (
+        <Paper key={index} elevation={3} sx={{ padding: 3, marginBottom: 2 }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <Avatar src={candidature.idOffre.image || "https://via.placeholder.com/150"} sx={{ width: 56, height: 56 }} />
+            </Grid>
+            <Grid item xs>
+              <Typography variant="h6" component="h2">{candidature.idOffre.title}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                Postulé le: {new Date(candidature.datePostulation).toLocaleDateString()}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Salaire: {candidature.idOffre.Salaire || "Non spécifié"}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Lieu: {candidature.idOffre.Emplacement}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Type: {candidature.idOffre.jobType}
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs>
-            <Typography variant="h6" component="h2">Stage - Automatisation du Processus de Recrutement</Typography>
-            <Typography color="textSecondary">postulé le 04/03/2024</Typography>
-          </Grid>
-        </Grid>
-        <Box mt={3}>
-          <Stepper alternativeLabel activeStep={3}>
-            {steps.map((label, index) => (
-              <Step key={label}>
-                <StepLabel icon={index === 2 ? <Icon path={mdiHistory} size={1} color="green" /> : index + 1}>
-                  {label}
-                </StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-        </Box>
-        <Box mt={2} textAlign="right">
-          <Button variant="contained" color="primary">Voir l'offre</Button>
-        </Box>
-      </Paper>
-      </main>
+          <Box mt={3}>
+            <Stepper activeStep={steps.indexOf(candidature.etatCandidature)} alternativeLabel>
+              {steps.map(label => (
+                <Step key={label}>
+                  <StepLabel icon={label === 'Entretien' ? <Icon path={mdiHistory} size={1} /> : undefined}>
+                    {label}
+                  </StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+          </Box>
+          <Box mt={2} textAlign="right">
+            <Button variant="contained" color="primary">
+              Voir Détails
+            </Button>
+          </Box>
+        </Paper>
+      ))}
     </Box>
-    </div>
-    </div>
   );
 }
 
-export default JobApplicationHistory;
+export default CandidaturesList;
