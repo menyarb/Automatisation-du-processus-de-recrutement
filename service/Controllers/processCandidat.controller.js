@@ -99,3 +99,11 @@ exports.getProcessByOfferAndCandidateIds = async (req, res) => {
         res.status(500).send(err);
     }
 };
+exports.deleteAllProcesses = async (req, res) => {
+    try {
+        const result = await ProcessCandidat.deleteMany({});
+        res.send(result);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};

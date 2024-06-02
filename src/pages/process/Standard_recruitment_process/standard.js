@@ -2,7 +2,7 @@ import React, { useState, useEffect,useRef } from 'react';
 import { useTheme } from "@mui/material/styles";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, TextField, Box, Typography, Paper } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import emailjs from '@emailjs/browser';
@@ -15,7 +15,6 @@ const getOfferById = (offreId, setOffer) => {
             console.error('Error fetching offer:', error);
         });
 }
-
 
 
 const RecruitmentProcessPage = () => {
@@ -130,6 +129,8 @@ useEffect(() => {
             });
     };
     const form = useRef();
+    const navigate = useNavigate();
+
     const sendEmail = (e) => {
         e.preventDefault();
     
@@ -140,6 +141,7 @@ useEffect(() => {
           .then(
             () => {
               console.log('SUCCESS!');
+               navigate('/company/ListeOffres');
             },
             (error) => {
               console.log('FAILED...', error.text);

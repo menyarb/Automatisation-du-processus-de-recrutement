@@ -11,6 +11,7 @@ router.get('/:id', processCandidatController.getProcessCandidatById);
 router.put('/:id', processCandidatController.updateProcessCandidatById);
 
 router.delete('/:id', processCandidatController.deleteProcessCandidatById);
+router.delete('/', processCandidatController.deleteAllProcesses);
 
 router.get('/:id/non-null-etapes', processCandidatController.getNonNullEtapesById);
 

@@ -122,7 +122,6 @@ const RecruitmentProcessPage = () => {
         console.log('la prediction est ', response.data[0]);
         setprediction(response.data[0])}
         catch{}
-            
     }
 
     useEffect(() => {
