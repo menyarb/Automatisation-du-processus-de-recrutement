@@ -4,9 +4,6 @@ const offreSchema = new mongoose.Schema({
     image: {
         type: String,
     },
-    domaine: {
-        type: String,
-    },
     title: {
         type: String,
     },
@@ -28,10 +25,7 @@ const offreSchema = new mongoose.Schema({
     Experience: {
         type: String,
     },
-    TypeContrat: {
-        type: String,
-    },
-    TempsTravail: {
+    jobType: {
         type: String,
     },
     Salaire: {
@@ -47,9 +41,6 @@ const offreSchema = new mongoose.Schema({
         type: String,
     },
     type: {
-        type: String,
-    },
-    genre: {
         type: String,
     },
     entrepriseId:{

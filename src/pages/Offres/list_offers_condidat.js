@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box, Snackbar } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box, Snackbar, TextField } from '@mui/material';
 import { useTheme } from "@mui/material/styles";
 import { Typography } from "@mui/material";
 import axios from 'axios';
 import Image from '../../assets/images/mpbs.png';
-import MenuNavbarAddCandidat from '../NavBar/NavbarCandidat';
+import MenuNavbarAddCandidat from '../NavBar/NavbarCondidat';
 import { Link } from 'react-router-dom';
 import MuiAlert from '@mui/material/Alert';
 
@@ -17,11 +17,14 @@ const themedStyles = (theme) => {
       marginLeft: drawerWidth + 15,
       //  marginTop:96,
     }
+   
   }
+  
 }
 
 const ListeOffres = () => {
   const [offers, setOffers] = useState([]);
+  const [searchText, setSearchText] = useState(''); // État pour la recherche
   const [showAlert, setShowAlert] = useState(false); // État pour gérer l'affichage de l'alerte
   const theme = useTheme();
 
@@ -75,6 +78,15 @@ const ListeOffres = () => {
     }
   }, []);
 
+  // Fonction de gestion de la recherche
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  // Filtrer les offres en fonction du texte de recherche
+  const filteredOffers = offers.filter(offer =>
+    (offer.title || '').toLowerCase().includes(searchText.toLowerCase())
+  );
   return (
     <div style={{ backgroundColor: '#ced4da' }}>
       <MenuNavbarAddCandidat />
@@ -82,6 +94,14 @@ const ListeOffres = () => {
         <main style={{ ...themedStyles(theme).content }}>
           <Paper elevation={3} sx={{ borderRadius: '16px', padding: '20px' }}>
             <Typography variant="h5" gutterBottom>Liste des Offres</Typography>
+            <TextField
+              label="Recherche par nom d'entreprise"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={searchText}
+              onChange={handleSearchChange}
+            />
             <TableContainer>
               <Table aria-label="simple table" style={{ minWidth: '100%' }}>
                 <TableHead>
@@ -97,7 +117,7 @@ const ListeOffres = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {offers.map((offer, index) => (
+                  {filteredOffers.map((offer, index) => (
                     <TableRow key={index}>
                       <TableCell> <img src={Image} alt="Demo PC" style={{ width: '50px', height: '50px', borderRadius: '8px' }} /></TableCell>
                       <TableCell>{offer.title}</TableCell>
@@ -114,7 +134,6 @@ const ListeOffres = () => {
                         <Button sx={{ borderRadius: '16px', margin: '10px' }} variant="contained" color="success" onClick={() => postulerOffre(offer._id)}>
                           Postuler
                         </Button>
-
                       </TableCell>
                     </TableRow>
                   ))}

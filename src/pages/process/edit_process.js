@@ -57,17 +57,21 @@ const themedStyles = (theme) => {
 const RecruitmentProcessPage = () => {
     const [recruitmentSteps, setRecruitmentSteps] = useState([]);
     const [stepOptions] = useState([
-        "Entretiens RH ",
-        "test comportemental",
-        "Entretiens en personne (vidéo)",
-        "test technique :niveaux 1",
-        "Évaluation des compétences comportementales",
-        "Entretiens finaux avec des membres de l'équipe de direction",
-        "Vérification des références",
-        "Préparation du test technique :niveaux 2",
-        "Préparation du test technique :niveaux 3",
-        "test technique :niveaux 3 (difficile)",
-        
+        "Présélection des CV",
+        "Entretien téléphonique",
+        "Entretien en personne",
+        "Offre d'emploi",
+        "Présélection des CV1",
+        "Entretien téléphonique1",
+        "Entretien en personne1",
+        "Offre d'emploi1",
+        "Présélection des CV2",
+        "Entretien téléphonique2",
+        "Entretien en personne2",
+        "Offre d'emploi2",
+        "entretien1",
+        "entretien2",
+        "entretien1"
     ]);
 
     const { idProcess } = useParams();

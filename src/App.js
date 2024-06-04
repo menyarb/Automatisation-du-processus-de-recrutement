@@ -6,9 +6,9 @@ import ListeOffres from './pages/Offres/list_offers';
 import AddOffres from './pages/Offres/Add_offers';
 import DetailOffres from './pages/Offres/detail_Offer ';
 import EditOffres from './pages/Offres/Edit_offers';
-import AddCandidat from './pages/Candidats/AddCandidats';
+import AddCondidat from './pages/Candidats/AddCandidats';
 
-import ListeCandidat from './pages/Candidats/ListeCandidats';
+import ListeCondidat from './pages/Candidats/ListeCandidats';
 import HomeAdmin from './Home';
 import Home from './pages/Login/index';
 import Login from './pages/Login/signIn_candidat';
@@ -16,16 +16,15 @@ import LoginEnt from './pages/Login/signIn_entreprise';
 import Signup from './pages/Login/signup_candidat';
 import SignupEnt from './pages/Login/signup_entreprise';
 import MenuNavbar from './pages/NavBar/Navbar';
-import MenuNavbarAddCandidat from './pages/NavBar/NavbarCandidat';
-import ListeOffresCandidat from './pages/Offres/list_offers_candidat';
-import DetailOffresCandidat from './pages/Offres/detail_Offer _candidat';
+import MenuNavbarAddCandidat from './pages/NavBar/NavbarCondidat';
+import ListeOffresCondidat from './pages/Offres/list_offers_condidat';
+import DetailOffresCondidat from './pages/Offres/detail_Offer _condidat';
 import RecruitmentProcess from './pages/process/process_steps';
-import ProcessSteps2 from './pages/process/process_steps2';
+import RecruitmentProcessCondidat from './pages/process/process_candidate';
 import EditProcess from './pages/process/edit_process';
 import EditProcessCandidate from './pages/process/edit_process_candidate';
 import JobApplicationHistory from './pages/Candidats/JobApplicationHistory';
 import DashboardCandidat from './pages/Dashboard/DashboardCandidat';
-import EditProcess2 from './pages/process/edit_process2';
 
 
 import StandardProcess from './pages/process/Standard_recruitment_process/standard';
@@ -35,7 +34,7 @@ function App() {
     <BrowserRouter>
       <div className="App">
         {/* Affichage de MenuNavbar sauf sur les pages de connexion et de création de compte */}
-
+       
 
         <Routes>
           <Route
@@ -46,14 +45,14 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
+                <Route
             path="/"
             element={
               <RouteHandler excludeNavbar >
                 <Home />
               </RouteHandler>
             }
-          />
+          />    
           <Route
             path="/signin/candidate"
             element={
@@ -78,7 +77,7 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
+           <Route
             path="/signup/company"
             element={
               <RouteHandler excludeNavbar>
@@ -86,7 +85,7 @@ function App() {
               </RouteHandler>
             }
           />
-
+          
           <Route
             path="/company/AddOffres/"
             element={
@@ -109,7 +108,7 @@ function App() {
               <RouteHandler>
                 <EditOffres />
               </RouteHandler>
-            } s
+            }s
           />
           <Route
             path="/company/DetailOffres/:idOffer"
@@ -119,22 +118,22 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
-            path="/candidate/AddCandidat"
-            element={<RouteHandler>
-              <AddCandidat />
-            </RouteHandler>}
-
+              <Route
+               path="/candidate/AddCondidat"
+              element={ <RouteHandler>
+                <AddCondidat />
+              </RouteHandler>}
+          
           />
-          <Route
+           <Route
             path="/candidate/ListeOffres"
             element={
               <RouteHandler>
-                <ListeOffresCandidat />
+                <ListeOffresCondidat />
               </RouteHandler>
             }
           />
-          <Route
+           <Route
             path="/candidate/JobApplicationHistory"
             element={
               <RouteHandler>
@@ -142,7 +141,7 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
+           <Route
             path="/candidate/DashboardCandidat"
             element={
               <RouteHandler>
@@ -150,11 +149,11 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
+           <Route
             path="/candidate/DetailOffres/:idOffer"
             element={
               <RouteHandler>
-                <DetailOffresCandidat />
+                <DetailOffresCondidat />
               </RouteHandler>
             }
           />
@@ -162,7 +161,7 @@ function App() {
             path="/company/ListeCandidat/:idOffer"
             element={
               <RouteHandler>
-                <ListeCandidat />
+                <ListeCondidat />
               </RouteHandler>
             }
           />
@@ -174,15 +173,15 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
-            path="/company/process2/:idOffre"
+             <Route
+            path="/company/processCandidat/:idOffre"
             element={
               <RouteHandler>
-                <ProcessSteps2 />
+                <RecruitmentProcessCondidat />
               </RouteHandler>
             }
           />
-          <Route
+            <Route
             path="/company/EditProcess/:idProcess/:idOffre"
             element={
               <RouteHandler>
@@ -190,15 +189,7 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
-            path="/company/EditProcess2/:idProcess/:idOffre"
-            element={
-              <RouteHandler>
-                <EditProcess2 />
-              </RouteHandler>
-            }
-          />
-          <Route
+                      <Route
             path="/company/EditProcessCandidate"
             element={
               <RouteHandler>
@@ -206,7 +197,7 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
+                      <Route
             path="/company/Standard_Process/:idCandidat/:idOffer"
             element={
               <RouteHandler>
@@ -214,16 +205,16 @@ function App() {
               </RouteHandler>
             }
           />
-          <Route
+                      <Route
             path="/company/Calendar_Process"
             element={
               <RouteHandler>
-                <CalendarProcess />
+                <CalendarProcess/>
               </RouteHandler>
             }
-          />
+          />          
         </Routes>
-
+       
 
       </div>
     </BrowserRouter>
@@ -238,15 +229,15 @@ function RouteHandler({ children, excludeNavbar }) {
 
   return (
     <>
-
-      {/* Affichage du bon Navbar en fonction de la page */}
-      {!(isLoginPage || isSignupPage) && !excludeNavbar && (
-        // Vérifiez si c'est la page AddCandidat pour afficher le bon navbar
-        location.pathname === '/candidate/AddCandidat' ? <MenuNavbarAddCandidat /> : <MenuNavbar />
-
-      )}
-      {children}
-    </>
+    
+    {/* Affichage du bon Navbar en fonction de la page */}
+    {!(isLoginPage || isSignupPage) && !excludeNavbar && (
+      // Vérifiez si c'est la page AddCandidat pour afficher le bon navbar
+      location.pathname === '/candidate/AddCondidat' ? <MenuNavbarAddCandidat /> : <MenuNavbar />
+     
+    )}
+    {children}
+  </>
   );
 }
 

@@ -37,25 +37,18 @@ const themedStyles = (theme) => {
 }
 
 const RecruitmentProcessPage = () => {
-    
+    const recruitmentSteps = [
+        'Présélection des CV',
+        'Entretien téléphonique',
+        'Entretien en personne',
+        'Offre d\'emploi'
+    ];
     const { idOffre }=useParams();
-    const [recruitmentSteps, setRecruitmentSteps] = useState([]);
 
 const getprocessbyidoffre= async() =>{
     try {
         const response = await axios.get(`http://localhost:3001/processoffre/${idOffre}`);
-        const newSteps = [];
-        if (response.data) {
-            const stepsData = response.data;
-
-            Object.keys(stepsData).forEach((key) => {
-                if (key.startsWith('etape') && stepsData[key] !== undefined) {
-                    newSteps.push(stepsData[key]);
-                }
-            });
-        }
-        setRecruitmentSteps(newSteps);
-        console.log("new steps",newSteps);
+        console.log("process est ",response.data);
     } catch (error) {
         console.error('Error fetching offer:', error);
     }
